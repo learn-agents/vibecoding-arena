@@ -13,95 +13,67 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const [loading, setLoading] = useState(true);
   const shareId = `${promptId}-${agent.id}`;
   
-  // References for DOM elements
+  // Reference to the GIF element and its playback state
   const imgRef = useRef<HTMLImageElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   
-  // Function to capture the current frame of the GIF
-  const captureCurrentFrame = () => {
-    if (!imgRef.current || !canvasRef.current || !containerRef.current) return;
-    
-    const canvas = canvasRef.current;
-    const img = imgRef.current;
-    const container = containerRef.current;
-    
-    // Ensure canvas dimensions match the container/image
-    canvas.width = container.clientWidth;
-    canvas.height = container.clientHeight;
-    
-    // Draw the current frame of the GIF to the canvas
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    }
-  };
+  // Used to track if we need to "restart" the GIF playback
+  const wasPlayingRef = useRef(false);
+  
+  // Keep track of the GIF's URL for reloading it with a new URL to pause/play
+  const [gifUrl, setGifUrl] = useState(agent.gifUrl);
   
   // Handle mouse events
   const handleMouseEnter = () => {
     setIsHovering(true);
     
-    // Show the actual GIF (which will continue from where it was)
-    if (imgRef.current) {
-      imgRef.current.style.visibility = 'visible';
-    }
-    
-    // Hide the frozen frame
-    if (canvasRef.current) {
-      canvasRef.current.style.visibility = 'hidden';
+    // If the image was previously playing, we need to set the URL back to the original
+    if (imgRef.current && !wasPlayingRef.current) {
+      // Use the original URL to start playing
+      setGifUrl(agent.gifUrl);
+      wasPlayingRef.current = true;
     }
   };
   
   const handleMouseLeave = () => {
     setIsHovering(false);
     
-    // Capture and freeze the current frame when mouse leaves
-    captureCurrentFrame();
-    
-    // Hide the GIF
-    if (imgRef.current) {
-      imgRef.current.style.visibility = 'hidden';
-    }
-    
-    // Show the frozen frame
-    if (canvasRef.current) {
-      canvasRef.current.style.visibility = 'visible';
-    }
+    // We don't immediately pause the GIF - that will happen on the next render
+    wasPlayingRef.current = false;
   };
 
-  // Set up initial loading and handle GIF behavior
+  // Effect to handle GIF pausing/playing based on hover state
+  useEffect(() => {
+    if (!loading) {
+      if (!isHovering && wasPlayingRef.current) {
+        // Wait a moment to ensure we get the current frame, not the first frame
+        const timeoutId = setTimeout(() => {
+          // Append a '#' to pause the GIF at the current frame
+          // This is a trick that stops animated GIFs by making the browser treat it as a fragment identifier
+          setGifUrl(`${agent.gifUrl}#`);
+          wasPlayingRef.current = false;
+        }, 50);
+        
+        return () => clearTimeout(timeoutId);
+      }
+    }
+  }, [isHovering, loading, agent.gifUrl]);
+
+  // Handle image loading
   useEffect(() => {
     // Create an image to preload the GIF
     const img = new Image();
     img.onload = () => {
       setLoading(false);
       
-      // Initial setup - capture first frame after the GIF has loaded
-      setTimeout(() => {
-        if (imgRef.current && canvasRef.current) {
-          // Start by showing the active GIF briefly
-          imgRef.current.style.visibility = 'visible';
-          canvasRef.current.style.visibility = 'hidden';
-          
-          // Then capture the current frame and freeze it
-          setTimeout(() => {
-            if (!isHovering) {
-              captureCurrentFrame();
-              
-              // Hide the GIF and show the frozen frame
-              if (imgRef.current) imgRef.current.style.visibility = 'hidden';
-              if (canvasRef.current) canvasRef.current.style.visibility = 'visible';
-            }
-          }, 50); // Small delay to ensure first frame is rendered
-        }
-      }, 50);
+      // Start with the "paused" version (adding # to URL)
+      if (!isHovering) {
+        setGifUrl(`${agent.gifUrl}#`);
+      }
     };
-    
     img.onerror = () => {
       console.error("Error loading image");
       setLoading(false);
     };
-    
     img.src = agent.gifUrl;
     
     return () => {
@@ -109,20 +81,6 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       img.onerror = null;
     };
   }, [agent.gifUrl, isHovering]);
-
-  // Handle window resize to adjust canvas size
-  useEffect(() => {
-    const handleResize = () => {
-      if (!isHovering) {
-        captureCurrentFrame();
-      }
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [isHovering]);
 
   const handleShare = () => {
     const url = `${window.location.origin}/#item=${shareId}`;
@@ -151,33 +109,21 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       onMouseLeave={handleMouseLeave}
     >
       {/* Card image container */}
-      <div 
-        className="relative flex-none aspect-video rounded-subtle overflow-hidden"
-        ref={containerRef}
-      >
+      <div className="relative flex-none aspect-video rounded-subtle overflow-hidden">
         {/* Loading placeholder */}
         {loading && (
           <div className="w-full h-full bg-gray-200 animate-pulse"></div>
         )}
         
         {!loading && (
-          <>
-            {/* Canvas for frozen frame (visible when not hovering) */}
-            <canvas 
-              ref={canvasRef}
-              className="absolute top-0 left-0 w-full h-full object-cover rounded-subtle"
-              style={{ visibility: 'hidden' }} // Initially hidden
-            />
-            
-            {/* Original GIF (only visible and animated when hovering) */}
-            <img 
-              ref={imgRef}
-              src={agent.gifUrl}
-              alt={`${agent.agentName} solution`}
-              className="w-full h-full object-cover rounded-subtle"
-              style={{ visibility: 'visible' }} // Initially visible
-            />
-          </>
+          /* The GIF - using a key to force re-render when URL changes */
+          <img 
+            ref={imgRef}
+            key={gifUrl} // This forces a re-render when the URL changes
+            src={gifUrl}
+            alt={`${agent.agentName} solution`}
+            className="w-full h-full object-cover rounded-subtle"
+          />
         )}
         
         {/* Gradient overlay at the bottom - only render when hovering */}
