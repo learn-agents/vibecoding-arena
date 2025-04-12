@@ -50,8 +50,8 @@ prompts:
         code_link: "https://github.com/google-deepmind/gemini-weather-app"
 
   - shortname: fitness-tracker
-    full_prompt: "Develop a fitness tracking application that allows users to log workouts, track progress over time, and set goals. Include visualizations of key metrics and a streak counter for consistency."
-    description: "A fitness tracker with workout logging, progress charts, and goal setting features"
+    full_prompt: "Fitness Tracker"
+    description: "Workout logger with progress charts and streak counter"
     agents:
       - name: v0
         created_at: "2025-02-15"
@@ -75,8 +75,8 @@ prompts:
         code_link: "https://github.com/google-deepmind/gemini-weather-app"
 
   - shortname: recipe-finder
-    full_prompt: "Create a recipe finder application that lets users search by ingredients they have on hand. Include filters for dietary restrictions, cooking time, and cuisine type. Display recipe cards with time, difficulty, and ratings."
-    description: "A recipe search engine that finds dishes based on available ingredients and preferences"
+    full_prompt: "Recipe Finder"
+    description: "Search by ingredients with dietary and cuisine filters"
     agents:
       - name: v0
         created_at: "2025-02-15"
