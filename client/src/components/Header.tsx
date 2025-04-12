@@ -15,7 +15,7 @@ export default function Header() {
         <div>
           <Link to="/about">
             <span className="inline-block px-4 py-2 rounded-md border-2 border-black text-black hover:bg-black hover:text-white transition-all cursor-pointer">
-              About Us
+              About
             </span>
           </Link>
         </div>

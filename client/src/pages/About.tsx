@@ -11,7 +11,7 @@ export default function About() {
       <main className="py-8 px-4 md:px-8 lg:px-16 flex-grow">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-8 text-center">
-            About the Author
+            About
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
