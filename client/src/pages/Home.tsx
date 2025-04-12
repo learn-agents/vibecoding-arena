@@ -61,12 +61,12 @@ export default function Home() {
       <main className="py-8 px-4 md:px-8 lg:px-16 flex-grow">
         <div className="max-w-7xl mx-auto">
           {/* Introduction */}
-          <section className="mb-12 text-center">
+          <section className="mb-16 text-center">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-4">
-              Compare AI Coding Agents Side-by-Side
+              AI Coding Agents Showcase
             </h2>
-            <p className="text-muted-foreground max-w-3xl mx-auto mb-6">
-              See how different AI agents interpret and build applications from identical prompts. 
+            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+              Compare how different AI agents interpret and build applications from identical prompts. 
               Browse through examples, get inspired, and share your favorites.
             </p>
             
@@ -90,7 +90,7 @@ export default function Home() {
               </div>
               <input
                 type="search"
-                className="block w-full pl-10 pr-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-background"
+                className="block w-full pl-10 pr-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-background shadow-sm"
                 placeholder="Search prompts or agents..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -118,7 +118,7 @@ export default function Home() {
                   d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" 
                 />
               </svg>
-              <span>Hover over GIFs to play animations</span>
+              <span>Hover over preview cards to play animations</span>
             </div>
           </section>
 
@@ -127,11 +127,10 @@ export default function Home() {
             // Skeleton loading state
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {Array(8).fill(0).map((_, i) => (
-                <div key={i} className="flex flex-col">
-                  <Skeleton className="h-48 w-full rounded-t-lg" />
-                  <div className="p-4 border border-t-0 rounded-b-lg">
-                    <Skeleton className="h-5 w-20 mb-2" />
-                    <Skeleton className="h-5 w-3/4" />
+                <div key={i} className="flex flex-col overflow-hidden rounded-lg">
+                  <Skeleton className="aspect-video w-full" />
+                  <div className="p-4 bg-background">
+                    <Skeleton className="h-5 w-24" />
                   </div>
                 </div>
               ))}

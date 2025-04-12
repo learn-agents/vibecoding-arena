@@ -102,15 +102,16 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   };
 
   return (
-    <Card 
-      className="overflow-hidden transition-all duration-300 hover:shadow-lg h-full flex flex-col"
+    <div 
+      className="group relative flex flex-col overflow-hidden rounded-lg bg-background transition-all duration-300 hover:shadow-lg h-full"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <div className="relative group flex-none h-52">
+      {/* Card image container */}
+      <div className="relative flex-none aspect-video">
         {/* Loading placeholder */}
         {loading && (
-          <div className="w-full h-52 bg-gray-200 animate-pulse"></div>
+          <div className="w-full h-full bg-gray-200 animate-pulse"></div>
         )}
         
         {/* Static image (shown when not hovering) */}
@@ -118,10 +119,9 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
           <img 
             src={staticImageSrc}
             alt={`${agent.agentName} result (static)`}
-            className={`w-full h-52 object-cover absolute inset-0 transition-opacity duration-300 ${
+            className={`w-full h-full object-cover absolute inset-0 transition-opacity duration-300 ${
               isHovering ? 'opacity-0' : 'opacity-100'
             }`}
-            style={{ aspectRatio: "16/9" }}
           />
         )}
         
@@ -131,23 +131,72 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
             key={`animated-${agent.id}-${Date.now()}`} // Force new instance on each hover
             src={agent.gifUrl}
             alt={`${agent.agentName} result (animated)`}
-            className="w-full h-52 object-cover absolute inset-0 transition-opacity duration-300 opacity-100"
-            style={{ aspectRatio: "16/9" }}
+            className="w-full h-full object-cover absolute inset-0 transition-opacity duration-300 opacity-100"
           />
         )}
         
-        {/* Agent name badge */}
-        <div className={`absolute top-3 left-3 ${getAgentBgColor(agent.agentName)} text-white text-sm font-medium px-3 py-1 rounded-full z-20`}>
-          {agent.agentName}
+        {/* Action buttons that appear on hover in the bottom-right corner */}
+        <div 
+          className={`absolute bottom-4 right-4 flex space-x-3 z-30 transition-all duration-300 ${
+            isHovering ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+          }`}
+        >
+          <a 
+            href={agent.codeLink} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="w-8 h-8 rounded-full bg-white hover:bg-white flex items-center justify-center shadow-md transition-all duration-200"
+            aria-label="View code by this agent"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="20" 
+              height="20" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
+          
+          <button 
+            className="w-8 h-8 rounded-full bg-white hover:bg-white flex items-center justify-center shadow-md transition-all duration-200"
+            onClick={handleShare}
+            aria-label="Share this agent's solution"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="18" 
+              height="18" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </button>
         </div>
         
         {/* Play indicator that appears on hover */}
         <div 
-          className={`absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity duration-300 z-10 ${
+          className={`absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300 z-10 ${
             isHovering ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+          <div className="w-12 h-12 rounded-full bg-white/30 flex items-center justify-center backdrop-blur-sm">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
               width="24" 
@@ -166,56 +215,12 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
         </div>
       </div>
       
-      {/* Card footer with share and view code buttons */}
-      <div className="p-4 flex justify-between items-center mt-auto">
-        <button 
-          className="text-sm font-medium text-primary hover:text-primary/80 transition-colors flex items-center"
-          onClick={handleShare}
-          aria-label="Share this agent's solution"
-        >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="16" 
-            height="16" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            className="mr-1"
-          >
-            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-            <polyline points="16 6 12 2 8 6"></polyline>
-            <line x1="12" y1="2" x2="12" y2="15"></line>
-          </svg>
-          Share
-        </button>
-        <a 
-          href={agent.codeLink} 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center"
-          aria-label="View code by this agent"
-        >
-          View Code
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="16" 
-            height="16" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            className="ml-1"
-          >
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
+      {/* Agent name under the card */}
+      <div className="p-4">
+        <div className="text-sm font-medium text-foreground/90">
+          {agent.agentName}
+        </div>
       </div>
-    </Card>
+    </div>
   );
 }

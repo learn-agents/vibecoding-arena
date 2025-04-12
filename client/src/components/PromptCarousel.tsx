@@ -8,13 +8,13 @@ interface PromptCarouselProps {
 export default function PromptCarousel({ prompt }: PromptCarouselProps) {
   return (
     <section className="mb-16">
-      <div className="mb-6">
+      <div className="mb-8">
         <h3 className="text-xl font-semibold mb-2">{prompt.text}</h3>
-        <p className="text-muted-foreground">{prompt.description}</p>
+        <p className="text-muted-foreground max-w-3xl">{prompt.description}</p>
       </div>
       
       {/* Responsive Grid Layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {prompt.agents.map((agent) => (
           <AgentCard key={agent.id} agent={agent} promptId={prompt.id} />
         ))}
