@@ -47,6 +47,9 @@ export default function Home() {
               Browse through examples, get inspired, and share your favorites.
             </p>
           </section>
+          
+          {/* Divider before first prompt */}
+          <div className="mb-16 border-b border-border"></div>
 
           {/* Grid Layout */}
           {isLoading ? (
