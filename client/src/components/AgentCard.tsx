@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Agent } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
 
@@ -11,15 +11,74 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const { toast } = useToast();
   const [isHovering, setIsHovering] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const shareId = `${promptId}-${agent.id}`;
+  
+  // References for DOM elements
+  const imgRef = useRef<HTMLImageElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Track if we have the first frame and the GIF's current time
+  const hasStaticFrame = useRef(false);
+  const lastTimeRef = useRef(0);
+  const animationFrameId = useRef<number | null>(null);
   
   // Handle mouse events
   const handleMouseEnter = () => {
     setIsHovering(true);
+    
+    // Start GIF animation when mouse enters
+    if (imgRef.current && canvasRef.current && hasStaticFrame.current) {
+      // Show the original GIF
+      if (imgRef.current) {
+        imgRef.current.style.visibility = 'visible';
+      }
+      
+      // Hide the canvas with the paused frame
+      if (canvasRef.current) {
+        canvasRef.current.style.visibility = 'hidden';
+      }
+    }
   };
   
   const handleMouseLeave = () => {
     setIsHovering(false);
+    
+    // Pause GIF animation (capture the current frame) when mouse leaves
+    if (imgRef.current && canvasRef.current && imageLoaded) {
+      captureCurrentFrame();
+      
+      // Hide the original GIF
+      if (imgRef.current) {
+        imgRef.current.style.visibility = 'hidden';
+      }
+      
+      // Show the canvas with the paused frame
+      if (canvasRef.current) {
+        canvasRef.current.style.visibility = 'visible';
+      }
+    }
+  };
+  
+  // Function to capture the current frame of the GIF
+  const captureCurrentFrame = () => {
+    if (!imgRef.current || !canvasRef.current || !containerRef.current) return;
+    
+    const canvas = canvasRef.current;
+    const img = imgRef.current;
+    const container = containerRef.current;
+    
+    // Ensure canvas dimensions match the container/image
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+    
+    // Draw the current frame of the GIF to the canvas
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      hasStaticFrame.current = true;
+    }
   };
 
   // Set loading state based on image load
@@ -28,6 +87,24 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
     const img = new Image();
     img.onload = () => {
       setLoading(false);
+      setImageLoaded(true);
+      
+      // Capture the first frame after a small delay to ensure it's loaded
+      setTimeout(() => {
+        if (imgRef.current && canvasRef.current && containerRef.current) {
+          captureCurrentFrame();
+          
+          // Initially hide the GIF and show the static frame
+          if (!isHovering) {
+            if (imgRef.current) {
+              imgRef.current.style.visibility = 'hidden';
+            }
+            if (canvasRef.current) {
+              canvasRef.current.style.visibility = 'visible';
+            }
+          }
+        }
+      }, 100);
     };
     img.onerror = () => {
       console.error("Error loading image");
@@ -40,6 +117,20 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       img.onerror = null;
     };
   }, [agent.gifUrl]);
+
+  // Handle window resize to adjust canvas size
+  useEffect(() => {
+    const handleResize = () => {
+      if (!isHovering && hasStaticFrame.current) {
+        captureCurrentFrame();
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isHovering]);
 
   const handleShare = () => {
     const url = `${window.location.origin}/#item=${shareId}`;
@@ -68,19 +159,33 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       onMouseLeave={handleMouseLeave}
     >
       {/* Card image container */}
-      <div className="relative flex-none aspect-video rounded-subtle overflow-hidden">
+      <div 
+        className="relative flex-none aspect-video rounded-subtle overflow-hidden"
+        ref={containerRef}
+      >
         {/* Loading placeholder */}
         {loading && (
           <div className="w-full h-full bg-gray-200 animate-pulse"></div>
         )}
         
-        {/* GIF image - always displayed but only animated on hover */}
         {!loading && (
-          <img 
-            src={agent.gifUrl}
-            alt={`${agent.agentName} solution`}
-            className={`w-full h-full object-cover rounded-subtle ${isHovering ? '' : 'gif-paused'}`}
-          />
+          <>
+            {/* Canvas for static frame (visible when not hovering) */}
+            <canvas 
+              ref={canvasRef}
+              className="absolute top-0 left-0 w-full h-full object-cover rounded-subtle"
+              style={{ visibility: 'hidden' }} // Initially hidden until first frame is captured
+            />
+            
+            {/* Original GIF (only visible and animated when hovering) */}
+            <img 
+              ref={imgRef}
+              src={agent.gifUrl}
+              alt={`${agent.agentName} solution`}
+              className="w-full h-full object-cover rounded-subtle"
+              style={{ visibility: 'visible' }} // Initially visible until first frame is captured
+            />
+          </>
         )}
         
         {/* Gradient overlay at the bottom - only render when hovering */}
