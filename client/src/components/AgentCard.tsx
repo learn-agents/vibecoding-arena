@@ -108,7 +108,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Card image container */}
-      <div className="relative flex-none aspect-video rounded-lg overflow-hidden">
+      <div className="relative flex-none aspect-video rounded-md overflow-hidden">
         {/* Loading placeholder */}
         {loading && (
           <div className="w-full h-full bg-gray-200 animate-pulse"></div>

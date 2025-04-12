@@ -9,7 +9,7 @@ prompts:
         code_link: "https://github.com/anthropic-labs/claude-todo-app"
       - name: replit
         created_at: "2025-02-15"
-        gif_url: "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWw0YWpldXhxcGpraGttamxud2FtZm4wem53ZWVvaHJkbG1jengwdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/A06UFEx8jxKzSGzdP1/giphy.gif"
+        gif_url: "https://media0.giphy.com/media/l0HlGRDhPTqVEvhCw/giphy.gif"
         code_link: "https://github.com/openai-examples/gpt4-todo-app"
       - name: lovable
         created_at: "2025-02-16"
@@ -19,19 +19,31 @@ prompts:
         created_at: "2025-02-15"
         gif_url: "https://media2.giphy.com/media/3o7aCTfyhYawdOXcFW/giphy.gif"
         code_link: "https://github.com/github-labs/copilotx-todo-app"
+      - name: grok
+        created_at: "2025-03-02"
+        gif_url: "https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif"
+        code_link: "https://github.com/google-deepmind/gemini-weather-app"
 
   - shortname: weather-app
     full_prompt: "Create a weather application that shows current conditions and 5-day forecast for a user-specified location. Include temperature, humidity, wind speed, and visual weather indicators."
     description: "A weather forecast app with 5-day predictions and comprehensive data display"
     agents:
       - name: v0
-        created_at: "2025-03-01"
-        gif_url: "https://media0.giphy.com/media/l0HlGRDhPTqVEvhCw/giphy.gif"
-        code_link: "https://github.com/anthropic-labs/claude-weather-app"
+        created_at: "2025-02-15"
+        gif_url: "https://media3.giphy.com/media/QpVUMRUJGokfqXyfa1/giphy.gif"
+        code_link: "https://github.com/anthropic-labs/claude-todo-app"
       - name: replit
-        created_at: "2025-03-01"
-        gif_url: "https://media1.giphy.com/media/l2SpYDOZm4OK9WV3y/giphy.gif"
-        code_link: "https://github.com/openai-examples/gpt4-weather-app"
+        created_at: "2025-02-15"
+        gif_url: "https://media0.giphy.com/media/l0HlGRDhPTqVEvhCw/giphy.gif"
+        code_link: "https://github.com/openai-examples/gpt4-todo-app"
+      - name: lovable
+        created_at: "2025-02-16"
+        gif_url: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemgycHJkY283YTQyZ2l5aGR5MGY4MGQ0YjUwZncyOGg3cDRvdm44NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYt5jPR6QX5pnqM/giphy.gif"
+        code_link: "https://github.com/google-deepmind/gemini-todo-app"
+      - name: bolt
+        created_at: "2025-02-15"
+        gif_url: "https://media2.giphy.com/media/3o7aCTfyhYawdOXcFW/giphy.gif"
+        code_link: "https://github.com/github-labs/copilotx-todo-app"
       - name: grok
         created_at: "2025-03-02"
         gif_url: "https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif"
@@ -42,31 +54,48 @@ prompts:
     description: "A fitness tracker with workout logging, progress charts, and goal setting features"
     agents:
       - name: v0
-        created_at: "2025-03-10"
-        gif_url: "https://media2.giphy.com/media/3o7TKSha51ATTx9TSU/giphy.gif"
-        code_link: "https://github.com/anthropic-labs/claude-fitness-tracker"
+        created_at: "2025-02-15"
+        gif_url: "https://media3.giphy.com/media/QpVUMRUJGokfqXyfa1/giphy.gif"
+        code_link: "https://github.com/anthropic-labs/claude-todo-app"
       - name: replit
-        created_at: "2025-03-10"
-        gif_url: "https://media1.giphy.com/media/3ohhwfsweRaKsZXJBu/giphy.gif"
-        code_link: "https://github.com/openai-examples/gpt4-fitness-tracker"
+        created_at: "2025-02-15"
+        gif_url: "https://media0.giphy.com/media/l0HlGRDhPTqVEvhCw/giphy.gif"
+        code_link: "https://github.com/openai-examples/gpt4-todo-app"
+      - name: lovable
+        created_at: "2025-02-16"
+        gif_url: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemgycHJkY283YTQyZ2l5aGR5MGY4MGQ0YjUwZncyOGg3cDRvdm44NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYt5jPR6QX5pnqM/giphy.gif"
+        code_link: "https://github.com/google-deepmind/gemini-todo-app"
       - name: bolt
-        created_at: "2025-03-11"
-        gif_url: "https://media4.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif"
-        code_link: "https://github.com/github-labs/copilotx-fitness-tracker"
+        created_at: "2025-02-15"
+        gif_url: "https://media2.giphy.com/media/3o7aCTfyhYawdOXcFW/giphy.gif"
+        code_link: "https://github.com/github-labs/copilotx-todo-app"
+      - name: grok
+        created_at: "2025-03-02"
+        gif_url: "https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif"
+        code_link: "https://github.com/google-deepmind/gemini-weather-app"
 
   - shortname: recipe-finder
     full_prompt: "Create a recipe finder application that lets users search by ingredients they have on hand. Include filters for dietary restrictions, cooking time, and cuisine type. Display recipe cards with time, difficulty, and ratings."
     description: "A recipe search engine that finds dishes based on available ingredients and preferences"
     agents:
       - name: v0
-        created_at: "2025-03-20"
-        gif_url: "https://media2.giphy.com/media/diAhf8bYer76E/giphy.gif"
-        code_link: "https://github.com/openai-examples/gpt4-recipe-finder"
+        created_at: "2025-02-15"
+        gif_url: "https://media3.giphy.com/media/QpVUMRUJGokfqXyfa1/giphy.gif"
+        code_link: "https://github.com/anthropic-labs/claude-todo-app"
+      - name: replit
+        created_at: "2025-02-15"
+        gif_url: "https://media0.giphy.com/media/l0HlGRDhPTqVEvhCw/giphy.gif"
+        code_link: "https://github.com/openai-examples/gpt4-todo-app"
       - name: lovable
-        created_at: "2025-03-21"
-        gif_url: "https://media4.giphy.com/media/ehU9JwqjdJtJufFQl1/giphy.gif"
-        code_link: "https://github.com/google-deepmind/gemini-recipe-finder"
+        created_at: "2025-02-16"
+        gif_url: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemgycHJkY283YTQyZ2l5aGR5MGY4MGQ0YjUwZncyOGg3cDRvdm44NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYt5jPR6QX5pnqM/giphy.gif"
+        code_link: "https://github.com/google-deepmind/gemini-todo-app"
+      - name: bolt
+        created_at: "2025-02-15"
+        gif_url: "https://media2.giphy.com/media/3o7aCTfyhYawdOXcFW/giphy.gif"
+        code_link: "https://github.com/github-labs/copilotx-todo-app"
       - name: grok
-        created_at: "2025-03-20"
-        gif_url: "https://media3.giphy.com/media/26BRvIYDh7UdTpCRa/giphy.gif"
-        code_link: "https://github.com/github-labs/copilotx-recipe-finder"
+        created_at: "2025-03-02"
+        gif_url: "https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif"
+        code_link: "https://github.com/google-deepmind/gemini-weather-app"
+        
