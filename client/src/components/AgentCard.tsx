@@ -144,15 +144,15 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
         
         {/* Action buttons that appear on hover in the bottom-right corner */}
         <div 
-          className={`absolute bottom-4 right-4 flex space-x-3 z-30 transition-all duration-300 ${
-            isHovering ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+          className={`absolute bottom-4 right-4 flex space-x-3 z-30 transition-opacity duration-300 ${
+            isHovering ? 'opacity-100' : 'opacity-0'
           }`}
         >
           <a 
             href={agent.codeLink} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200"
+            className="w-8 h-8 rounded-full flex items-center justify-center"
             aria-label="View code by this agent"
           >
             <svg 
@@ -173,7 +173,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
           </a>
           
           <button 
-            className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200"
+            className="w-8 h-8 rounded-full flex items-center justify-center"
             onClick={handleShare}
             aria-label="Share this agent's solution"
           >
