@@ -3,33 +3,12 @@ import Footer from "@/components/Footer";
 import PromptCarousel from "@/components/PromptCarousel";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useToast } from "@/hooks/use-toast";
-import { useEffect } from "react";
 import { Prompt } from "@/lib/types";
 
 export default function Home() {
-  const { toast } = useToast();
   const { data: prompts, isLoading } = useQuery<Prompt[]>({
     queryKey: ['/api/prompts'],
   });
-
-  useEffect(() => {
-    // Handle URL sharing logic
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const sharedItemId = hashParams.get("item");
-    
-    if (sharedItemId) {
-      setTimeout(() => {
-        toast({
-          title: "Viewing shared item",
-          description: `You're viewing a shared item with ID: ${sharedItemId}`,
-        });
-        
-        // Clear the hash to avoid showing the toast on refresh
-        window.history.replaceState(null, "", window.location.pathname);
-      }, 1000);
-    }
-  }, [toast]);
 
   return (
     <div className="flex flex-col min-h-screen bg-background font-sans text-foreground">
@@ -44,7 +23,7 @@ export default function Home() {
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-7">
               Compare how different AI agents interpret and build applications from identical prompts. 
-              Browse through examples, get inspired, and share your favorites.
+              Browse through examples and get inspired by different approaches.
             </p>
           </section>
           

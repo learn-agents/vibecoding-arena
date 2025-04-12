@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { Agent } from "@/lib/types";
-import { useToast } from "@/hooks/use-toast";
 
 interface AgentCardProps {
   agent: Agent;
@@ -8,12 +7,10 @@ interface AgentCardProps {
 }
 
 export default function AgentCard({ agent, promptId }: AgentCardProps) {
-  const { toast } = useToast();
   const [isHovering, setIsHovering] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isVideo, setIsVideo] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const shareId = `${promptId}-${agent.id}`;
   
   // References for media elements
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -99,26 +96,6 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       };
     }
   }, [agent.gifUrl, isVideo]);
-
-  const handleShare = () => {
-    const url = `${window.location.origin}/#item=${shareId}`;
-    
-    navigator.clipboard.writeText(url)
-      .then(() => {
-        toast({
-          title: "Link copied!",
-          description: "The link has been copied to your clipboard.",
-        });
-      })
-      .catch((err) => {
-        console.error("Could not copy text: ", err);
-        toast({
-          title: "Failed to copy link",
-          description: "Please try again later.",
-          variant: "destructive",
-        });
-      });
-  };
 
   // Handle video load error (fallback to GIF if possible)
   const handleVideoError = () => {
@@ -210,7 +187,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
           ></div>
         )}
         
-        {/* Action buttons that only appear on hover in the bottom-right corner */}
+        {/* Code link button that appears on hover in the bottom-right corner */}
         {isHovering && (
           <div className="absolute bottom-2 right-2 flex gap-0 z-30 transition-all duration-300">
             <a 
@@ -228,30 +205,6 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
                 <path d="M10.8101 1.96222L0.726954 12.0453L1.66171 12.9801L11.7448 2.89698L11.9344 9.4447L13.208 9.07311L13.0134 2.35278C12.9877 1.46249 12.2434 0.718185 11.3531 0.692412L4.80762 0.502924L4.43487 1.77539L10.8101 1.96222Z" fill="white" stroke="white" strokeWidth="0.542084"></path>
               </svg>
             </a>
-            
-            <button 
-              className="w-8 h-8 rounded-full flex items-center justify-center ml-[-4px]"
-              onClick={handleShare}
-              aria-label="Share this agent's solution"
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="18" 
-                height="18" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="white" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              >
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-              </svg>
-            </button>
           </div>
         )}
       </div>
