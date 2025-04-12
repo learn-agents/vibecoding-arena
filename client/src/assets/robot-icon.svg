@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Robot Head -->
+  <g fill="#b8c6c8">
+    <path d="M100,40 C65,40 40,65 40,100 L40,120 C40,142 58,160 80,160 L120,160 C142,160 160,142 160,120 L160,100 C160,65 135,40 100,40 Z" stroke="#000" stroke-width="6"/>
+    
+    <!-- Antenna -->
+    <circle cx="100" cy="30" r="10" stroke="#000" stroke-width="5"/>
+    <rect x="95" y="30" width="10" height="20" stroke="#000" stroke-width="5"/>
+    
+    <!-- Ears -->
+    <circle cx="40" cy="100" r="10" stroke="#000" stroke-width="5"/>
+    <circle cx="160" cy="100" r="10" stroke="#000" stroke-width="5"/>
+    
+    <!-- Body/Chest -->
+    <rect x="65" y="160" width="70" height="30" stroke="#000" stroke-width="5"/>
+    <circle cx="85" cy="175" r="7" fill="#000"/>
+    <circle cx="115" cy="175" r="7" fill="#000"/>
+    
+    <!-- Arms -->
+    <rect x="35" y="160" width="15" height="30" rx="5" stroke="#000" stroke-width="4"/>
+    <rect x="150" y="160" width="15" height="30" rx="5" stroke="#000" stroke-width="4"/>
+  </g>
+  
+  <!-- Sunglasses -->
+  <path d="M50,85 L90,85 C95,85 95,95 90,95 L50,95 C45,95 45,85 50,85 Z" fill="#000"/>
+  <path d="M110,85 L150,85 C155,85 155,95 150,95 L110,95 C105,95 105,85 110,85 Z" fill="#000"/>
+  <rect x="90" y="85" width="20" height="5" fill="#000"/>
+  <line x1="65" y1="85" x2="75" y2="95" stroke="#b8c6c8" stroke-width="4"/>
+  <line x1="135" y1="85" x2="125" y2="95" stroke="#b8c6c8" stroke-width="4"/>
+  
+  <!-- Smile -->
+  <path d="M85,120 C85,125 95,130 100,130 C105,130 115,125 115,120" fill="none" stroke="#000" stroke-width="4" stroke-linecap="round"/>
+</svg>
