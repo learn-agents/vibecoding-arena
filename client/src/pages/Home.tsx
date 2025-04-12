@@ -62,8 +62,12 @@ export default function Home() {
               ))}
             </div>
           ) : prompts && prompts.length > 0 ? (
-            prompts.map((prompt: Prompt) => (
-              <PromptCarousel key={prompt.id} prompt={prompt} />
+            prompts.map((prompt: Prompt, index: number) => (
+              <PromptCarousel 
+                key={prompt.id} 
+                prompt={prompt} 
+                isLast={index === prompts.length - 1} 
+              />
             ))
           ) : (
             <div className="text-center p-10">

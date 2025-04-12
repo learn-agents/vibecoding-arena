@@ -3,9 +3,10 @@ import { Prompt } from "@/lib/types";
 
 interface PromptCarouselProps {
   prompt: Prompt;
+  isLast?: boolean;
 }
 
-export default function PromptCarousel({ prompt }: PromptCarouselProps) {
+export default function PromptCarousel({ prompt, isLast = false }: PromptCarouselProps) {
   return (
     <section className="mb-16">
       <div className="flex flex-col md:flex-row gap-8">
@@ -24,7 +25,7 @@ export default function PromptCarousel({ prompt }: PromptCarouselProps) {
           </div>
         </div>
       </div>
-      <div className="mt-16 border-b border-border"></div>
+      {!isLast && <div className="mt-16 border-b border-border"></div>}
     </section>
   );
 }
