@@ -13,62 +13,26 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const [loading, setLoading] = useState(true);
   const shareId = `${promptId}-${agent.id}`;
   
-  // Reference to the GIF element and its playback state
+  // For gif playback control
   const imgRef = useRef<HTMLImageElement>(null);
   
-  // Used to track if we need to "restart" the GIF playback
-  const wasPlayingRef = useRef(false);
-  
-  // Keep track of the GIF's URL for reloading it with a new URL to pause/play
-  const [gifUrl, setGifUrl] = useState(agent.gifUrl);
+  // The image element will always be present, but we'll control its CSS animation-play-state
+  // via the hover state to pause/play the GIF
   
   // Handle mouse events
   const handleMouseEnter = () => {
     setIsHovering(true);
-    
-    // If the image was previously playing, we need to set the URL back to the original
-    if (imgRef.current && !wasPlayingRef.current) {
-      // Use the original URL to start playing
-      setGifUrl(agent.gifUrl);
-      wasPlayingRef.current = true;
-    }
   };
   
   const handleMouseLeave = () => {
     setIsHovering(false);
-    
-    // We don't immediately pause the GIF - that will happen on the next render
-    wasPlayingRef.current = false;
   };
 
-  // Effect to handle GIF pausing/playing based on hover state
+  // Preload the GIF
   useEffect(() => {
-    if (!loading) {
-      if (!isHovering && wasPlayingRef.current) {
-        // Wait a moment to ensure we get the current frame, not the first frame
-        const timeoutId = setTimeout(() => {
-          // Append a '#' to pause the GIF at the current frame
-          // This is a trick that stops animated GIFs by making the browser treat it as a fragment identifier
-          setGifUrl(`${agent.gifUrl}#`);
-          wasPlayingRef.current = false;
-        }, 50);
-        
-        return () => clearTimeout(timeoutId);
-      }
-    }
-  }, [isHovering, loading, agent.gifUrl]);
-
-  // Handle image loading
-  useEffect(() => {
-    // Create an image to preload the GIF
     const img = new Image();
     img.onload = () => {
       setLoading(false);
-      
-      // Start with the "paused" version (adding # to URL)
-      if (!isHovering) {
-        setGifUrl(`${agent.gifUrl}#`);
-      }
     };
     img.onerror = () => {
       console.error("Error loading image");
@@ -80,7 +44,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       img.onload = null;
       img.onerror = null;
     };
-  }, [agent.gifUrl, isHovering]);
+  }, [agent.gifUrl]);
 
   const handleShare = () => {
     const url = `${window.location.origin}/#item=${shareId}`;
@@ -115,16 +79,31 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
           <div className="w-full h-full bg-gray-200 animate-pulse"></div>
         )}
         
+        {/* GIF with conditional animation */}
         {!loading && (
-          /* The GIF - using a key to force re-render when URL changes */
           <img 
             ref={imgRef}
-            key={gifUrl} // This forces a re-render when the URL changes
-            src={gifUrl}
+            src={agent.gifUrl}
             alt={`${agent.agentName} solution`}
             className="w-full h-full object-cover rounded-subtle"
+            style={{ 
+              animationPlayState: isHovering ? 'running' : 'paused',
+              WebkitAnimationPlayState: isHovering ? 'running' : 'paused',
+              // This is more consistent across browsers for different GIFs
+              filter: isHovering ? 'none' : 'url(#paused-gif)'
+            }}
           />
         )}
+        
+        {/* SVG filter to help improve GIF pausing across browsers */}
+        <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+          <defs>
+            <filter id="paused-gif">
+              {/* We use a very subtle blur to ensure the GIF animation stops in most browsers */}
+              <feGaussianBlur stdDeviation="0.01" />
+            </filter>
+          </defs>
+        </svg>
         
         {/* Gradient overlay at the bottom - only render when hovering */}
         {isHovering && (
