@@ -6,15 +6,19 @@ interface PromptCarouselProps {
 }
 
 export default function PromptCarousel({ prompt }: PromptCarouselProps) {
-  // In the new layout, each card represents a prompt and shows only its first agent
-  const mainAgent = prompt.agents[0];
-  
   return (
-    <div className="h-full">
-      {/* We're now showing only the main agent for each prompt in the card */}
-      {mainAgent && (
-        <AgentCard key={mainAgent.id} agent={mainAgent} promptId={prompt.id} />
-      )}
-    </div>
+    <section className="mb-16">
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold mb-2">{prompt.text}</h3>
+        <p className="text-muted-foreground max-w-3xl">{prompt.description}</p>
+      </div>
+      
+      {/* Responsive Grid Layout - 3 columns max */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {prompt.agents.map((agent) => (
+          <AgentCard key={agent.id} agent={agent} promptId={prompt.id} />
+        ))}
+      </div>
+    </section>
   );
 }
