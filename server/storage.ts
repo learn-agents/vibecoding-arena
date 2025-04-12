@@ -4,6 +4,9 @@ import {
   type InsertPrompt, type InsertAgentResult 
 } from "@shared/schema";
 import { mockPrompts } from "../client/src/data/mockData";
+import { YamlStorage } from "./yamlStorage";
+import fs from 'fs';
+import path from 'path';
 
 export interface IStorage {
   getPrompts(): Promise<Prompt[]>;
@@ -81,4 +84,8 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Check if YAML file exists and use YamlStorage if it does, otherwise fallback to MemStorage
+const yamlPath = path.join(process.cwd(), 'prompts-metadata.yaml');
+export const storage = fs.existsSync(yamlPath) 
+  ? new YamlStorage() 
+  : new MemStorage();
