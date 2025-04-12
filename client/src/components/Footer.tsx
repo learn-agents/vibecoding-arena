@@ -10,21 +10,12 @@ export default function Footer() {
             </div>
             <p className="text-sm text-muted-foreground mt-1">Comparing AI coding capabilities</p>
           </div>
-          <div className="flex space-x-6">
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-              <i className="fab fa-github"></i>
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-              <i className="fas fa-envelope"></i>
-            </a>
+          <div className="text-sm text-muted-foreground">
+            <p>© {new Date().getFullYear()} All rights reserved</p>
           </div>
         </div>
         <div className="mt-8 pt-6 border-t border-border text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Vibe Coding Arena. All rights reserved.</p>
-          <p className="mt-1">This is a showcase for comparing AI coding capabilities.</p>
+          <p>This is a showcase for comparing AI coding capabilities.</p>
         </div>
       </div>
     </footer>
