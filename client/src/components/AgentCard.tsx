@@ -1,8 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Agent } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
-import { Card } from "@/components/ui/card";
-import html2canvas from "html2canvas";
 
 interface AgentCardProps {
   agent: Agent;
@@ -13,155 +11,35 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const { toast } = useToast();
   const [isHovering, setIsHovering] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [staticImageSrc, setStaticImageSrc] = useState<string | null>(null);
-  const [hasInteracted, setHasInteracted] = useState(false);
-  const [lastFrameCaptured, setLastFrameCaptured] = useState(false);
-  const animatedImgRef = useRef<HTMLImageElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const frameCaptureFailed = useRef(false);
   const shareId = `${promptId}-${agent.id}`;
   
-  // Get static image on component mount
-  // Capture current GIF frame when hover ends
-  const captureCurrentFrame = async () => {
-    if (!isHovering || !animatedImgRef.current) return;
-    
-    try {
-      // Create a container for proper rendering
-      const tempContainer = document.createElement('div');
-      tempContainer.style.position = 'absolute';
-      tempContainer.style.top = '0';
-      tempContainer.style.left = '0';
-      tempContainer.style.width = `${animatedImgRef.current.offsetWidth}px`;
-      tempContainer.style.height = `${animatedImgRef.current.offsetHeight}px`;
-      tempContainer.style.overflow = 'hidden';
-      tempContainer.style.pointerEvents = 'none';
-      tempContainer.style.opacity = '0';
-      
-      // Clone the animated image
-      const clonedImg = animatedImgRef.current.cloneNode(true) as HTMLImageElement;
-      clonedImg.style.position = 'absolute';
-      clonedImg.style.top = '0';
-      clonedImg.style.left = '0';
-      clonedImg.style.width = '100%';
-      clonedImg.style.height = '100%';
-      clonedImg.style.objectFit = 'cover';
-      
-      // Add to DOM temporarily (required for html2canvas to work)
-      tempContainer.appendChild(clonedImg);
-      document.body.appendChild(tempContainer);
-      
-      // Take the screenshot
-      const canvas = await html2canvas(tempContainer, {
-        useCORS: true,
-        backgroundColor: null,
-        scale: 1,
-        logging: false,
-        allowTaint: true, // Allow cross-origin images
-      });
-      
-      // Remove temp container
-      document.body.removeChild(tempContainer);
-      
-      // Get data URL and set as static image
-      const dataUrl = canvas.toDataURL('image/png');
-      setStaticImageSrc(dataUrl);
-      setHasInteracted(true);
-      setLastFrameCaptured(true);
-      frameCaptureFailed.current = false;
-    } catch (error) {
-      console.error('Error capturing current frame:', error);
-      frameCaptureFailed.current = true;
-    }
-  };
-
-  // Handle mouse enter/leave
+  // Handle mouse events
   const handleMouseEnter = () => {
     setIsHovering(true);
   };
   
-  const handleMouseLeave = async () => {
-    // First capture the current frame while the GIF is still visible
-    await captureCurrentFrame();
-    // Only after capture is complete, set hovering to false
+  const handleMouseLeave = () => {
     setIsHovering(false);
   };
 
-  // Get initial static image on component mount
+  // Set loading state based on image load
   useEffect(() => {
-    // Check if a previous session exists in sessionStorage
-    const sessionKey = `gif-frame-${agent.id}`;
-    const savedFrame = sessionStorage.getItem(sessionKey);
-    
-    // If we've already captured a frame during this browser session, use it
-    if (savedFrame) {
-      setStaticImageSrc(savedFrame);
-      setHasInteracted(true);
-      setLastFrameCaptured(true);
-      setLoading(false);
-      return;
-    }
-    
-    // Only continue if we haven't already interacted
-    if (hasInteracted) return;
-    
-    // Otherwise load the initial frame (first frame of GIF)
+    // Create an image to preload the GIF
     const img = new Image();
-    img.crossOrigin = "anonymous";
-    
-    // When the image loads, draw it to a canvas and capture the first frame
     img.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext('2d');
-      
-      if (ctx) {
-        // Draw the first frame of the GIF onto the canvas
-        ctx.drawImage(img, 0, 0);
-        
-        // Get the canvas data as a URL
-        try {
-          // Use the canvas data URL as our static image
-          const staticImageData = canvas.toDataURL('image/png');
-          setStaticImageSrc(staticImageData);
-        } catch (e) {
-          // If we can't get the data URL (e.g., due to CORS), fall back to the original
-          console.error("Could not get static image:", e);
-          setStaticImageSrc(agent.gifUrl);
-        }
-      }
       setLoading(false);
     };
-    
-    // Handle image load errors
     img.onerror = () => {
-      console.error("Error loading image for static capture");
-      setStaticImageSrc(agent.gifUrl);
+      console.error("Error loading image");
       setLoading(false);
     };
-    
-    // Start loading the image
     img.src = agent.gifUrl;
     
-    // Cleanup function
     return () => {
       img.onload = null;
       img.onerror = null;
     };
-  }, [agent.gifUrl, agent.id, hasInteracted]);
-  
-  // Save captured frame to session storage when it changes
-  useEffect(() => {
-    if (lastFrameCaptured && staticImageSrc) {
-      const sessionKey = `gif-frame-${agent.id}`;
-      try {
-        sessionStorage.setItem(sessionKey, staticImageSrc);
-      } catch (e) {
-        console.error('Error saving frame to session storage:', e);
-      }
-    }
-  }, [staticImageSrc, lastFrameCaptured, agent.id]);
+  }, [agent.gifUrl]);
 
   const handleShare = () => {
     const url = `${window.location.origin}/#item=${shareId}`;
@@ -183,16 +61,6 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       });
   };
 
-  const getAgentBgColor = (name: string) => {
-    const colors: Record<string, string> = {
-      v0: "bg-primary",
-      Replit: "bg-[#F26207]",
-      Lovable: "bg-[#FF3366]",
-      Bolt: "bg-[#3388FF]",
-    };
-    return colors[name] || "bg-primary";
-  };
-
   return (
     <div 
       className="group relative flex flex-col overflow-visible bg-transparent transition-all duration-300 h-full"
@@ -200,31 +68,18 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       onMouseLeave={handleMouseLeave}
     >
       {/* Card image container */}
-      <div ref={containerRef} className="relative flex-none aspect-video rounded-subtle overflow-hidden">
+      <div className="relative flex-none aspect-video rounded-subtle overflow-hidden">
         {/* Loading placeholder */}
         {loading && (
           <div className="w-full h-full bg-gray-200 animate-pulse"></div>
         )}
         
-        {/* Static image (shown when not hovering) */}
-        {!loading && staticImageSrc && (
+        {/* GIF image - always displayed but only animated on hover */}
+        {!loading && (
           <img 
-            src={staticImageSrc}
-            alt={`${agent.agentName} result (static)`}
-            className={`w-full h-full object-cover absolute inset-0 transition-opacity duration-300 rounded-subtle ${
-              isHovering ? 'opacity-0' : 'opacity-100'
-            }`}
-          />
-        )}
-        
-        {/* Animated GIF (only rendered when hovering) */}
-        {!loading && isHovering && (
-          <img 
-            ref={animatedImgRef}
-            key={`animated-${agent.id}-${Date.now()}`} // Force new instance on each hover
             src={agent.gifUrl}
-            alt={`${agent.agentName} result (animated)`}
-            className="w-full h-full object-cover absolute inset-0 transition-opacity duration-300 opacity-100 rounded-subtle animated-gif"
+            alt={`${agent.agentName} solution`}
+            className={`w-full h-full object-cover rounded-subtle ${isHovering ? '' : 'gif-paused'}`}
           />
         )}
         
