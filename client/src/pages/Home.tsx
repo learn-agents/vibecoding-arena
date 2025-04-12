@@ -7,6 +7,18 @@ import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
 import { Prompt } from "@/lib/types";
 
+// Project categories for the new layout
+const PROJECT_CATEGORIES = [
+  {
+    id: "portfolio",
+    title: "Simple portfolio site with CRUD",
+  },
+  {
+    id: "cat-food",
+    title: "Landing page for cat food",
+  }
+];
+
 export default function Home() {
   const { toast } = useToast();
   const { data: prompts, isLoading } = useQuery<Prompt[]>({
@@ -16,6 +28,29 @@ export default function Home() {
   // State for search/filter functionality
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredPrompts, setFilteredPrompts] = useState<Prompt[]>([]);
+  const [groupedPrompts, setGroupedPrompts] = useState<Record<string, Prompt[]>>({});
+  
+  // Group prompts by category when they load
+  useEffect(() => {
+    if (!prompts) return;
+    
+    // For simplicity, we'll assign each prompt to a category
+    // In a real implementation, prompts would have a category field
+    const grouped: Record<string, Prompt[]> = {};
+    
+    // Assign first half of prompts to first category, second half to second category
+    prompts.forEach((prompt, index) => {
+      const categoryId = index < prompts.length / 2 ? PROJECT_CATEGORIES[0].id : PROJECT_CATEGORIES[1].id;
+      
+      if (!grouped[categoryId]) {
+        grouped[categoryId] = [];
+      }
+      
+      grouped[categoryId].push(prompt);
+    });
+    
+    setGroupedPrompts(grouped);
+  }, [prompts]);
   
   // Update filtered prompts when the search term or prompts change
   useEffect(() => {
@@ -60,21 +95,38 @@ export default function Home() {
       
       <main className="py-8 px-4 md:px-8 lg:px-16 flex-grow">
         <div className="max-w-7xl mx-auto">
-          {/* Introduction */}
-          <section className="mb-16 text-center">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-4">
-              AI Coding Agents Showcase
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-              Compare how different AI agents interpret and build applications from identical prompts. 
-              Browse through examples, get inspired, and share your favorites.
-            </p>
-            
-            {/* Search input */}
-            <div className="relative max-w-md mx-auto mb-8">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          {isLoading ? (
+            // Skeleton loading state for the new category-based layout
+            <div className="space-y-16">
+              {PROJECT_CATEGORIES.map((category) => (
+                <div key={category.id} className="space-y-4">
+                  <h2 className="text-2xl font-medium">{category.title}</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {Array(5).fill(0).map((_, i) => (
+                      <div key={i} className="flex flex-col overflow-hidden rounded-lg border border-border">
+                        <Skeleton className="aspect-video w-full" />
+                        <div className="p-4 bg-background">
+                          <Skeleton className="h-5 w-24" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : searchTerm.trim() ? (
+            // Search results view - unchanged
+            filteredPrompts.length > 0 ? (
+              <div>
+                <h2 className="text-xl font-medium mb-4">Search Results</h2>
+                {filteredPrompts.map((prompt: Prompt) => (
+                  <PromptCarousel key={prompt.id} prompt={prompt} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center p-10">
                 <svg 
-                  className="w-5 h-5 text-muted-foreground" 
+                  className="w-12 h-12 mx-auto text-muted-foreground" 
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24" 
@@ -83,82 +135,31 @@ export default function Home() {
                   <path 
                     strokeLinecap="round" 
                     strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+                    strokeWidth={1.5} 
+                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
                   />
                 </svg>
+                <h3 className="mt-4 text-lg font-medium">No results found</h3>
+                <p className="mt-2 text-muted-foreground">
+                  We couldn't find any prompts or agents matching your search. Try different keywords.
+                </p>
               </div>
-              <input
-                type="search"
-                className="block w-full pl-10 pr-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-background shadow-sm"
-                placeholder="Search prompts or agents..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            
-            <div className="flex items-center justify-center text-sm text-muted-foreground">
-              <svg 
-                className="w-5 h-5 mr-1" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" 
-                />
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" 
-                />
-              </svg>
-              <span>Hover over preview cards to play animations</span>
-            </div>
-          </section>
-
-          {/* Grid Layout */}
-          {isLoading ? (
-            // Skeleton loading state
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {Array(8).fill(0).map((_, i) => (
-                <div key={i} className="flex flex-col overflow-hidden rounded-lg">
-                  <Skeleton className="aspect-video w-full" />
-                  <div className="p-4 bg-background">
-                    <Skeleton className="h-5 w-24" />
+            )
+          ) : (
+            // New category-based layout
+            <div className="space-y-16">
+              {PROJECT_CATEGORIES.map((category) => (
+                <div key={category.id} className="space-y-4">
+                  <h2 className="text-2xl font-medium">{category.title}</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {groupedPrompts[category.id]?.map((prompt) => (
+                      <div key={prompt.id} className="flex flex-col overflow-hidden rounded-lg border border-border">
+                        <PromptCarousel prompt={prompt} />
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
-            </div>
-          ) : filteredPrompts.length > 0 ? (
-            filteredPrompts.map((prompt: Prompt) => (
-              <PromptCarousel key={prompt.id} prompt={prompt} />
-            ))
-          ) : (
-            <div className="text-center p-10">
-              <svg 
-                className="w-12 h-12 mx-auto text-muted-foreground" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={1.5} 
-                  d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
-                />
-              </svg>
-              <h3 className="mt-4 text-lg font-medium">No results found</h3>
-              <p className="mt-2 text-muted-foreground">
-                We couldn't find any prompts or agents matching your search. Try different keywords.
-              </p>
             </div>
           )}
         </div>

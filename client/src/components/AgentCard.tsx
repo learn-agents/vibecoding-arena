@@ -145,12 +145,12 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
 
   return (
     <div 
-      className="group relative flex flex-col overflow-visible bg-transparent transition-all duration-300 h-full"
+      className="group relative flex flex-col overflow-hidden bg-transparent transition-all duration-300 h-full border border-border rounded-lg"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {/* Card image container */}
-      <div className="relative flex-none aspect-video rounded-subtle overflow-hidden">
+      <div className="relative flex-grow aspect-video overflow-hidden">
         {/* Loading placeholder */}
         {loading && (
           <div className="w-full h-full bg-gray-200 animate-pulse"></div>
@@ -164,7 +164,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
               <video 
                 ref={videoRef}
                 src={agent.gifUrl}
-                className="w-full h-full object-cover rounded-subtle"
+                className="w-full h-full object-cover"
                 loop
                 playsInline
                 muted
@@ -181,7 +181,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
                 ref={imgRef}
                 src={agent.gifUrl}
                 alt={`${agent.agentName} solution`}
-                className="w-full h-full object-cover rounded-subtle"
+                className="w-full h-full object-cover"
                 style={{ 
                   animationPlayState: isHovering ? 'running' : 'paused',
                   WebkitAnimationPlayState: isHovering ? 'running' : 'paused',
@@ -202,63 +202,11 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
             </defs>
           </svg>
         )}
-        
-        {/* Gradient overlay at the bottom - only render when hovering */}
-        {isHovering && (
-          <div 
-            className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-300 z-10 opacity-100"
-          ></div>
-        )}
-        
-        {/* Action buttons that only appear on hover in the bottom-right corner */}
-        {isHovering && (
-          <div className="absolute bottom-2 right-2 flex space-x-0.5 z-30 transition-all duration-300">
-            <a 
-              href={agent.codeLink} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="w-8 h-8 rounded-full flex items-center justify-center"
-              aria-label="View code by this agent"
-            >
-              <svg 
-                width="14" 
-                height="14" 
-                viewBox="0 0 14 14"
-              >
-                <path d="M10.8101 1.96222L0.726954 12.0453L1.66171 12.9801L11.7448 2.89698L11.9344 9.4447L13.208 9.07311L13.0134 2.35278C12.9877 1.46249 12.2434 0.718185 11.3531 0.692412L4.80762 0.502924L4.43487 1.77539L10.8101 1.96222Z" fill="white" stroke="white" strokeWidth="0.542084"></path>
-              </svg>
-            </a>
-            
-            <button 
-              className="w-8 h-8 rounded-full flex items-center justify-center"
-              onClick={handleShare}
-              aria-label="Share this agent's solution"
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="18" 
-                height="18" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="white" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              >
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-              </svg>
-            </button>
-          </div>
-        )}
       </div>
       
-      {/* Agent name under the card */}
-      <div className="p-3 pt-2">
-        <div className="text-sm font-medium text-foreground/90">
+      {/* Agent name centered at the bottom of the card, matching the mockup */}
+      <div className="p-3 flex items-center justify-center bg-background">
+        <div className="text-base font-medium text-center">
           {agent.agentName}
         </div>
       </div>
