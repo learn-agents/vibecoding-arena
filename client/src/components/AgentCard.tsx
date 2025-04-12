@@ -149,8 +149,8 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Card image container */}
-      <div className="relative flex-none aspect-video rounded-subtle overflow-hidden">
+      {/* Card image container - smaller size */}
+      <div className="relative flex-none aspect-video rounded-subtle overflow-hidden max-w-[200px]">
         {/* Loading placeholder */}
         {loading && (
           <div className="w-full h-full bg-gray-200 animate-pulse"></div>
