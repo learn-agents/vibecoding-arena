@@ -1,7 +1,7 @@
 prompts:
   - shortname: todo-app
-    full_prompt: "Build a minimalist to-do application using React. Include features for adding, completing, and deleting tasks. Implement a clean interface with a light/dark mode toggle."
-    description: "A minimalist to-do app with task management and theme switching"
+    full_prompt: "To-do App with Dark Mode"
+    description: "Minimal to-do with task management and theme toggle"
     agents:
       - name: v0
         created_at: "2025-02-15"
@@ -25,8 +25,8 @@ prompts:
         code_link: "https://github.com/google-deepmind/gemini-weather-app"
 
   - shortname: weather-app
-    full_prompt: "Create a weather application that shows current conditions and 5-day forecast for a user-specified location. Include temperature, humidity, wind speed, and visual weather indicators."
-    description: "A weather forecast app with 5-day predictions and comprehensive data display"
+    full_prompt: "Weather Dashboard"
+    description: "5-day forecast with location search and visual indicators"
     agents:
       - name: v0
         created_at: "2025-02-15"

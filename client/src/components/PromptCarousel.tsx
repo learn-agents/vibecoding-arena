@@ -13,8 +13,8 @@ export default function PromptCarousel({ prompt }: PromptCarouselProps) {
         <p className="text-muted-foreground max-w-3xl">{prompt.description}</p>
       </div>
       
-      {/* Responsive Grid Layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {/* Responsive Grid Layout - 3 columns max */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {prompt.agents.map((agent) => (
           <AgentCard key={agent.id} agent={agent} promptId={prompt.id} />
         ))}
