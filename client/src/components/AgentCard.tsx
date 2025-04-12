@@ -212,7 +212,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
         
         {/* Action buttons that only appear on hover in the bottom-right corner */}
         {isHovering && (
-          <div className="absolute bottom-2 right-2 flex space-x-2 z-30 transition-all duration-300">
+          <div className="absolute bottom-2 right-2 flex space-x-0.5 z-30 transition-all duration-300">
             <a 
               href={agent.codeLink} 
               target="_blank" 
@@ -225,7 +225,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
                 height="14" 
                 viewBox="0 0 14 14"
               >
-                <path d="M10.8101 1.96222L0.726954 12.0453L1.66171 12.9801L11.7448 2.89698L11.9344 9.4447L13.208 9.07311L13.0134 2.35278C12.9877 1.46249 12.2434 0.718185 11.3531 0.692412L4.80762 0.502924L4.43487 1.77539L10.8101 1.96222Z" fill="white" stroke="white" stroke-width="0.542084"></path>
+                <path d="M10.8101 1.96222L0.726954 12.0453L1.66171 12.9801L11.7448 2.89698L11.9344 9.4447L13.208 9.07311L13.0134 2.35278C12.9877 1.46249 12.2434 0.718185 11.3531 0.692412L4.80762 0.502924L4.43487 1.77539L10.8101 1.96222Z" fill="white" stroke="white" strokeWidth="0.542084"></path>
               </svg>
             </a>
             
