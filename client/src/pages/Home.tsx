@@ -41,10 +41,16 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-4">
               Compare AI Coding Agents Side-by-Side
             </h2>
-            <p className="text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-muted-foreground max-w-3xl mx-auto mb-3">
               See how different AI agents interpret and build applications from identical prompts. 
               Browse through examples, get inspired, and share your favorites.
             </p>
+            <div className="flex items-center justify-center text-sm text-muted-foreground">
+              <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+              </svg>
+              <span>Scroll horizontally with mouse wheel or arrow keys to see more</span>
+            </div>
           </section>
 
           {/* Carousels */}
