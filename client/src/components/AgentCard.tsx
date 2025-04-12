@@ -15,42 +15,63 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const [loading, setLoading] = useState(true);
   const [staticImageSrc, setStaticImageSrc] = useState<string | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [lastFrameCaptured, setLastFrameCaptured] = useState(false);
   const animatedImgRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const frameCaptureFailed = useRef(false);
   const shareId = `${promptId}-${agent.id}`;
   
   // Get static image on component mount
   // Capture current GIF frame when hover ends
   const captureCurrentFrame = async () => {
-    if (!containerRef.current || !isHovering) return;
+    if (!isHovering || !animatedImgRef.current) return;
     
     try {
-      // Only capture the animated GIF element, not the entire container
-      // This prevents capturing the gradient overlay
-      if (!animatedImgRef.current) return;
+      // Create a container for proper rendering
+      const tempContainer = document.createElement('div');
+      tempContainer.style.position = 'absolute';
+      tempContainer.style.top = '0';
+      tempContainer.style.left = '0';
+      tempContainer.style.width = `${animatedImgRef.current.offsetWidth}px`;
+      tempContainer.style.height = `${animatedImgRef.current.offsetHeight}px`;
+      tempContainer.style.overflow = 'hidden';
+      tempContainer.style.pointerEvents = 'none';
+      tempContainer.style.opacity = '0';
       
-      // Use html2canvas to take a snapshot of just the animated image
-      const canvas = await html2canvas(animatedImgRef.current, {
+      // Clone the animated image
+      const clonedImg = animatedImgRef.current.cloneNode(true) as HTMLImageElement;
+      clonedImg.style.position = 'absolute';
+      clonedImg.style.top = '0';
+      clonedImg.style.left = '0';
+      clonedImg.style.width = '100%';
+      clonedImg.style.height = '100%';
+      clonedImg.style.objectFit = 'cover';
+      
+      // Add to DOM temporarily (required for html2canvas to work)
+      tempContainer.appendChild(clonedImg);
+      document.body.appendChild(tempContainer);
+      
+      // Take the screenshot
+      const canvas = await html2canvas(tempContainer, {
         useCORS: true,
         backgroundColor: null,
         scale: 1,
-        logging: false, // Disable logging to prevent console spam
-        onclone: (clonedDoc) => {
-          // Make sure the cloned element is visible and sized correctly
-          const clonedImg = clonedDoc.querySelector('img[alt*="animated"]') as HTMLImageElement;
-          if (clonedImg) {
-            clonedImg.style.opacity = '1';
-            clonedImg.style.position = 'static';
-          }
-        }
+        logging: false,
+        allowTaint: true, // Allow cross-origin images
       });
       
-      // Convert canvas to data URL and set as static image
+      // Remove temp container
+      document.body.removeChild(tempContainer);
+      
+      // Get data URL and set as static image
       const dataUrl = canvas.toDataURL('image/png');
       setStaticImageSrc(dataUrl);
       setHasInteracted(true);
+      setLastFrameCaptured(true);
+      frameCaptureFailed.current = false;
     } catch (error) {
       console.error('Error capturing current frame:', error);
+      frameCaptureFailed.current = true;
     }
   };
 
@@ -66,11 +87,25 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
     setIsHovering(false);
   };
 
-  // Get initial static image on component mount (first frame)
+  // Get initial static image on component mount
   useEffect(() => {
-    // Only load the default first frame if we haven't interacted yet
+    // Check if a previous session exists in sessionStorage
+    const sessionKey = `gif-frame-${agent.id}`;
+    const savedFrame = sessionStorage.getItem(sessionKey);
+    
+    // If we've already captured a frame during this browser session, use it
+    if (savedFrame) {
+      setStaticImageSrc(savedFrame);
+      setHasInteracted(true);
+      setLastFrameCaptured(true);
+      setLoading(false);
+      return;
+    }
+    
+    // Only continue if we haven't already interacted
     if (hasInteracted) return;
     
+    // Otherwise load the initial frame (first frame of GIF)
     const img = new Image();
     img.crossOrigin = "anonymous";
     
@@ -114,7 +149,19 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       img.onload = null;
       img.onerror = null;
     };
-  }, [agent.gifUrl, hasInteracted]);
+  }, [agent.gifUrl, agent.id, hasInteracted]);
+  
+  // Save captured frame to session storage when it changes
+  useEffect(() => {
+    if (lastFrameCaptured && staticImageSrc) {
+      const sessionKey = `gif-frame-${agent.id}`;
+      try {
+        sessionStorage.setItem(sessionKey, staticImageSrc);
+      } catch (e) {
+        console.error('Error saving frame to session storage:', e);
+      }
+    }
+  }, [staticImageSrc, lastFrameCaptured, agent.id]);
 
   const handleShare = () => {
     const url = `${window.location.origin}/#item=${shareId}`;
@@ -177,7 +224,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
             key={`animated-${agent.id}-${Date.now()}`} // Force new instance on each hover
             src={agent.gifUrl}
             alt={`${agent.agentName} result (animated)`}
-            className="w-full h-full object-cover absolute inset-0 transition-opacity duration-300 opacity-100 rounded-subtle"
+            className="w-full h-full object-cover absolute inset-0 transition-opacity duration-300 opacity-100 rounded-subtle animated-gif"
           />
         )}
         
