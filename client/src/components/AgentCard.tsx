@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Agent } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
@@ -11,25 +11,65 @@ interface AgentCardProps {
 export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const { toast } = useToast();
   const [isHovering, setIsHovering] = useState(false);
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [staticImageSrc, setStaticImageSrc] = useState<string | null>(null);
   const shareId = `${promptId}-${agent.id}`;
   
-  // Reference to the img element
-  const imgRef = useRef<HTMLImageElement>(null);
-  
-  // Load and unload GIF based on hover state
+  // Get static image on component mount
   useEffect(() => {
-    const img = imgRef.current;
-    if (!img) return;
+    // For this example, we'll create a static first frame by:
+    // 1. Creating a canvas element
+    // 2. Loading the GIF but not appending it to the DOM
+    // 3. Drawing the first frame to the canvas
+    // 4. Getting the canvas data URL as the static image
     
-    if (isHovering) {
-      // Set source to load GIF when hovering
-      img.src = agent.gifUrl;
-    } else {
-      // Remove source to stop GIF when not hovering
-      img.src = "";
-    }
-  }, [isHovering, agent.gifUrl]);
+    // This is a simplified approach, in a real-world application,
+    // you would typically have the backend generate a static thumbnail
+    
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    
+    // When the image loads, draw it to a canvas and capture the first frame
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      
+      if (ctx) {
+        // Draw the first frame of the GIF onto the canvas
+        ctx.drawImage(img, 0, 0);
+        
+        // Get the canvas data as a URL
+        try {
+          // Use the canvas data URL as our static image
+          const staticImageData = canvas.toDataURL('image/png');
+          setStaticImageSrc(staticImageData);
+        } catch (e) {
+          // If we can't get the data URL (e.g., due to CORS), fall back to the original
+          console.error("Could not get static image:", e);
+          setStaticImageSrc(agent.gifUrl);
+        }
+      }
+      setLoading(false);
+    };
+    
+    // Handle image load errors
+    img.onerror = () => {
+      console.error("Error loading image for static capture");
+      setStaticImageSrc(agent.gifUrl);
+      setLoading(false);
+    };
+    
+    // Start loading the image
+    img.src = agent.gifUrl;
+    
+    // Cleanup function
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [agent.gifUrl]);
 
   const handleShare = () => {
     const url = `${window.location.origin}/#item=${shareId}`;
@@ -69,33 +109,32 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
     >
       <div className="relative group flex-none h-52">
         {/* Loading placeholder */}
-        {!isImageLoaded && (
+        {loading && (
           <div className="w-full h-52 bg-gray-200 animate-pulse"></div>
         )}
         
-        {/* Still image that's always visible when not hovering */}
-        <div 
-          className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300 ${
-            isHovering ? 'opacity-0' : 'opacity-100'
-          }`}
-          style={{
-            backgroundImage: `url(${agent.gifUrl})`,
-            aspectRatio: "16/9",
-            filter: 'brightness(0.9)'
-          }}
-        ></div>
+        {/* Static image (shown when not hovering) */}
+        {!loading && staticImageSrc && (
+          <img 
+            src={staticImageSrc}
+            alt={`${agent.agentName} result (static)`}
+            className={`w-full h-52 object-cover absolute inset-0 transition-opacity duration-300 ${
+              isHovering ? 'opacity-0' : 'opacity-100'
+            }`}
+            style={{ aspectRatio: "16/9" }}
+          />
+        )}
         
-        {/* GIF image that's only loaded on hover */}
-        <img 
-          ref={imgRef}
-          src=""  // Initially empty, set by the effect
-          alt={`${agent.agentName} result`}
-          className={`w-full h-52 object-cover transition-opacity duration-300 ${
-            isHovering ? 'opacity-100' : 'opacity-0'
-          }`}
-          onLoad={() => setIsImageLoaded(true)}
-          style={{ aspectRatio: "16/9" }}
-        />
+        {/* Animated GIF (only rendered when hovering) */}
+        {!loading && isHovering && (
+          <img 
+            key={`animated-${agent.id}-${Date.now()}`} // Force new instance on each hover
+            src={agent.gifUrl}
+            alt={`${agent.agentName} result (animated)`}
+            className="w-full h-52 object-cover absolute inset-0 transition-opacity duration-300 opacity-100"
+            style={{ aspectRatio: "16/9" }}
+          />
+        )}
         
         {/* Agent name badge */}
         <div className={`absolute top-3 left-3 ${getAgentBgColor(agent.agentName)} text-white text-sm font-medium px-3 py-1 rounded-full z-20`}>
