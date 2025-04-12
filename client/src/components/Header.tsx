@@ -7,7 +7,10 @@ export default function Header() {
           <h1 className="text-xl md:text-2xl font-semibold">Vibe Coding Arena</h1>
         </div>
         <div>
-          <a href="#about" className="px-4 py-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+          <a 
+            href="#about" 
+            className="px-4 py-2 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all"
+          >
             About Us
           </a>
         </div>
