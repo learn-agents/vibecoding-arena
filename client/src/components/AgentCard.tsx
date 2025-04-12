@@ -108,7 +108,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Card image container */}
-      <div className="relative flex-none aspect-video rounded-none overflow-hidden">
+      <div className="relative flex-none aspect-video rounded-sm overflow-hidden">
         {/* Loading placeholder */}
         {loading && (
           <div className="w-full h-full bg-gray-200 animate-pulse"></div>
@@ -119,7 +119,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
           <img 
             src={staticImageSrc}
             alt={`${agent.agentName} result (static)`}
-            className={`w-full h-full object-cover absolute inset-0 transition-opacity duration-300 rounded-none ${
+            className={`w-full h-full object-cover absolute inset-0 transition-opacity duration-300 rounded-sm ${
               isHovering ? 'opacity-0' : 'opacity-100'
             }`}
           />
@@ -131,7 +131,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
             key={`animated-${agent.id}-${Date.now()}`} // Force new instance on each hover
             src={agent.gifUrl}
             alt={`${agent.agentName} result (animated)`}
-            className="w-full h-full object-cover absolute inset-0 transition-opacity duration-300 opacity-100 rounded-none"
+            className="w-full h-full object-cover absolute inset-0 transition-opacity duration-300 opacity-100 rounded-sm"
           />
         )}
         
