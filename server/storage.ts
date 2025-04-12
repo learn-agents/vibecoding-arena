@@ -46,6 +46,7 @@ export class MemStorage implements IStorage {
           agentName: agent.agentName,
           gifUrl: agent.gifUrl,
           codeLink: agent.codeLink,
+          originalGifUrl: agent.originalGifUrl,
         };
         this.agents.set(agent.id, agentData);
       });

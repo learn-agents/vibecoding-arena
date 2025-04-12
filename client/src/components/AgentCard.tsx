@@ -12,6 +12,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const [isHovering, setIsHovering] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isVideo, setIsVideo] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
   const shareId = `${promptId}-${agent.id}`;
   
   // References for media elements
@@ -30,8 +31,13 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const handleMouseEnter = () => {
     setIsHovering(true);
     
-    // Play video if it's a video element
+    // Play video if it's a video element - continue from where it left off
     if (isVideo && videoRef.current) {
+      // Set the current time before playing to resume from where it was paused
+      if (currentTime > 0) {
+        videoRef.current.currentTime = currentTime;
+      }
+      
       videoRef.current.play().catch(err => {
         console.error("Error playing video:", err);
       });
@@ -41,9 +47,32 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const handleMouseLeave = () => {
     setIsHovering(false);
     
-    // Pause video if it's a video element
+    // Pause video if it's a video element and save its current time
     if (isVideo && videoRef.current) {
+      // Save the current timestamp for later resumption
+      setCurrentTime(videoRef.current.currentTime);
       videoRef.current.pause();
+    }
+  };
+
+  // Save video time periodically while playing
+  useEffect(() => {
+    if (isVideo && videoRef.current && isHovering) {
+      const interval = setInterval(() => {
+        if (videoRef.current) {
+          setCurrentTime(videoRef.current.currentTime);
+        }
+      }, 250); // Update every 250ms while playing
+      
+      return () => clearInterval(interval);
+    }
+  }, [isVideo, isHovering]);
+
+  // Reset currentTime when the video loops back to beginning
+  const handleTimeUpdate = () => {
+    if (videoRef.current && videoRef.current.currentTime < 0.1 && currentTime > 0) {
+      // The video has likely looped, reset our saved time
+      setCurrentTime(0);
     }
   };
 
@@ -142,6 +171,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
                 preload="auto"
                 onError={handleVideoError}
                 onLoadedData={() => setLoading(false)}
+                onTimeUpdate={handleTimeUpdate}
                 // Initialize paused if not hovering
                 autoPlay={false}
               />

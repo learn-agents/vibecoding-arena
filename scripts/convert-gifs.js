@@ -1,8 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
-const { exec } = require('child_process');
-const { promisify } = require('util');
+import fs from 'fs';
+import path from 'path';
+import yaml from 'js-yaml';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+import { fileURLToPath } from 'url';
 const execPromise = promisify(exec);
 
 // Paths

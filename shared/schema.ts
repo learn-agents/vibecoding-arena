@@ -28,7 +28,4 @@ export const insertAgentResultSchema = createInsertSchema(agentResults);
 export type InsertPrompt = z.infer<typeof insertPromptSchema>;
 export type InsertAgentResult = z.infer<typeof insertAgentResultSchema>;
 export type Prompt = typeof prompts.$inferSelect;
-export type AgentResult = typeof agentResults.$inferSelect & {
-  // Add potential runtime properties that might not be in the DB schema
-  originalGifUrl?: string;
-};
+export type AgentResult = typeof agentResults.$inferSelect;
