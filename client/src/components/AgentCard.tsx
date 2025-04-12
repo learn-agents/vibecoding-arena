@@ -212,12 +212,12 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
         
         {/* Action buttons that only appear on hover in the bottom-right corner */}
         {isHovering && (
-          <div className="absolute bottom-2 right-2 flex space-x-0 z-30 transition-all duration-300">
+          <div className="absolute bottom-2 right-2 flex gap-0 z-30 transition-all duration-300">
             <a 
               href={agent.codeLink} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="w-8 h-8 rounded-full flex items-center justify-center mr-0.5"
+              className="w-7 h-8 rounded-full flex items-center justify-center"
               aria-label="View code by this agent"
             >
               <svg 
@@ -230,7 +230,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
             </a>
             
             <button 
-              className="w-8 h-8 rounded-full flex items-center justify-center"
+              className="w-8 h-8 rounded-full flex items-center justify-center ml-[-4px]"
               onClick={handleShare}
               aria-label="Share this agent's solution"
             >
