@@ -5,7 +5,7 @@
 /* Custom utilities */
 @layer utilities {
   .rounded-subtle {
-    border-radius: 0.125rem; /* 2px on a 16px base - very subtle rounding for 10% effect */
+    border-radius: 0.1875rem; /* 3px on a 16px base - subtle rounding for 15% effect */
   }
 }
 
