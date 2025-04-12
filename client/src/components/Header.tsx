@@ -9,7 +9,7 @@ export default function Header() {
         <div>
           <a 
             href="#about" 
-            className="px-4 py-2 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all"
+            className="px-4 py-2 rounded-md border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all"
           >
             About Us
           </a>
