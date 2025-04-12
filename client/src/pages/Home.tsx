@@ -5,10 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect } from "react";
+import { Prompt } from "@/lib/types";
 
 export default function Home() {
   const { toast } = useToast();
-  const { data: prompts, isLoading } = useQuery({
+  const { data: prompts, isLoading } = useQuery<Prompt[]>({
     queryKey: ['/api/prompts'],
   });
 
@@ -70,7 +71,7 @@ export default function Home() {
               </div>
             ))
           ) : (
-            prompts?.map((prompt) => (
+            prompts?.map((prompt: Prompt) => (
               <PromptCarousel key={prompt.id} prompt={prompt} />
             ))
           )}

@@ -20,13 +20,27 @@ export default function PromptCarousel({ prompt }: PromptCarouselProps) {
     if (!container) return;
     
     const handleWheel = (e: WheelEvent) => {
-      // If there's content to scroll and user is using the mouse wheel
+      // If there's content to scroll horizontally
       if (container.scrollWidth > container.clientWidth) {
-        // Always prevent the default vertical scroll when over our carousel
+        // Calculate whether we're at the left or right edge
+        const isAtLeftEdge = container.scrollLeft <= 0;
+        const isAtRightEdge = container.scrollLeft + container.clientWidth >= container.scrollWidth - 1; // -1 for rounding errors
+        
+        // Determine scroll direction
+        const isScrollingRight = e.deltaY > 0 || e.deltaX > 0;
+        const isScrollingLeft = e.deltaY < 0 || e.deltaX < 0;
+        
+        // Allow vertical page scroll when at the edges
+        if ((isAtRightEdge && isScrollingRight) || (isAtLeftEdge && isScrollingLeft)) {
+          // Don't prevent default, allowing the page to scroll normally
+          return;
+        }
+        
+        // In the middle of the carousel, scroll horizontally
         e.preventDefault();
         
         // Determine the scroll amount (use deltaY for most mouse wheels)
-        const scrollAmount = e.deltaY !== 0 ? e.deltaY : e.deltaX;
+        const scrollAmount = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
         
         // Apply the scroll with a smoother speed multiplier
         container.scrollLeft += scrollAmount * 0.8;
