@@ -29,12 +29,4 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
   }
-  
-  /* Class to pause GIFs when not hovered */
-  .gif-paused {
-    animation-play-state: paused !important;
-    animation: 0s !important;
-    -webkit-animation-play-state: paused !important;
-    -webkit-animation: 0s !important;
-  }
 }

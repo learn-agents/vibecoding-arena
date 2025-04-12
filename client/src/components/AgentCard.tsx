@@ -11,55 +11,12 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const { toast } = useToast();
   const [isHovering, setIsHovering] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [imageLoaded, setImageLoaded] = useState(false);
   const shareId = `${promptId}-${agent.id}`;
   
   // References for DOM elements
   const imgRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Track if we have the first frame and the GIF's current time
-  const hasStaticFrame = useRef(false);
-  const lastTimeRef = useRef(0);
-  const animationFrameId = useRef<number | null>(null);
-  
-  // Handle mouse events
-  const handleMouseEnter = () => {
-    setIsHovering(true);
-    
-    // Start GIF animation when mouse enters
-    if (imgRef.current && canvasRef.current && hasStaticFrame.current) {
-      // Show the original GIF
-      if (imgRef.current) {
-        imgRef.current.style.visibility = 'visible';
-      }
-      
-      // Hide the canvas with the paused frame
-      if (canvasRef.current) {
-        canvasRef.current.style.visibility = 'hidden';
-      }
-    }
-  };
-  
-  const handleMouseLeave = () => {
-    setIsHovering(false);
-    
-    // Pause GIF animation (capture the current frame) when mouse leaves
-    if (imgRef.current && canvasRef.current && imageLoaded) {
-      captureCurrentFrame();
-      
-      // Hide the original GIF
-      if (imgRef.current) {
-        imgRef.current.style.visibility = 'hidden';
-      }
-      
-      // Show the canvas with the paused frame
-      if (canvasRef.current) {
-        canvasRef.current.style.visibility = 'visible';
-      }
-    }
-  };
   
   // Function to capture the current frame of the GIF
   const captureCurrentFrame = () => {
@@ -77,51 +34,86 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
     const ctx = canvas.getContext('2d');
     if (ctx) {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      hasStaticFrame.current = true;
+    }
+  };
+  
+  // Handle mouse events
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+    
+    // Show the actual GIF (which will continue from where it was)
+    if (imgRef.current) {
+      imgRef.current.style.visibility = 'visible';
+    }
+    
+    // Hide the frozen frame
+    if (canvasRef.current) {
+      canvasRef.current.style.visibility = 'hidden';
+    }
+  };
+  
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+    
+    // Capture and freeze the current frame when mouse leaves
+    captureCurrentFrame();
+    
+    // Hide the GIF
+    if (imgRef.current) {
+      imgRef.current.style.visibility = 'hidden';
+    }
+    
+    // Show the frozen frame
+    if (canvasRef.current) {
+      canvasRef.current.style.visibility = 'visible';
     }
   };
 
-  // Set loading state based on image load
+  // Set up initial loading and handle GIF behavior
   useEffect(() => {
     // Create an image to preload the GIF
     const img = new Image();
     img.onload = () => {
       setLoading(false);
-      setImageLoaded(true);
       
-      // Capture the first frame after a small delay to ensure it's loaded
+      // Initial setup - capture first frame after the GIF has loaded
       setTimeout(() => {
-        if (imgRef.current && canvasRef.current && containerRef.current) {
-          captureCurrentFrame();
+        if (imgRef.current && canvasRef.current) {
+          // Start by showing the active GIF briefly
+          imgRef.current.style.visibility = 'visible';
+          canvasRef.current.style.visibility = 'hidden';
           
-          // Initially hide the GIF and show the static frame
-          if (!isHovering) {
-            if (imgRef.current) {
-              imgRef.current.style.visibility = 'hidden';
+          // Then capture the current frame and freeze it
+          setTimeout(() => {
+            if (!isHovering) {
+              captureCurrentFrame();
+              
+              // Hide the GIF and show the frozen frame
+              if (imgRef.current) imgRef.current.style.visibility = 'hidden';
+              if (canvasRef.current) canvasRef.current.style.visibility = 'visible';
             }
-            if (canvasRef.current) {
-              canvasRef.current.style.visibility = 'visible';
-            }
-          }
+          }, 50); // Small delay to ensure first frame is rendered
         }
-      }, 100);
+      }, 50);
     };
+    
     img.onerror = () => {
       console.error("Error loading image");
       setLoading(false);
     };
+    
     img.src = agent.gifUrl;
     
     return () => {
       img.onload = null;
       img.onerror = null;
     };
-  }, [agent.gifUrl]);
+  }, [agent.gifUrl, isHovering]);
 
   // Handle window resize to adjust canvas size
   useEffect(() => {
     const handleResize = () => {
-      if (!isHovering && hasStaticFrame.current) {
+      if (!isHovering) {
         captureCurrentFrame();
       }
     };
@@ -170,11 +162,11 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
         
         {!loading && (
           <>
-            {/* Canvas for static frame (visible when not hovering) */}
+            {/* Canvas for frozen frame (visible when not hovering) */}
             <canvas 
               ref={canvasRef}
               className="absolute top-0 left-0 w-full h-full object-cover rounded-subtle"
-              style={{ visibility: 'hidden' }} // Initially hidden until first frame is captured
+              style={{ visibility: 'hidden' }} // Initially hidden
             />
             
             {/* Original GIF (only visible and animated when hovering) */}
@@ -183,7 +175,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
               src={agent.gifUrl}
               alt={`${agent.agentName} solution`}
               className="w-full h-full object-cover rounded-subtle"
-              style={{ visibility: 'visible' }} // Initially visible until first frame is captured
+              style={{ visibility: 'visible' }} // Initially visible
             />
           </>
         )}
