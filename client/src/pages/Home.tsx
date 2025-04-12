@@ -38,11 +38,11 @@ export default function Home() {
       <main className="py-8 px-4 md:px-8 lg:px-16 flex-grow">
         <div className="max-w-7xl mx-auto">
           {/* Introduction */}
-          <section className="mb-16 text-center">
+          <section className="mb-10 text-center">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-4">
               AI Coding Agents Showcase
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-10">
+            <p className="text-muted-foreground max-w-2xl mx-auto mb-7">
               Compare how different AI agents interpret and build applications from identical prompts. 
               Browse through examples, get inspired, and share your favorites.
             </p>
