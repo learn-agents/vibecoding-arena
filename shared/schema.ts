@@ -17,7 +17,7 @@ export const agentResults = pgTable("agent_results", {
   agentName: text("agent_name").notNull(),
   gifUrl: text("gif_url").notNull(),
   codeLink: text("code_link").notNull(),
-  originalGifUrl: text("original_gif_url").default(null),  // Optional field for the original GIF URL when converted to video
+  originalGifUrl: text("original_gif_url"),  // Optional field for the original GIF URL when converted to video
 });
 
 // Insert schemas

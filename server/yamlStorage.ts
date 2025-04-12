@@ -68,7 +68,7 @@ export class YamlStorage implements IStorage {
             agentName: yamlAgent.name,
             gifUrl: yamlAgent.gif_url,
             codeLink: yamlAgent.code_link,
-            originalGifUrl: yamlAgent.original_gif_url,
+            originalGifUrl: yamlAgent.original_gif_url || null,
           };
 
           this.agents.set(agentId, agentData);
