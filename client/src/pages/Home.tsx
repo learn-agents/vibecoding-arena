@@ -4,7 +4,7 @@ import PromptCarousel from "@/components/PromptCarousel";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Prompt } from "@/lib/types";
 
 export default function Home() {
@@ -12,29 +12,6 @@ export default function Home() {
   const { data: prompts, isLoading } = useQuery<Prompt[]>({
     queryKey: ['/api/prompts'],
   });
-  
-  // State for search/filter functionality
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredPrompts, setFilteredPrompts] = useState<Prompt[]>([]);
-  
-  // Update filtered prompts when the search term or prompts change
-  useEffect(() => {
-    if (!prompts) return;
-    
-    if (!searchTerm.trim()) {
-      setFilteredPrompts(prompts);
-      return;
-    }
-    
-    const lowerCaseSearch = searchTerm.toLowerCase();
-    const filtered = prompts.filter(prompt => 
-      prompt.text.toLowerCase().includes(lowerCaseSearch) || 
-      prompt.description.toLowerCase().includes(lowerCaseSearch) ||
-      prompt.agents.some(agent => agent.agentName.toLowerCase().includes(lowerCaseSearch))
-    );
-    
-    setFilteredPrompts(filtered);
-  }, [searchTerm, prompts]);
 
   useEffect(() => {
     // Handle URL sharing logic
@@ -69,33 +46,6 @@ export default function Home() {
               Compare how different AI agents interpret and build applications from identical prompts. 
               Browse through examples, get inspired, and share your favorites.
             </p>
-            
-            {/* Search input */}
-            <div className="relative max-w-md mx-auto mb-8">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg 
-                  className="w-5 h-5 text-muted-foreground" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24" 
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
-                  />
-                </svg>
-              </div>
-              <input
-                type="search"
-                className="block w-full pl-10 pr-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-background shadow-sm"
-                placeholder="Search prompts or agents..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
           </section>
 
           {/* Grid Layout */}
@@ -111,8 +61,8 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          ) : filteredPrompts.length > 0 ? (
-            filteredPrompts.map((prompt: Prompt) => (
+          ) : prompts && prompts.length > 0 ? (
+            prompts.map((prompt: Prompt) => (
               <PromptCarousel key={prompt.id} prompt={prompt} />
             ))
           ) : (
@@ -131,9 +81,9 @@ export default function Home() {
                   d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
                 />
               </svg>
-              <h3 className="mt-4 text-lg font-medium">No results found</h3>
+              <h3 className="mt-4 text-lg font-medium">No prompts found</h3>
               <p className="mt-2 text-muted-foreground">
-                We couldn't find any prompts or agents matching your search. Try different keywords.
+                We couldn't find any prompts. Please check back later.
               </p>
             </div>
           )}
