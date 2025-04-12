@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Agent } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
+import html2canvas from "html2canvas";
 
 interface AgentCardProps {
   agent: Agent;
@@ -13,18 +14,52 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const [isHovering, setIsHovering] = useState(false);
   const [loading, setLoading] = useState(true);
   const [staticImageSrc, setStaticImageSrc] = useState<string | null>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const animatedImgRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const shareId = `${promptId}-${agent.id}`;
   
   // Get static image on component mount
-  useEffect(() => {
-    // For this example, we'll create a static first frame by:
-    // 1. Creating a canvas element
-    // 2. Loading the GIF but not appending it to the DOM
-    // 3. Drawing the first frame to the canvas
-    // 4. Getting the canvas data URL as the static image
+  // Capture current GIF frame when hover ends
+  const captureCurrentFrame = async () => {
+    if (!containerRef.current || !isHovering) return;
     
-    // This is a simplified approach, in a real-world application,
-    // you would typically have the backend generate a static thumbnail
+    try {
+      // Find the animated GIF element
+      const animatedImg = containerRef.current.querySelector('img[alt*="animated"]');
+      if (!animatedImg) return;
+      
+      // Use html2canvas to take a snapshot of the current frame
+      const canvas = await html2canvas(containerRef.current, {
+        useCORS: true,
+        backgroundColor: null,
+        scale: 1,
+      });
+      
+      // Convert canvas to data URL and set as static image
+      const dataUrl = canvas.toDataURL('image/png');
+      setStaticImageSrc(dataUrl);
+      setHasInteracted(true);
+    } catch (error) {
+      console.error('Error capturing current frame:', error);
+    }
+  };
+
+  // Handle mouse enter/leave
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+  };
+  
+  const handleMouseLeave = async () => {
+    // Capture current frame before hiding the GIF
+    await captureCurrentFrame();
+    setIsHovering(false);
+  };
+
+  // Get initial static image on component mount (first frame)
+  useEffect(() => {
+    // Only load the default first frame if we haven't interacted yet
+    if (hasInteracted) return;
     
     const img = new Image();
     img.crossOrigin = "anonymous";
@@ -69,7 +104,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       img.onload = null;
       img.onerror = null;
     };
-  }, [agent.gifUrl]);
+  }, [agent.gifUrl, hasInteracted]);
 
   const handleShare = () => {
     const url = `${window.location.origin}/#item=${shareId}`;
@@ -104,11 +139,11 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   return (
     <div 
       className="group relative flex flex-col overflow-visible bg-transparent transition-all duration-300 h-full"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Card image container */}
-      <div className="relative flex-none aspect-video rounded-subtle overflow-hidden">
+      <div ref={containerRef} className="relative flex-none aspect-video rounded-subtle overflow-hidden">
         {/* Loading placeholder */}
         {loading && (
           <div className="w-full h-full bg-gray-200 animate-pulse"></div>
@@ -128,6 +163,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
         {/* Animated GIF (only rendered when hovering) */}
         {!loading && isHovering && (
           <img 
+            ref={animatedImgRef}
             key={`animated-${agent.id}-${Date.now()}`} // Force new instance on each hover
             src={agent.gifUrl}
             alt={`${agent.agentName} result (animated)`}
