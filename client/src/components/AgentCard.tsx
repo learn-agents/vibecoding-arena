@@ -103,12 +103,12 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
 
   return (
     <div 
-      className="group relative flex flex-col overflow-hidden rounded-lg bg-background transition-all duration-300 hover:shadow-lg h-full"
+      className="group relative flex flex-col overflow-visible bg-transparent transition-all duration-300 h-full"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Card image container */}
-      <div className="relative flex-none aspect-video">
+      <div className="relative flex-none aspect-video rounded-lg overflow-hidden">
         {/* Loading placeholder */}
         {loading && (
           <div className="w-full h-full bg-gray-200 animate-pulse"></div>
@@ -135,6 +135,13 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
           />
         )}
         
+        {/* Gradient overlay at the bottom when hovering */}
+        <div 
+          className={`absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-300 z-10 ${
+            isHovering ? 'opacity-100' : 'opacity-0'
+          }`}
+        ></div>
+        
         {/* Action buttons that appear on hover in the bottom-right corner */}
         <div 
           className={`absolute bottom-4 right-4 flex space-x-3 z-30 transition-all duration-300 ${
@@ -145,7 +152,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
             href={agent.codeLink} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="w-8 h-8 rounded-full bg-white hover:bg-white flex items-center justify-center shadow-md transition-all duration-200"
+            className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200"
             aria-label="View code by this agent"
           >
             <svg 
@@ -154,7 +161,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
               height="20" 
               viewBox="0 0 24 24" 
               fill="none" 
-              stroke="currentColor" 
+              stroke="white" 
               strokeWidth="2" 
               strokeLinecap="round" 
               strokeLinejoin="round"
@@ -166,7 +173,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
           </a>
           
           <button 
-            className="w-8 h-8 rounded-full bg-white hover:bg-white flex items-center justify-center shadow-md transition-all duration-200"
+            className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200"
             onClick={handleShare}
             aria-label="Share this agent's solution"
           >
@@ -176,7 +183,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
               height="18" 
               viewBox="0 0 24 24" 
               fill="none" 
-              stroke="currentColor" 
+              stroke="white" 
               strokeWidth="2" 
               strokeLinecap="round" 
               strokeLinejoin="round"
@@ -189,34 +196,10 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
             </svg>
           </button>
         </div>
-        
-        {/* Play indicator that appears on hover */}
-        <div 
-          className={`absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300 z-10 ${
-            isHovering ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <div className="w-12 h-12 rounded-full bg-white/30 flex items-center justify-center backdrop-blur-sm">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="white" 
-              stroke="white" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-              className="ml-1"
-            >
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-          </div>
-        </div>
       </div>
       
       {/* Agent name under the card */}
-      <div className="p-4">
+      <div className="p-3 pt-2">
         <div className="text-sm font-medium text-foreground/90">
           {agent.agentName}
         </div>
