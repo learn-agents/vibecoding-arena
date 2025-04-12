@@ -42,10 +42,16 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-4">
               AI Coding Agents Showcase
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+            <p className="text-muted-foreground max-w-2xl mx-auto mb-4">
               Compare how different AI agents interpret and build applications from identical prompts. 
               Browse through examples, get inspired, and share your favorites.
             </p>
+            <div className="flex justify-center mt-4">
+              <a href="https://github.com" target="_blank" className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors">
+                <i className="fab fa-github text-xl"></i>
+                <span>View on GitHub</span>
+              </a>
+            </div>
           </section>
           
           {/* Divider before first prompt */}

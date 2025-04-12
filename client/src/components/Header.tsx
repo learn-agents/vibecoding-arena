@@ -6,15 +6,9 @@ export default function Header() {
           <img src="/favicon.ico" alt="Robot Icon" className="w-8 h-8" />
           <h1 className="text-xl md:text-2xl font-semibold">Vibe Coding Arena</h1>
         </div>
-        <div className="flex space-x-4">
-          <a href="https://twitter.com" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
-            <i className="fab fa-twitter text-xl"></i>
-          </a>
-          <a href="https://github.com" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
-            <i className="fab fa-github text-xl"></i>
-          </a>
-          <a href="mailto:contact@example.com" className="text-muted-foreground hover:text-primary transition-colors">
-            <i className="fas fa-envelope text-xl"></i>
+        <div>
+          <a href="#about" className="px-4 py-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+            About Us
           </a>
         </div>
       </div>
