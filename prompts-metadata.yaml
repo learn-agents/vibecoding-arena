@@ -1,7 +1,7 @@
 prompts:
-  - shortname: todo-app
-    full_prompt: To-do App with Dark Mode
-    description: Minimal to-do with task management and theme toggle
+  - shortname: cat-food-landing
+    full_prompt: Landing page for cat food subscription service
+    description: Create a landing page for a cat food subscription service with a clean design, clear calls-to-action, and a testimonial section.
     agents:
       - name: v0
         created_at: '2025-02-15'
@@ -28,9 +28,10 @@ prompts:
         gif_url: /videos/grok_giphy.mp4
         code_link: https://github.com/google-deepmind/gemini-weather-app
         original_gif_url: https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif
-  - shortname: weather-app
-    full_prompt: Weather Dashboard
-    description: 5-day forecast with location search and visual indicators
+  
+  - shortname: portfolio-python
+    full_prompt: Porfolio website for a Python developer
+    description: Create a portfolio website for a Python developer with a clean design, clear calls-to-action, and a project section.
     agents:
       - name: v0
         created_at: '2025-02-15'
@@ -57,9 +58,10 @@ prompts:
         gif_url: /videos/grok_giphy.mp4
         code_link: https://github.com/google-deepmind/gemini-weather-app
         original_gif_url: https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif
-  - shortname: fitness-tracker
-    full_prompt: Fitness Tracker
-    description: Workout logger with progress charts and streak counter
+  
+  - shortname: chat-bot
+    full_prompt: Chat bot with personality and context awareness
+    description: Create a chat bot with a unique personality and the ability to maintain context across conversations.
     agents:
       - name: v0
         created_at: '2025-02-15'
@@ -86,32 +88,4 @@ prompts:
         gif_url: /videos/grok_giphy.mp4
         code_link: https://github.com/google-deepmind/gemini-weather-app
         original_gif_url: https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif
-  - shortname: recipe-finder
-    full_prompt: Recipe Finder
-    description: Search by ingredients with dietary and cuisine filters
-    agents:
-      - name: v0
-        created_at: '2025-02-15'
-        gif_url: /videos/v0_giphy.mp4
-        code_link: https://github.com/anthropic-labs/claude-todo-app
-        original_gif_url: https://media3.giphy.com/media/QpVUMRUJGokfqXyfa1/giphy.gif
-      - name: replit
-        created_at: '2025-02-15'
-        gif_url: /videos/replit_giphy.mp4
-        code_link: https://github.com/openai-examples/gpt4-todo-app
-        original_gif_url: https://media0.giphy.com/media/l0HlGRDhPTqVEvhCw/giphy.gif
-      - name: lovable
-        created_at: '2025-02-16'
-        gif_url: /videos/lovable_giphy.mp4
-        code_link: https://github.com/google-deepmind/gemini-todo-app
-        original_gif_url: https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemgycHJkY283YTQyZ2l5aGR5MGY4MGQ0YjUwZncyOGg3cDRvdm44NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYt5jPR6QX5pnqM/giphy.gif
-      - name: bolt
-        created_at: '2025-02-15'
-        gif_url: /videos/bolt_giphy.mp4
-        code_link: https://github.com/github-labs/copilotx-todo-app
-        original_gif_url: https://media2.giphy.com/media/3o7aCTfyhYawdOXcFW/giphy.gif
-      - name: grok
-        created_at: '2025-03-02'
-        gif_url: /videos/grok_giphy.mp4
-        code_link: https://github.com/google-deepmind/gemini-weather-app
-        original_gif_url: https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif
+
