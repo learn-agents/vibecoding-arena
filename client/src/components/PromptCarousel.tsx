@@ -11,7 +11,7 @@ export default function PromptCarousel({ prompt }: PromptCarouselProps) {
       <div className="flex flex-col md:flex-row gap-8">
         {/* Left column - Prompt text */}
         <div className="md:w-1/3">
-          <h3 className="text-xl font-semibold mb-2">{prompt.text}</h3>
+          <h3 className="text-xl font-semibold mb-2 [text-wrap:balance]">{prompt.text}</h3>
           <p className="text-muted-foreground">{prompt.description}</p>
         </div>
         
