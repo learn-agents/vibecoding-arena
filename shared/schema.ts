@@ -17,6 +17,7 @@ export const agentResults = pgTable("agent_results", {
   agentName: text("agent_name").notNull(),
   gifUrl: text("gif_url").notNull(),
   codeLink: text("code_link").notNull(),
+  originalGifUrl: text("original_gif_url"),  // Optional field for the original GIF URL when converted to video
 });
 
 // Insert schemas
@@ -27,4 +28,7 @@ export const insertAgentResultSchema = createInsertSchema(agentResults);
 export type InsertPrompt = z.infer<typeof insertPromptSchema>;
 export type InsertAgentResult = z.infer<typeof insertAgentResultSchema>;
 export type Prompt = typeof prompts.$inferSelect;
-export type AgentResult = typeof agentResults.$inferSelect;
+export type AgentResult = typeof agentResults.$inferSelect & {
+  // Add potential runtime properties that might not be in the DB schema
+  originalGifUrl?: string;
+};

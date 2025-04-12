@@ -11,40 +11,65 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const { toast } = useToast();
   const [isHovering, setIsHovering] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isVideo, setIsVideo] = useState(false);
   const shareId = `${promptId}-${agent.id}`;
   
-  // For gif playback control
+  // References for media elements
+  const videoRef = useRef<HTMLVideoElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   
-  // The image element will always be present, but we'll control its CSS animation-play-state
-  // via the hover state to pause/play the GIF
+  // Check if the media source is a video (MP4/WebM) or GIF
+  useEffect(() => {
+    const isVideoSource = agent.gifUrl.endsWith('.mp4') || 
+                          agent.gifUrl.endsWith('.webm') || 
+                          agent.gifUrl.startsWith('/videos/');
+    setIsVideo(isVideoSource);
+  }, [agent.gifUrl]);
   
-  // Handle mouse events
+  // Handle mouse events for hover
   const handleMouseEnter = () => {
     setIsHovering(true);
+    
+    // Play video if it's a video element
+    if (isVideo && videoRef.current) {
+      videoRef.current.play().catch(err => {
+        console.error("Error playing video:", err);
+      });
+    }
   };
   
   const handleMouseLeave = () => {
     setIsHovering(false);
+    
+    // Pause video if it's a video element
+    if (isVideo && videoRef.current) {
+      videoRef.current.pause();
+    }
   };
 
-  // Preload the GIF
+  // Preload the media (either video or GIF)
   useEffect(() => {
-    const img = new Image();
-    img.onload = () => {
+    if (isVideo) {
+      // For video, we'll let the video element handle loading
       setLoading(false);
-    };
-    img.onerror = () => {
-      console.error("Error loading image");
-      setLoading(false);
-    };
-    img.src = agent.gifUrl;
-    
-    return () => {
-      img.onload = null;
-      img.onerror = null;
-    };
-  }, [agent.gifUrl]);
+    } else {
+      // For GIF, preload with Image
+      const img = new Image();
+      img.onload = () => {
+        setLoading(false);
+      };
+      img.onerror = () => {
+        console.error("Error loading image");
+        setLoading(false);
+      };
+      img.src = agent.gifUrl;
+      
+      return () => {
+        img.onload = null;
+        img.onerror = null;
+      };
+    }
+  }, [agent.gifUrl, isVideo]);
 
   const handleShare = () => {
     const url = `${window.location.origin}/#item=${shareId}`;
@@ -66,6 +91,29 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       });
   };
 
+  // Handle video load error (fallback to GIF if possible)
+  const handleVideoError = () => {
+    console.error(`Error loading video: ${agent.gifUrl}`);
+    
+    // Check if we have an original GIF URL to fall back to
+    if (agent.originalGifUrl) {
+      setIsVideo(false);
+      
+      // Preload the fallback GIF
+      const img = new Image();
+      img.onload = () => {
+        setLoading(false);
+      };
+      img.onerror = () => {
+        console.error("Error loading fallback image");
+        setLoading(false);
+      };
+      img.src = agent.originalGifUrl;
+    } else {
+      setLoading(false);
+    }
+  };
+
   return (
     <div 
       className="group relative flex flex-col overflow-visible bg-transparent transition-all duration-300 h-full"
@@ -79,31 +127,51 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
           <div className="w-full h-full bg-gray-200 animate-pulse"></div>
         )}
         
-        {/* GIF with conditional animation */}
+        {/* Media content: either video or GIF */}
         {!loading && (
-          <img 
-            ref={imgRef}
-            src={agent.gifUrl}
-            alt={`${agent.agentName} solution`}
-            className="w-full h-full object-cover rounded-subtle"
-            style={{ 
-              animationPlayState: isHovering ? 'running' : 'paused',
-              WebkitAnimationPlayState: isHovering ? 'running' : 'paused',
-              // This is more consistent across browsers for different GIFs
-              filter: isHovering ? 'none' : 'url(#paused-gif)'
-            }}
-          />
+          <>
+            {isVideo ? (
+              // Video element for better control
+              <video 
+                ref={videoRef}
+                src={agent.gifUrl}
+                className="w-full h-full object-cover rounded-subtle"
+                loop
+                playsInline
+                muted
+                preload="auto"
+                onError={handleVideoError}
+                onLoadedData={() => setLoading(false)}
+                // Initialize paused if not hovering
+                autoPlay={false}
+              />
+            ) : (
+              // GIF with conditional animation for browsers that support it
+              <img 
+                ref={imgRef}
+                src={agent.gifUrl}
+                alt={`${agent.agentName} solution`}
+                className="w-full h-full object-cover rounded-subtle"
+                style={{ 
+                  animationPlayState: isHovering ? 'running' : 'paused',
+                  WebkitAnimationPlayState: isHovering ? 'running' : 'paused',
+                  filter: isHovering ? 'none' : 'url(#paused-gif)'
+                }}
+              />
+            )}
+          </>
         )}
         
         {/* SVG filter to help improve GIF pausing across browsers */}
-        <svg style={{ position: 'absolute', width: 0, height: 0 }}>
-          <defs>
-            <filter id="paused-gif">
-              {/* We use a very subtle blur to ensure the GIF animation stops in most browsers */}
-              <feGaussianBlur stdDeviation="0.01" />
-            </filter>
-          </defs>
-        </svg>
+        {!isVideo && (
+          <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+            <defs>
+              <filter id="paused-gif">
+                <feGaussianBlur stdDeviation="0.01" />
+              </filter>
+            </defs>
+          </svg>
+        )}
         
         {/* Gradient overlay at the bottom - only render when hovering */}
         {isHovering && (

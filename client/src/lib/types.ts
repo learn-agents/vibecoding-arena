@@ -4,6 +4,7 @@ export interface Agent {
   agentName: string;
   gifUrl: string;
   codeLink: string;
+  originalGifUrl?: string; // Optional field for the original GIF URL when converted to video
 }
 
 export interface Prompt {

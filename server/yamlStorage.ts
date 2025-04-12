@@ -12,6 +12,7 @@ interface YamlAgent {
   created_at: string;
   gif_url: string;
   code_link: string;
+  original_gif_url?: string; // Optional field to store the original GIF URL when converted to video
 }
 
 interface YamlPrompt {
@@ -67,6 +68,7 @@ export class YamlStorage implements IStorage {
             agentName: yamlAgent.name,
             gifUrl: yamlAgent.gif_url,
             codeLink: yamlAgent.code_link,
+            originalGifUrl: yamlAgent.original_gif_url,
           };
 
           this.agents.set(agentId, agentData);
