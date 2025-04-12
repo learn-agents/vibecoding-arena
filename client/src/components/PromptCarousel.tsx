@@ -24,6 +24,7 @@ export default function PromptCarousel({ prompt }: PromptCarouselProps) {
           </div>
         </div>
       </div>
+      <div className="mt-16 border-b border-border"></div>
     </section>
   );
 }
