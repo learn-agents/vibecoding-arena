@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom utilities */
+@layer utilities {
+  .rounded-subtle {
+    border-radius: 0.125rem; /* 2px on a 16px base - very subtle rounding for 10% effect */
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
