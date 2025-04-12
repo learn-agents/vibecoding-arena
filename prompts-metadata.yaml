@@ -60,7 +60,7 @@ prompts:
         original_gif_url: https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif
   
   - shortname: chat-bot
-    full_prompt: Chat bot with personality and context awareness
+    full_prompt: Chat bot with a personality
     description: Create a chat bot with a unique personality and the ability to maintain context across conversations.
     agents:
       - name: v0
