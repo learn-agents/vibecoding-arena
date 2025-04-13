@@ -103,19 +103,29 @@ export default function FilterSystem({ onFilterChange }: FilterSystemProps) {
         {/* Agents Column */}
         <div className="flex-1">
           <h4 className="text-sm font-semibold uppercase mb-2 text-gray-600">Agents</h4>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="flex flex-wrap gap-2">
             {uniqueAgentNames.map((agentName) => (
               <button
                 key={agentName}
                 onClick={() => toggleAgent(agentName)}
                 className={cn(
-                  "px-3 py-1.5 rounded-md text-sm transition-colors whitespace-nowrap overflow-hidden text-ellipsis",
+                  "px-3 py-1.5 rounded-md text-sm transition-colors min-w-0 max-w-full",
                   selectedAgents.includes(agentName)
                     ? "bg-black text-white" 
                     : "bg-white text-black border border-gray-300 hover:bg-gray-100"
                 )}
+                style={{ 
+                  flexBasis: 'calc(33.333% - 0.5rem)',
+                  flexGrow: 0,
+                  flexShrink: 1
+                }}
               >
-                <span style={{ fontFamily: "'Space Mono', monospace" }}>
+                <span style={{ 
+                  fontFamily: "'Space Mono', monospace",
+                  display: 'block',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
+                }}>
                   {agentName.charAt(0).toUpperCase() + agentName.slice(1)}
                 </span>
               </button>
