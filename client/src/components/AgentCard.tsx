@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Agent } from "@/lib/types";
+import v0Logo from "@assets/v0.svg";
 
 interface AgentCardProps {
   agent: Agent;
@@ -212,7 +213,11 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       {/* Agent name under the card */}
       <div className="p-3 pt-2">
         <div className="text-sm font-medium text-foreground/90">
-          {agent.agentName}
+          {agent.agentName === "v0" ? (
+            <img src={v0Logo} alt="v0" className="h-5 w-auto" />
+          ) : (
+            agent.agentName
+          )}
         </div>
       </div>
     </div>
