@@ -67,7 +67,7 @@ export class YamlStorage implements IStorage {
             agentName: yamlAgent.name,
             gifUrl: yamlAgent.video_url, // Map video_url to gifUrl for compatibility with existing schema
             codeLink: yamlAgent.code_link,
-            originalGifUrl: yamlAgent.original_video_url || null, // Map original_video_url to originalGifUrl
+            originalGifUrl: null, // No original URLs are needed anymore
           };
 
           this.agents.set(agentId, agentData);
