@@ -1,5 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { Agent } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+
+// Map of agent names to their website URLs
+const agentWebsites: Record<string, string> = {
+  v0: "https://v0.dev/",
+  lovable: "https://lovable.dev/",
+  replit: "https://replit.com",
+  bolt: "https://bolt.new/",
+  grok: "https://x.ai/",
+};
 
 interface AgentCardProps {
   agent: Agent;
@@ -211,8 +221,21 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       
       {/* Agent name under the card */}
       <div className="p-3 pt-2">
-        <div className="text-sm font-medium text-foreground/90">
-          {agent.agentName}
+        <div className="text-sm font-medium text-foreground/90 flex items-center gap-2">
+          <span>by</span>
+          <a 
+            href={agentWebsites[agent.agentName.toLowerCase()] || "#"} 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            <Button 
+              variant="default" 
+              size="sm" 
+              className="h-7 px-3 py-1 bg-black hover:bg-black/80 text-white rounded-md"
+            >
+              {agent.agentName}
+            </Button>
+          </a>
         </div>
       </div>
     </div>
