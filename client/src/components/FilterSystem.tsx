@@ -72,7 +72,7 @@ export default function FilterSystem({ onFilterChange }: FilterSystemProps) {
         {/* Prompts Column */}
         <div className="flex-1 mb-4 md:mb-0">
           <h4 className="text-sm font-semibold uppercase mb-2 text-gray-600">Prompts</h4>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-2 gap-2">
             {prompts?.map((prompt) => (
               <button
                 key={prompt.id}
