@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Agent } from "@/lib/types";
 import v0Logo from "@assets/v0.svg";
+import lovableLogo from "@assets/lovable.svg";
 
 interface AgentCardProps {
   agent: Agent;
@@ -215,6 +216,16 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
         <div className="text-sm font-medium text-foreground/90">
           {agent.agentName === "v0" ? (
             <img src={v0Logo} alt="v0" className="h-5 w-auto" />
+          ) : agent.agentName === "Lovable" ? (
+            <img 
+              src={lovableLogo} 
+              alt="Lovable" 
+              className="h-5 w-auto" 
+              style={{ 
+                filter: "grayscale(100%)", 
+                opacity: 0.85 
+              }} 
+            />
           ) : (
             agent.agentName
           )}
