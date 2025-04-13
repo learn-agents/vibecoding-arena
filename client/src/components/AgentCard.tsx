@@ -211,8 +211,8 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       
       {/* Agent name under the card */}
       <div className="p-3 pt-2">
-        <div className="text-sm font-medium text-foreground/90">
-          {agent.agentName}
+        <div className="text-sm font-medium text-foreground/90" style={{ fontFamily: "'Space Mono', monospace" }}>
+          {agent.agentName.charAt(0).toUpperCase() + agent.agentName.slice(1)}
         </div>
       </div>
     </div>
