@@ -68,8 +68,6 @@ export default function FilterSystem({ onFilterChange }: FilterSystemProps) {
 
   return (
     <div className="mb-8 p-4 rounded-md border border-gray-200 bg-white">
-      <h3 className="text-lg font-medium mb-4">Filter By:</h3>
-      
       <div className="flex flex-col md:flex-row">
         {/* Prompts Column */}
         <div className="flex-1 mb-4 md:mb-0">
