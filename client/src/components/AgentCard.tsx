@@ -211,7 +211,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       
       {/* Agent name under the card */}
       <div className="p-3 pt-2">
-        <div className="text-sm font-medium text-foreground/90">
+        <div className="text-sm font-medium italic text-foreground/90">
           {agent.agentName}
         </div>
       </div>
