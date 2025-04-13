@@ -32,19 +32,19 @@ prompts:
         created_at: '2025-02-15'
         video_url: /videos/v0_giphy.mp4
         code_link: /code/v0-portfolio
-      - name: replit
+      - name: Replit
         created_at: '2025-02-15'
         video_url: /videos/replit_giphy.mp4
         code_link: /code/replit-portfolio
-      - name: lovable
+      - name: Lovable
         created_at: '2025-02-16'
         video_url: /videos/lovable_giphy.mp4
         code_link: /code/lovable-portfolio
-      - name: bolt
+      - name: Bolt
         created_at: '2025-02-15'
         video_url: /videos/bolt_giphy.mp4
         code_link: /code/bolt-portfolio
-      - name: grok
+      - name: Grok
         created_at: '2025-03-02'
         video_url: /videos/grok_giphy.mp4
         code_link: /code/grok-portfolio
