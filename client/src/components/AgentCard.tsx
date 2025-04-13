@@ -183,7 +183,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
         {/* Gradient overlay at the bottom - only render when hovering */}
         {isHovering && (
           <div 
-            className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-300 z-10 opacity-100"
+            className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#222]/50 to-transparent transition-opacity duration-300 z-10 opacity-100"
           ></div>
         )}
         

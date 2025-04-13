@@ -48,7 +48,7 @@ export default function About() {
                     href="https://github.com/all-mute" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-black hover:text-white transition-all"
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-[#222] hover:text-white transition-all"
                     title="GitHub"
                   >
                     <Github size={20} />
@@ -66,7 +66,7 @@ export default function About() {
                     href="https://x.com/0xMerkulov" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-black hover:text-white transition-all"
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-[#222] hover:text-white transition-all"
                     title="Twitter/X"
                   >
                     <FaXTwitter size={20} />
