@@ -92,6 +92,9 @@ export default function Home() {
           {!isLoading && (
             <FilterSystem onFilterChange={handleFilterChange} />
           )}
+          
+          {/* Divider after filter system */}
+          <div className="my-8 border-b border-border"></div>
 
           {/* Grid Layout */}
           {isLoading ? (
