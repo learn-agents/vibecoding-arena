@@ -12,6 +12,7 @@ prompts:
         created_at: '2025-02-15'
         video_url: /videos/replit_giphy.mp4
         code_link: /code/replit-cat-food
+        logo_url: null
       - name: lovable
         created_at: '2025-02-16'
         video_url: /videos/lovable_giphy.mp4
@@ -21,10 +22,12 @@ prompts:
         created_at: '2025-02-15'
         video_url: /videos/bolt_giphy.mp4
         code_link: /code/bolt-cat-food
+        logo_url: null
       - name: grok
         created_at: '2025-03-02'
         video_url: /videos/grok_giphy.mp4
         code_link: /code/grok-cat-food
+        logo_url: null
   
   - shortname: portfolio-python
     full_prompt: Porfolio website for a Python developer
@@ -39,6 +42,7 @@ prompts:
         created_at: '2025-02-15'
         video_url: /videos/replit_giphy.mp4
         code_link: /code/replit-portfolio
+        logo_url: null
       - name: lovable
         created_at: '2025-02-16'
         video_url: /videos/lovable_giphy.mp4
@@ -48,10 +52,12 @@ prompts:
         created_at: '2025-02-15'
         video_url: /videos/bolt_giphy.mp4
         code_link: /code/bolt-portfolio
+        logo_url: null
       - name: grok
         created_at: '2025-03-02'
         video_url: /videos/grok_giphy.mp4
         code_link: /code/grok-portfolio
+        logo_url: null
   
   - shortname: chat-bot
     full_prompt: Chat bot with a personality
@@ -66,6 +72,7 @@ prompts:
         created_at: '2025-02-15'
         video_url: /videos/replit_giphy.mp4
         code_link: /code/replit-chatbot
+        logo_url: null
       - name: lovable
         created_at: '2025-02-16'
         video_url: /videos/lovable_giphy.mp4
@@ -75,8 +82,10 @@ prompts:
         created_at: '2025-02-15'
         video_url: /videos/bolt_giphy.mp4
         code_link: /code/bolt-chatbot
+        logo_url: null
       - name: grok
         created_at: '2025-03-02'
         video_url: /videos/grok_giphy.mp4
         code_link: /code/grok-chatbot
+        logo_url: null
 
