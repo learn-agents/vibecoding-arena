@@ -222,8 +222,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
               alt="lovable" 
               className="h-4 w-auto" 
               style={{ 
-                filter: "grayscale(100%)", 
-                opacity: 0.85,
+                filter: "grayscale(100%) brightness(0)",
                 maxWidth: "100px"
               }} 
             />
