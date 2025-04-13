@@ -115,7 +115,9 @@ export default function FilterSystem({ onFilterChange }: FilterSystemProps) {
                     : "bg-white text-black border border-gray-300 hover:bg-gray-100"
                 )}
               >
-                {agentName}
+                <span style={{ fontFamily: "'Space Mono', monospace" }}>
+                  {agentName.charAt(0).toUpperCase() + agentName.slice(1)}
+                </span>
               </button>
             ))}
           </div>
