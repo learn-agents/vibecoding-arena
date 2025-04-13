@@ -216,10 +216,11 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
             <img 
               src={agent.logoUrl} 
               alt={agent.agentName} 
-              className="h-4 w-auto" 
+              className="h-5 w-auto" 
               style={{ 
                 filter: "grayscale(100%) brightness(0)",
-                maxWidth: "100px"
+                maxWidth: "100px",
+                maxHeight: "20px" // Adding a consistent max height for all logos
               }} 
             />
           ) : (

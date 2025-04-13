@@ -12,7 +12,7 @@ interface YamlAgent {
   created_at: string;
   video_url: string;
   code_link: string;
-  logo_url?: string;
+  logo_url: string | null;
 }
 
 interface YamlPrompt {
