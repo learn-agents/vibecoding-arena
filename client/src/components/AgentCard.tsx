@@ -221,7 +221,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       
       {/* Agent name under the card */}
       <div className="p-3 pt-2">
-        <div className="text-sm font-medium text-foreground/90 flex items-center gap-2">
+        <div className="text-sm font-medium text-foreground/90 flex items-center gap-1.5">
           <span>by</span>
           <a 
             href={agentWebsites[agent.agentName.toLowerCase()] || "#"} 
@@ -231,7 +231,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
             <Button 
               variant="default" 
               size="sm" 
-              className="h-7 px-3 py-1 bg-black hover:bg-black/80 text-white rounded-md"
+              className="h-6 px-2 py-0 bg-[#222] hover:bg-[#222]/80 text-white rounded-md text-xs"
             >
               {agent.agentName}
             </Button>
