@@ -212,20 +212,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       {/* Agent name under the card */}
       <div className="p-3 pt-2">
         <div className="text-sm font-medium text-foreground/90">
-          {agent.logoUrl ? (
-            <img 
-              src={agent.logoUrl} 
-              alt={agent.agentName} 
-              className="h-5 w-auto" 
-              style={{ 
-                filter: "grayscale(100%) brightness(0)",
-                maxWidth: "100px",
-                maxHeight: "20px" // Adding a consistent max height for all logos
-              }} 
-            />
-          ) : (
-            agent.agentName
-          )}
+          {agent.agentName}
         </div>
       </div>
     </div>
