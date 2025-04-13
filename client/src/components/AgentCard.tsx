@@ -216,14 +216,15 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
         <div className="text-sm font-medium text-foreground/90">
           {agent.agentName === "v0" ? (
             <img src={v0Logo} alt="v0" className="h-5 w-auto" />
-          ) : agent.agentName === "Lovable" ? (
+          ) : agent.agentName === "lovable" ? (
             <img 
               src={lovableLogo} 
-              alt="Lovable" 
-              className="h-5 w-auto" 
+              alt="lovable" 
+              className="h-4 w-auto" 
               style={{ 
                 filter: "grayscale(100%)", 
-                opacity: 0.85 
+                opacity: 0.85,
+                maxWidth: "100px"
               }} 
             />
           ) : (
