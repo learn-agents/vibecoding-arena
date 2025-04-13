@@ -80,8 +80,8 @@ export default function FilterSystem({ onFilterChange }: FilterSystemProps) {
                 className={cn(
                   "px-3 py-1.5 rounded-md text-sm transition-colors whitespace-nowrap",
                   selectedPrompts.includes(prompt.id)
-                    ? "bg-black text-white" 
-                    : "bg-white text-black border border-gray-300 hover:bg-gray-100"
+                    ? "bg-[#222] text-white" 
+                    : "bg-white text-[#222] border border-gray-300 hover:bg-gray-100"
                 )}
               >
                 {prompt.id}
@@ -111,8 +111,8 @@ export default function FilterSystem({ onFilterChange }: FilterSystemProps) {
                 className={cn(
                   "px-3 py-1.5 rounded-md text-sm transition-colors min-w-0 max-w-full",
                   selectedAgents.includes(agentName)
-                    ? "bg-black text-white" 
-                    : "bg-white text-black border border-gray-300 hover:bg-gray-100"
+                    ? "bg-[#222] text-white" 
+                    : "bg-white text-[#222] border border-gray-300 hover:bg-gray-100"
                 )}
                 style={{ 
                   flexBasis: 'calc(33.333% - 0.5rem)',
