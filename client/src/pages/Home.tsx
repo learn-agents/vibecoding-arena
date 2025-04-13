@@ -31,33 +31,29 @@ export default function Home() {
       return prompts;
     }
 
-    return prompts
-      .filter(prompt => {
-        // If prompt filters exist, check if this prompt is selected
-        if (selectedPromptIds.length > 0 && !selectedPromptIds.includes(prompt.id)) {
-          return false;
-        }
+    // First, filter by prompts if prompt filters are selected
+    let promptsToProcess = prompts;
+    if (selectedPromptIds.length > 0) {
+      promptsToProcess = prompts.filter(prompt => 
+        selectedPromptIds.includes(prompt.id)
+      );
+    }
 
-        // If agent filters exist, check if this prompt has any of the selected agents
-        if (selectedAgentNames.length > 0) {
-          const hasSelectedAgent = prompt.agents.some(agent => 
-            selectedAgentNames.includes(agent.agentName)
-          );
-          return hasSelectedAgent;
-        }
-
-        return true;
-      })
-      .map(prompt => {
-        // If agent filters exist, filter agents within each prompt
-        if (selectedAgentNames.length > 0) {
-          const filteredAgents = prompt.agents.filter(agent => 
-            selectedAgentNames.includes(agent.agentName)
-          );
-          return { ...prompt, agents: filteredAgents };
-        }
-        return prompt;
-      });
+    // Then, if agent filters are selected, filter or process the agents
+    if (selectedAgentNames.length > 0) {
+      return promptsToProcess.map(prompt => {
+        // Filter the agents within this prompt to only include selected agents
+        const filteredAgents = prompt.agents.filter(agent => 
+          selectedAgentNames.includes(agent.agentName)
+        );
+        
+        // Return the prompt with filtered agents
+        return { ...prompt, agents: filteredAgents };
+      }).filter(prompt => prompt.agents.length > 0); // Only keep prompts that have matching agents
+    }
+    
+    // If only prompt filters were applied, return those prompts with all their agents
+    return promptsToProcess;
   }, [prompts, selectedPromptIds, selectedAgentNames]);
 
   return (
