@@ -10,9 +10,8 @@ import { v4 as uuidv4 } from 'uuid';
 interface YamlAgent {
   name: string;
   created_at: string;
-  gif_url: string;
+  video_url: string;
   code_link: string;
-  original_gif_url?: string; // Optional field to store the original GIF URL when converted to video
 }
 
 interface YamlPrompt {
@@ -66,9 +65,9 @@ export class YamlStorage implements IStorage {
             id: agentId,
             promptId: yamlPrompt.shortname,
             agentName: yamlAgent.name,
-            gifUrl: yamlAgent.gif_url,
+            gifUrl: yamlAgent.video_url, // Map video_url to gifUrl for compatibility with existing schema
             codeLink: yamlAgent.code_link,
-            originalGifUrl: yamlAgent.original_gif_url || null,
+            originalGifUrl: yamlAgent.original_video_url || null, // Map original_video_url to originalGifUrl
           };
 
           this.agents.set(agentId, agentData);

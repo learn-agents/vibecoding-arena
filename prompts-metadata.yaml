@@ -5,29 +5,24 @@ prompts:
     agents:
       - name: v0
         created_at: '2025-02-15'
-        gif_url: /videos/v0_giphy.mp4
-        code_link: https://github.com/anthropic-labs/claude-todo-app
-        original_gif_url: https://media3.giphy.com/media/QpVUMRUJGokfqXyfa1/giphy.gif
+        video_url: /videos/v0_giphy.mp4
+        code_link: /code/v0-cat-food
       - name: replit
         created_at: '2025-02-15'
-        gif_url: /videos/replit_giphy.mp4
-        code_link: https://github.com/openai-examples/gpt4-todo-app
-        original_gif_url: https://media0.giphy.com/media/l0HlGRDhPTqVEvhCw/giphy.gif
+        video_url: /videos/replit_giphy.mp4
+        code_link: /code/replit-cat-food
       - name: lovable
         created_at: '2025-02-16'
-        gif_url: /videos/lovable_giphy.mp4
-        code_link: https://github.com/google-deepmind/gemini-todo-app
-        original_gif_url: https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemgycHJkY283YTQyZ2l5aGR5MGY4MGQ0YjUwZncyOGg3cDRvdm44NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYt5jPR6QX5pnqM/giphy.gif
+        video_url: /videos/lovable_giphy.mp4
+        code_link: /code/lovable-cat-food
       - name: bolt
         created_at: '2025-02-15'
-        gif_url: /videos/bolt_giphy.mp4
-        code_link: https://github.com/github-labs/copilotx-todo-app
-        original_gif_url: https://media2.giphy.com/media/3o7aCTfyhYawdOXcFW/giphy.gif
+        video_url: /videos/bolt_giphy.mp4
+        code_link: /code/bolt-cat-food
       - name: grok
         created_at: '2025-03-02'
-        gif_url: /videos/grok_giphy.mp4
-        code_link: https://github.com/google-deepmind/gemini-weather-app
-        original_gif_url: https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif
+        video_url: /videos/grok_giphy.mp4
+        code_link: /code/grok-cat-food
   
   - shortname: portfolio-python
     full_prompt: Porfolio website for a Python developer
@@ -35,29 +30,24 @@ prompts:
     agents:
       - name: v0
         created_at: '2025-02-15'
-        gif_url: /videos/v0_giphy.mp4
-        code_link: https://github.com/anthropic-labs/claude-todo-app
-        original_gif_url: https://media3.giphy.com/media/QpVUMRUJGokfqXyfa1/giphy.gif
+        video_url: /videos/v0_giphy.mp4
+        code_link: /code/v0-portfolio
       - name: replit
         created_at: '2025-02-15'
-        gif_url: /videos/replit_giphy.mp4
-        code_link: https://github.com/openai-examples/gpt4-todo-app
-        original_gif_url: https://media0.giphy.com/media/l0HlGRDhPTqVEvhCw/giphy.gif
+        video_url: /videos/replit_giphy.mp4
+        code_link: /code/replit-portfolio
       - name: lovable
         created_at: '2025-02-16'
-        gif_url: /videos/lovable_giphy.mp4
-        code_link: https://github.com/google-deepmind/gemini-todo-app
-        original_gif_url: https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemgycHJkY283YTQyZ2l5aGR5MGY4MGQ0YjUwZncyOGg3cDRvdm44NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYt5jPR6QX5pnqM/giphy.gif
+        video_url: /videos/lovable_giphy.mp4
+        code_link: /code/lovable-portfolio
       - name: bolt
         created_at: '2025-02-15'
-        gif_url: /videos/bolt_giphy.mp4
-        code_link: https://github.com/github-labs/copilotx-todo-app
-        original_gif_url: https://media2.giphy.com/media/3o7aCTfyhYawdOXcFW/giphy.gif
+        video_url: /videos/bolt_giphy.mp4
+        code_link: /code/bolt-portfolio
       - name: grok
         created_at: '2025-03-02'
-        gif_url: /videos/grok_giphy.mp4
-        code_link: https://github.com/google-deepmind/gemini-weather-app
-        original_gif_url: https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif
+        video_url: /videos/grok_giphy.mp4
+        code_link: /code/grok-portfolio
   
   - shortname: chat-bot
     full_prompt: Chat bot with a personality
@@ -65,27 +55,22 @@ prompts:
     agents:
       - name: v0
         created_at: '2025-02-15'
-        gif_url: /videos/v0_giphy.mp4
-        code_link: https://github.com/anthropic-labs/claude-todo-app
-        original_gif_url: https://media3.giphy.com/media/QpVUMRUJGokfqXyfa1/giphy.gif
+        video_url: /videos/v0_giphy.mp4
+        code_link: /code/v0-chatbot
       - name: replit
         created_at: '2025-02-15'
-        gif_url: /videos/replit_giphy.mp4
-        code_link: https://github.com/openai-examples/gpt4-todo-app
-        original_gif_url: https://media0.giphy.com/media/l0HlGRDhPTqVEvhCw/giphy.gif
+        video_url: /videos/replit_giphy.mp4
+        code_link: /code/replit-chatbot
       - name: lovable
         created_at: '2025-02-16'
-        gif_url: /videos/lovable_giphy.mp4
-        code_link: https://github.com/google-deepmind/gemini-todo-app
-        original_gif_url: https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemgycHJkY283YTQyZ2l5aGR5MGY4MGQ0YjUwZncyOGg3cDRvdm44NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYt5jPR6QX5pnqM/giphy.gif
+        video_url: /videos/lovable_giphy.mp4
+        code_link: /code/lovable-chatbot
       - name: bolt
         created_at: '2025-02-15'
-        gif_url: /videos/bolt_giphy.mp4
-        code_link: https://github.com/github-labs/copilotx-todo-app
-        original_gif_url: https://media2.giphy.com/media/3o7aCTfyhYawdOXcFW/giphy.gif
+        video_url: /videos/bolt_giphy.mp4
+        code_link: /code/bolt-chatbot
       - name: grok
         created_at: '2025-03-02'
-        gif_url: /videos/grok_giphy.mp4
-        code_link: https://github.com/google-deepmind/gemini-weather-app
-        original_gif_url: https://media2.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif
+        video_url: /videos/grok_giphy.mp4
+        code_link: /code/grok-chatbot
 
