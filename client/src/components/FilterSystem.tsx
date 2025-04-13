@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Separator } from "@/components/ui/separator";
 import { cn } from '@/lib/utils';
 import { Agent, Prompt } from '@/lib/types';
@@ -67,7 +67,7 @@ export default function FilterSystem({ onFilterChange }: FilterSystemProps) {
   }, [selectedPrompts, selectedAgents, onFilterChange]);
 
   return (
-    <div className="mb-8 p-4 rounded-md border border-gray-200 bg-white">
+    <div style={{ backgroundColor: '#f8f8f8' }} className="mb-8 p-4 rounded-md border border-gray-200">
       <div className="flex flex-col md:flex-row">
         {/* Prompts Column */}
         <div className="flex-1 mb-4 md:mb-0">
