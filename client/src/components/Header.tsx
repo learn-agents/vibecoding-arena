@@ -115,22 +115,22 @@ export default function Header() {
               </button>
               
               {categoryDropdownOpen && (
-                <div className="absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md p-2 z-50 min-w-[200px]">
-                  <Link to="/">
-                    <div className="px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">
+                <div className="absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md p-2 z-50 min-w-[200px] flex flex-col">
+                  <Link to="/" className="w-full">
+                    <div className="px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer w-full text-left">
                       Simple
                     </div>
                   </Link>
                   
-                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed">
+                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed w-full text-left">
                     Hard
                   </div>
                   
-                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed">
+                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed w-full text-left">
                     Games
                   </div>
                   
-                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed">
+                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed w-full text-left">
                     4Devs
                   </div>
                 </div>
@@ -191,16 +191,16 @@ export default function Header() {
               
               {/* Conditional rendering of category items */}
               {mobileCategoryOpen && (
-                <div className="px-8 space-y-4 mt-4">
-                  <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-                    <span>Simple</span>
+                <div className="px-8 space-y-4 mt-4 flex flex-col">
+                  <Link to="/" onClick={() => setMobileMenuOpen(false)} className="w-full">
+                    <span className="block w-full text-left py-1">Simple</span>
                   </Link>
                   
-                  <div className="block text-gray-500 cursor-not-allowed">Hard</div>
+                  <div className="block text-gray-500 cursor-not-allowed w-full text-left py-1">Hard</div>
                   
-                  <div className="block text-gray-500 cursor-not-allowed">Games</div>
+                  <div className="block text-gray-500 cursor-not-allowed w-full text-left py-1">Games</div>
                   
-                  <div className="block text-gray-500 cursor-not-allowed">4Devs</div>
+                  <div className="block text-gray-500 cursor-not-allowed w-full text-left py-1">4Devs</div>
                 </div>
               )}
             </div>
