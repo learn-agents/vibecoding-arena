@@ -25,7 +25,10 @@ export default function Header() {
   // State for mobile menu
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
-  // State for category dropdown
+  // State for category dropdown in mobile menu
+  const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false);
+  
+  // State for category dropdown in desktop
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -68,11 +71,20 @@ export default function Header() {
   // Handle mobile menu toggle
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+    // Reset category dropdown state when closing the menu
+    if (mobileMenuOpen) {
+      setMobileCategoryOpen(false);
+    }
   };
 
-  // Handle category dropdown toggle
+  // Handle category dropdown toggle on desktop
   const toggleCategoryDropdown = () => {
     setCategoryDropdownOpen(!categoryDropdownOpen);
+  };
+  
+  // Handle category dropdown toggle on mobile
+  const toggleMobileCategory = () => {
+    setMobileCategoryOpen(!mobileCategoryOpen);
   };
 
   return (
@@ -93,10 +105,10 @@ export default function Header() {
           {/* Center section with category dropdown - hidden on small screens */}
           <div className="hidden lg:flex items-center space-x-4">
             {/* Category Dropdown */}
-            <div className="relative" ref={categoryDropdownRef}>
+            <div className="relative w-full" ref={categoryDropdownRef}>
               <button 
                 onClick={toggleCategoryDropdown}
-                className="flex items-center space-x-1 px-4 py-2 rounded-md bg-gray-light text-black hover:bg-gray-200 transition-all cursor-pointer"
+                className="flex items-center justify-between space-x-1 px-4 py-2 w-56 bg-gray-light text-black hover:bg-gray-200 transition-all cursor-pointer"
               >
                 <span>By Category</span>
                 <ChevronDown className={`h-4 w-4 transition-transform ${categoryDropdownOpen ? 'rotate-180' : ''}`} />
@@ -158,8 +170,8 @@ export default function Header() {
 
       {/* Mobile/tablet menu overlay - only visible when menu is open */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-white z-10 flex flex-col pt-24 px-8 overflow-y-auto">
-          {/* Close button in the top-right corner */}
+        <div className="fixed inset-0 bg-white z-10 flex flex-col overflow-y-auto">
+          {/* Close button positioned at the top-right */}
           <button 
             className="absolute top-6 right-6 p-2 focus:outline-none" 
             onClick={toggleMobileMenu}
@@ -167,37 +179,50 @@ export default function Header() {
           >
             <X className="h-6 w-6" />
           </button>
-          
-          <nav className="flex flex-col space-y-8 text-black text-4xl font-semibold">
-            {/* Category header */}
-            <div className="text-gray-light">By Category</div>
-            
-            {/* Category items with indentation */}
-            <div className="pl-4 space-y-6">
-              <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-                <span>Simple</span>
-              </Link>
+
+          <nav className="flex flex-col space-y-12 text-black text-4xl font-semibold mt-24">
+            {/* Category section with dropdown */}
+            <div className="-mt-6">
+              <button 
+                onClick={toggleMobileCategory}
+                className="flex items-center justify-between w-full py-4 text-black bg-gray-light px-4 w-screen"
+              >
+                <span className="ml-4">By Category</span>
+                <ChevronDown className={`h-6 w-6 mr-4 transition-transform ${mobileCategoryOpen ? 'rotate-180' : ''}`} />
+              </button>
               
-              <div className="text-gray-500 cursor-not-allowed">Hard</div>
-              
-              <div className="text-gray-500 cursor-not-allowed">Games</div>
-              
-              <div className="text-gray-500 cursor-not-allowed">4Devs</div>
+              {/* Conditional rendering of category items */}
+              {mobileCategoryOpen && (
+                <div className="px-8 space-y-8 mt-8">
+                  <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+                    <span>Simple</span>
+                  </Link>
+                  
+                  <div className="block text-gray-500 cursor-not-allowed">Hard</div>
+                  
+                  <div className="block text-gray-500 cursor-not-allowed">Games</div>
+                  
+                  <div className="block text-gray-500 cursor-not-allowed">4Devs</div>
+                </div>
+              )}
             </div>
             
             {/* Other menu items */}
-            <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
-              <span>About</span>
-            </Link>
-            
-            <a 
-              href={contributeUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span>Submit Prompt</span>
-            </a>
+            <div className="px-8 space-y-8">
+              <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
+                <span>About</span>
+              </Link>
+              
+              <a 
+                href={contributeUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="block"
+              >
+                <span>Submit Prompt</span>
+              </a>
+            </div>
           </nav>
         </div>
       )}
