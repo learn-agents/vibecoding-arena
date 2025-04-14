@@ -180,20 +180,20 @@ export default function Header() {
             <X className="h-6 w-6" />
           </button>
 
-          <nav className="flex flex-col space-y-12 text-black text-2xl font-semibold mt-24">
+          <nav className="flex flex-col space-y-12 text-black text-lg font-semibold mt-24">
             {/* Category section with dropdown */}
             <div className="-mt-6">
               <button 
                 onClick={toggleMobileCategory}
-                className="flex items-center justify-between w-full py-4 text-black bg-gray-light px-4 w-screen"
+                className="flex items-center justify-between w-full py-4 text-black bg-gray-light px-4 w-screen text-xl"
               >
                 <span className="ml-4">By Category</span>
-                <ChevronDown className={`h-6 w-6 mr-4 transition-transform ${mobileCategoryOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-5 w-5 mr-4 transition-transform ${mobileCategoryOpen ? 'rotate-180' : ''}`} />
               </button>
               
               {/* Conditional rendering of category items */}
               {mobileCategoryOpen && (
-                <div className="px-8 space-y-5 mt-6">
+                <div className="px-8 space-y-4 mt-4">
                   <Link to="/" onClick={() => setMobileMenuOpen(false)}>
                     <span>Simple</span>
                   </Link>
@@ -208,7 +208,7 @@ export default function Header() {
             </div>
             
             {/* Other menu items */}
-            <div className="px-8 space-y-5">
+            <div className="px-8 space-y-4">
               <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
                 <span>About</span>
               </Link>
