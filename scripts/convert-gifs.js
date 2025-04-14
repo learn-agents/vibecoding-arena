@@ -82,7 +82,7 @@ async function processGifs() {
     // First, identify all unique GIFs
     yamlData.prompts.forEach(prompt => {
       prompt.agents.forEach(agent => {
-        const gifUrl = agent.gif_url;
+        const gifUrl = agent.video_url;
         if (!uniqueGifs.has(gifUrl)) {
           // Generate a sanitized filename from the GIF URL
           const urlParts = new URL(gifUrl).pathname.split('/');

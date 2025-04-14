@@ -12,12 +12,14 @@ interface YamlAgent {
   created_at: string;
   video_url: string;
   code_link: string;
+  image_link: string | null;
 }
 
 interface YamlPrompt {
   shortname: string;
-  full_prompt: string;
-  description: string;
+  title: string;
+  short_description: string;
+  full_prompt_link: string | null;
   agents: YamlAgent[];
 }
 
@@ -51,8 +53,8 @@ export class YamlStorage implements IStorage {
       data.prompts.forEach((yamlPrompt, index) => {
         const promptData: Prompt = {
           id: yamlPrompt.shortname,
-          text: yamlPrompt.full_prompt,
-          description: yamlPrompt.description,
+          text: yamlPrompt.title,
+          description: yamlPrompt.short_description,
           carouselIndex: index,
         };
 
@@ -67,7 +69,7 @@ export class YamlStorage implements IStorage {
             agentName: yamlAgent.name,
             gifUrl: yamlAgent.video_url, // Map video_url to gifUrl for compatibility with existing schema
             codeLink: yamlAgent.code_link,
-            originalGifUrl: null, // No original URLs are needed anymore
+            originalGifUrl: yamlAgent.image_link, // Use image_link for originalGifUrl
           };
 
           this.agents.set(agentId, agentData);
