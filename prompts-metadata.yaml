@@ -37,7 +37,7 @@ prompts:
     agents:
       - name: v0
         created_at: '2025-02-15'
-        video_url: /videos/v0_giphy.mp4
+        video_url: https://i.gifer.com/xK.mp4
         code_link: /code/v0-portfolio
         image_link: null
       - name: replit
