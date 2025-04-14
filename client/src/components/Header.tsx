@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 // Define type for social links data
@@ -16,12 +16,15 @@ interface SocialLinks {
 }
 
 export default function Header() {
-  // State for category dropdown - acts as a full-screen overlay now
+  // State for fullscreen menu triggered by hamburger icon
+  const [menuOpen, setMenuOpen] = useState(false);
+  
+  // State for category dropdown within the menu
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   
-  // Prevent body scroll when dropdown is open
+  // Prevent body scroll when menu is open
   useEffect(() => {
-    if (categoryDropdownOpen) {
+    if (menuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -30,7 +33,7 @@ export default function Header() {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [categoryDropdownOpen]);
+  }, [menuOpen]);
 
   // Fetch social links to get the GitHub repository URL
   const { data } = useQuery<SocialLinks>({
@@ -43,88 +46,98 @@ export default function Header() {
     ? `${data.project.github}/blob/master/CONTRIBUTE.md` 
     : "#";
 
-  // Toggle the category dropdown
+  // Toggle fullscreen menu
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+    // Close category dropdown when closing menu
+    if (menuOpen) {
+      setCategoryDropdownOpen(false);
+    }
+  };
+
+  // Toggle category dropdown
   const toggleCategoryDropdown = () => {
     setCategoryDropdownOpen(!categoryDropdownOpen);
   };
 
   return (
     <>
-      {/* Main Header - only visible when dropdown is closed */}
-      {!categoryDropdownOpen && (
-        <header className="py-6 px-4 md:px-8 lg:px-16 border-b border-border relative z-20">
-          <div className="max-w-7xl mx-auto flex justify-between items-center">
-            {/* Left side with logo and text */}
-            <div className="flex items-center">
-              <Link to="/">
-                <div className="flex items-center space-x-2 cursor-pointer">
-                  <img src="/favicon.ico" alt="Robot Icon" className="w-8 h-8" />
-                  <h1 className="text-xl md:text-2xl font-semibold">Vibe Arena</h1>
-                </div>
-              </Link>
-            </div>
-            
-            {/* Category Button - on desktop and mobile */}
-            <div className="flex items-center space-x-4">
-              <button 
-                onClick={toggleCategoryDropdown}
-                className="flex items-center justify-between space-x-2 px-4 py-2 bg-gray-light text-black hover:bg-gray-200 transition-all cursor-pointer rounded-md"
-              >
-                <span>By Category</span>
-                <ChevronDown className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        </header>
-      )}
-
-      {/* Full Screen Dropdown Menu Overlay */}
-      {categoryDropdownOpen && (
-        <div className="fixed inset-0 bg-gray-light z-50 overflow-y-auto">
-          {/* Header with close button */}
-          <div className="px-4 py-4 md:px-8 lg:px-16 flex justify-between items-center border-b border-gray-300">
-            <h2 className="text-xl font-bold">By Category</h2>
-            <button 
-              onClick={toggleCategoryDropdown}
-              className="p-2 focus:outline-none"
-              aria-label="Close menu"
-            >
-              <X className="h-6 w-6" />
-            </button>
+      {/* Main Header - always visible */}
+      <header className="py-6 px-4 md:px-8 lg:px-16 border-b border-border relative z-30">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          {/* Left side with logo and text */}
+          <div className="flex items-center">
+            <Link to="/">
+              <div className="flex items-center space-x-2 cursor-pointer">
+                <img src="/favicon.ico" alt="Robot Icon" className="w-8 h-8" />
+                <h1 className="text-xl md:text-2xl font-semibold">Vibe Arena</h1>
+              </div>
+            </Link>
           </div>
           
-          {/* Menu content */}
-          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
-            <ul className="divide-y divide-gray-200 text-lg">
-              <li>
-                <Link to="/" onClick={() => setCategoryDropdownOpen(false)} className="block w-full">
-                  <div className="py-4 hover:bg-white px-4 -mx-4 transition-colors">
-                    Simple
-                  </div>
-                </Link>
-              </li>
-              <li>
-                <div className="py-4 text-gray-500 cursor-not-allowed px-4">
-                  Hard
-                </div>
-              </li>
-              <li>
-                <div className="py-4 text-gray-500 cursor-not-allowed px-4">
-                  Games
-                </div>
-              </li>
-              <li>
-                <div className="py-4 text-gray-500 cursor-not-allowed px-4">
-                  4Devs
-                </div>
-              </li>
-            </ul>
+          {/* Hamburger Menu Button */}
+          <button 
+            className="p-2 focus:outline-none" 
+            onClick={toggleMenu}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+          >
+            {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+      </header>
 
-            <div className="border-t border-gray-200 mt-6 pt-6">
-              <ul className="divide-y divide-gray-200 text-lg">
+      {/* Full Screen Menu Overlay */}
+      {menuOpen && (
+        <div className="fixed inset-0 top-[89px] bg-gray-light z-20 overflow-y-auto">
+          {/* Menu content */}
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-4">
+            {/* Category section with dropdown */}
+            <div className="border-b border-gray-300 pb-4">
+              <button 
+                onClick={toggleCategoryDropdown}
+                className="flex items-center justify-between w-full p-4 text-black bg-white rounded-md shadow-sm text-lg font-medium"
+              >
+                <span>By Category</span>
+                <ChevronDown className={`h-5 w-5 transition-transform ${categoryDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {/* Category dropdown items */}
+              {categoryDropdownOpen && (
+                <div className="mt-2 bg-white rounded-md shadow-sm overflow-hidden">
+                  <ul className="divide-y divide-gray-100">
+                    <li>
+                      <Link to="/" onClick={() => {setMenuOpen(false); setCategoryDropdownOpen(false);}} className="block w-full">
+                        <div className="p-4 hover:bg-gray-50">
+                          Simple
+                        </div>
+                      </Link>
+                    </li>
+                    <li>
+                      <div className="p-4 text-gray-500 cursor-not-allowed">
+                        Hard
+                      </div>
+                    </li>
+                    <li>
+                      <div className="p-4 text-gray-500 cursor-not-allowed">
+                        Games
+                      </div>
+                    </li>
+                    <li>
+                      <div className="p-4 text-gray-500 cursor-not-allowed">
+                        4Devs
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+            
+            {/* Other menu items */}
+            <div className="mt-4">
+              <ul className="divide-y divide-gray-200 bg-white rounded-md shadow-sm overflow-hidden">
                 <li>
-                  <Link to="/about" onClick={() => setCategoryDropdownOpen(false)} className="block w-full">
-                    <div className="py-4 hover:bg-white px-4 -mx-4 transition-colors">
+                  <Link to="/about" onClick={() => setMenuOpen(false)} className="block w-full">
+                    <div className="p-4 hover:bg-gray-50">
                       About
                     </div>
                   </Link>
@@ -134,10 +147,10 @@ export default function Header() {
                     href={contributeUrl} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    onClick={() => setCategoryDropdownOpen(false)}
+                    onClick={() => setMenuOpen(false)}
                     className="block w-full"
                   >
-                    <div className="py-4 hover:bg-white px-4 -mx-4 transition-colors">
+                    <div className="p-4 hover:bg-gray-50">
                       Submit Prompt
                     </div>
                   </a>
