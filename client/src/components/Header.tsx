@@ -153,39 +153,37 @@ export default function Header() {
             </a>
           </div>
           
-          {/* Hamburger menu button for small and medium screens */}
-          <button 
-            className="lg:hidden p-2 focus:outline-none" 
-            onClick={toggleMobileMenu}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-          >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
+          {/* Hamburger menu button for small and medium screens - only show when menu is closed */}
+          {!mobileMenuOpen && (
+            <button 
+              className="lg:hidden p-2 focus:outline-none" 
+              onClick={toggleMobileMenu}
+              aria-label="Open menu"
+            >
               <Menu className="h-6 w-6" />
-            )}
-          </button>
+            </button>
+          )}
         </div>
       </header>
 
       {/* Mobile/tablet menu overlay - only visible when menu is open */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-white z-10 flex flex-col overflow-y-auto">
+        <div className="fixed inset-0 top-[73px] bg-white z-10 flex flex-col overflow-y-auto">
           {/* Close button positioned at the top-right */}
           <button 
-            className="absolute top-6 right-6 p-2 focus:outline-none" 
+            className="absolute top-4 right-6 p-2 focus:outline-none" 
             onClick={toggleMobileMenu}
             aria-label="Close menu"
           >
             <X className="h-6 w-6" />
           </button>
 
-          <nav className="flex flex-col space-y-12 text-black text-lg font-semibold mt-24">
+          <nav className="flex flex-col space-y-12 text-black text-lg font-semibold mt-12">
             {/* Category section with dropdown */}
             <div className="-mt-6">
               <button 
                 onClick={toggleMobileCategory}
-                className="flex items-center justify-between w-full py-4 text-black bg-gray-light px-4 w-screen text-xl"
+                className="flex items-center justify-between w-full py-4 text-black bg-gray-light px-4 -mx-8 w-screen text-xl"
               >
                 <span className="ml-4">By Category</span>
                 <ChevronDown className={`h-5 w-5 mr-4 transition-transform ${mobileCategoryOpen ? 'rotate-180' : ''}`} />
