@@ -64,7 +64,7 @@ export default function About() {
                     ))}
                   </> 
                 ) : (
-                  "David Merkulov, Dmitry Zhechkov, Artem Bulgakov"
+                  "Dmitry Zhechkov, David Merkulov, Artem Bulgakov"
                 )}
               </li>
               <li>
