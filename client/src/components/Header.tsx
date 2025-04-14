@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 // Define type for social links data
 interface SocialLinks {
@@ -23,8 +23,24 @@ interface SocialLinks {
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [categoryOpen, setCategoryOpen] = useState(false);
-  
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Handle window resize to detect mobile view
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkIfMobile();
+    
+    // Set up event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Clean up event listener on component unmount
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -53,11 +69,6 @@ export default function Header() {
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
-  
-  // Toggle category dropdown
-  const toggleCategory = () => {
-    setCategoryOpen(!categoryOpen);
-  };
 
   return (
     <>
@@ -74,8 +85,8 @@ export default function Header() {
             </Link>
           </div>
           
-          {/* Center section with category buttons - hidden on mobile and tablet */}
-          <div className="hidden lg:flex items-center space-x-4">
+          {/* Center section with category buttons - hidden on mobile */}
+          <div className="hidden md:flex items-center space-x-4">
             <Link to="/">
               <span className="inline-block px-4 py-2 rounded-md text-black hover:bg-black hover:text-white transition-all cursor-pointer">
                 Simple
@@ -122,8 +133,8 @@ export default function Header() {
             </TooltipProvider>
           </div>
           
-          {/* Right side with About and Submit Prompt - hidden on mobile and tablet */}
-          <div className="hidden lg:flex items-center space-x-4">
+          {/* Right side with About and Submit Prompt - hidden on mobile */}
+          <div className="hidden md:flex items-center space-x-4">
             <Link to="/about">
               <span className="inline-block px-4 py-2 rounded-md text-black hover:bg-black hover:text-white transition-all cursor-pointer">
                 About
@@ -137,9 +148,9 @@ export default function Header() {
             </a>
           </div>
           
-          {/* Mobile/Tablet hamburger menu button */}
+          {/* Mobile hamburger menu button */}
           <button 
-            className="lg:hidden p-2 focus:outline-none" 
+            className="md:hidden p-2 focus:outline-none" 
             onClick={toggleMobileMenu}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
@@ -152,52 +163,33 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile menu */}
+      {/* Mobile menu overlay - only visible when menu is open */}
       {mobileMenuOpen && (
-        <div className="lg:hidden absolute w-full z-10 bg-white">
-          <div className="border-b border-gray-200">
-            <button 
-              onClick={toggleCategory}
-              className="w-full py-4 px-4 flex justify-between items-center bg-menu-gray hover:bg-gray-200 transition-colors"
-            >
-              <span className="text-xl font-medium text-gray-700">By Category</span>
-              {categoryOpen ? (
-                <ChevronUp className="h-5 w-5 text-gray-600" />
-              ) : (
-                <ChevronDown className="h-5 w-5 text-gray-600" />
-              )}
-            </button>
+        <div className="fixed inset-0 bg-black z-10 flex flex-col pt-24 px-8 overflow-y-auto">
+          <nav className="flex flex-col space-y-8 text-white text-4xl font-semibold">
+            <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+              <span>Simple</span>
+            </Link>
             
-            {/* Category items */}
-            {categoryOpen && (
-              <div className="pb-4 flex flex-col">
-                <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-                  <span className="block py-3 px-4 pl-8 text-black">Simple</span>
-                </Link>
-                <span className="block py-3 px-4 pl-8 text-gray-400 cursor-not-allowed">Hard</span>
-                <span className="block py-3 px-4 pl-8 text-gray-400 cursor-not-allowed">Games</span>
-                <span className="block py-3 px-4 pl-8 text-gray-400 cursor-not-allowed">4Devs</span>
-              </div>
-            )}
-          </div>
-          
-          {/* Other menu items */}
-          <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
-            <div className="py-4 px-4 border-b border-gray-200 text-xl font-medium">
-              About
-            </div>
-          </Link>
-          
-          <a 
-            href={contributeUrl} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            <div className="py-4 px-4 border-b border-gray-200 text-xl font-medium">
-              Submit Prompt
-            </div>
-          </a>
+            <span className="text-gray-500 cursor-not-allowed">Hard</span>
+            
+            <span className="text-gray-500 cursor-not-allowed">Games</span>
+            
+            <span className="text-gray-500 cursor-not-allowed">4Devs</span>
+            
+            <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
+              <span>About</span>
+            </Link>
+            
+            <a 
+              href={contributeUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span>Submit Prompt</span>
+            </a>
+          </nav>
         </div>
       )}
     </>
