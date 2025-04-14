@@ -6,10 +6,27 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Prompt, Agent } from "@/lib/types";
 import { useState, useMemo } from "react";
+import { FaGithub, FaXTwitter } from "react-icons/fa6";
+
+interface SocialLinks {
+  project: {
+    x: string;
+    github: string;
+  };
+  authors: Array<{
+    name: string;
+    x: string;
+  }>;
+}
 
 export default function Home() {
   const { data: prompts, isLoading } = useQuery<Prompt[]>({
     queryKey: ['/api/prompts'],
+  });
+
+  // Fetch social media links
+  const { data: socialLinks } = useQuery<SocialLinks>({
+    queryKey: ['/api/social-links'],
   });
 
   // Filter state
@@ -73,12 +90,33 @@ export default function Home() {
             </p>
           </section>
           
-          {/* GitHub Link */}
-          <div className="flex justify-center mb-6">
-            <a href="https://github.com" target="_blank" className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors">
-              <i className="fab fa-github text-xl"></i>
-              <span>View on GitHub</span>
-            </a>
+          {/* Social Media Links */}
+          <div className="flex justify-center mb-6 gap-6">
+            {socialLinks?.project && (
+              <>
+                {/* GitHub Link */}
+                <a 
+                  href={socialLinks.project.github}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <FaGithub className="text-xl" />
+                  <span className="sr-only">GitHub</span>
+                </a>
+                
+                {/* X (Twitter) Link */}
+                <a 
+                  href={socialLinks.project.x}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <FaXTwitter className="text-xl" />
+                  <span className="sr-only">X (Twitter)</span>
+                </a>
+              </>
+            )}
           </div>
           
           {/* Divider before filter system */}
