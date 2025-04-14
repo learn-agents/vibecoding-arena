@@ -13,7 +13,17 @@ export default function PromptCarousel({ prompt, isLast = false }: PromptCarouse
         {/* Left column - Prompt text */}
         <div className="md:w-1/3">
           <h3 className="text-xl font-semibold mb-2 [text-wrap:balance]">{prompt.text}</h3>
-          <p className="text-muted-foreground">{prompt.description}</p>
+          <p className="text-muted-foreground mb-2">{prompt.description}</p>
+          {prompt.fullPromptLink && (
+            <a 
+              href={prompt.fullPromptLink} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-xs underline text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Full prompt
+            </a>
+          )}
         </div>
         
         {/* Right column - Gallery of GIFs */}

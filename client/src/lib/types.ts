@@ -14,5 +14,6 @@ export interface Prompt {
   text: string;
   description: string;
   carouselIndex: number;
+  fullPromptLink?: string; // URL to the full prompt details
   agents: Agent[];
 }

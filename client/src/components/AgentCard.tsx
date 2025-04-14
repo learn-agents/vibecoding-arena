@@ -230,7 +230,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
                   className="absolute bottom-2 right-2 flex items-center justify-center z-30 transition-all duration-300 bg-black/40 rounded-full w-5 h-5 cursor-pointer"
                   onClick={handleBrowserIconClick}
                 >
-                  <Globe className="w-3.5 h-3.5 text-white" />
+                  <Globe className="w-3.5 h-3.5 text-[#6495ED]" />
                 </div>
               )}
               
@@ -320,17 +320,10 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
           {agent.agentName.charAt(0).toUpperCase() + agent.agentName.slice(1)}
         </div>
         
-        {/* External code link */}
-        <a 
-          href={agent.codeLink} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-          onClick={(e) => e.stopPropagation()}
-          aria-label="View code by this agent"
-        >
-          Code
-        </a>
+        {/* Created date */}
+        <div className="text-xs text-muted-foreground">
+          {agent.createdAt || ""}
+        </div>
       </div>
     </div>
   );

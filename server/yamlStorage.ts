@@ -57,6 +57,7 @@ export class YamlStorage implements IStorage {
           text: yamlPrompt.title,
           description: yamlPrompt.short_description,
           carouselIndex: index,
+          fullPromptLink: yamlPrompt.full_prompt_link || undefined,
         };
 
         this.prompts.set(yamlPrompt.shortname, promptData);
