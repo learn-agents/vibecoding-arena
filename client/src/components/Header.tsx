@@ -62,7 +62,7 @@ export default function Header() {
   return (
     <>
       {/* Main Header */}
-      <header className="py-6 px-4 md:px-8 lg:px-16 border-b border-border relative z-30">
+      <header className="py-6 px-4 md:px-8 lg:px-16 border-b border-border relative z-20">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Left side with logo and text */}
           <div className="flex items-center">
@@ -155,12 +155,12 @@ export default function Header() {
       {/* Mobile menu overlay with animation */}
       {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-gray-100 z-20 overflow-y-auto menu-slide-down"
+          className="fixed inset-0 bg-gray-100 z-10 overflow-y-auto"
           style={{
-            paddingTop: 'calc(24px + 3.5rem)' // Add extra padding to avoid collision with header
+            animation: 'slideDown 0.3s ease-out forwards',
           }}
         >
-          <div className="px-4">
+          <div className="pt-24 px-4">
             <nav className="flex flex-col">
               {/* Category dropdown */}
               <div className="border-b border-gray-200">
