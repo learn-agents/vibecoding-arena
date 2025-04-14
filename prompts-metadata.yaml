@@ -45,26 +45,31 @@ prompts:
         video_url: https://assets.awwwards.com/awards/element/2023/12/6584f1820c7bc073053986.mp4
         code_link: /code/v0-portfolio
         image_link: null
+        site_link: https://pythondev-portfolio.example.com
       - name: replit
         created_at: '2025-02-15'
         video_url: https://assets.awwwards.com/awards/element/2025/02/67a67ffb90217621271572.mp4
         code_link: /code/replit-portfolio
         image_link: null
+        site_link: https://pydev-showcase.example.com
       - name: lovable
         created_at: '2025-02-16'
         video_url: https://assets.awwwards.com/awards/element/2025/01/6798f6a17d779689123277.mp4
         code_link: /code/lovable-portfolio
         image_link: null
+        site_link: https://codedportfolio.example.com
       - name: bolt
         created_at: '2025-02-15'
         video_url: https://assets.awwwards.com/awards/element/2024/10/6720bb950b752303911183.mp4
         code_link: /code/bolt-portfolio
         image_link: null
+        site_link: https://pythonista.example.com
       - name: grok
         created_at: '2025-03-02'
         video_url: https://assets.awwwards.com/awards/element/2024/02/65dde5ebe59f7145939762.mp4
         code_link: /code/grok-portfolio
         image_link: null
+        site_link: https://serpent-coder.example.com
   
   - shortname: chat-bot
     title: Chat bot with a personality
@@ -76,21 +81,25 @@ prompts:
         video_url: https://assets.awwwards.com/awards/element/2023/12/6584f1820c7bc073053986.mp4
         code_link: /code/v0-chatbot
         image_link: null
+        site_link: https://robofriend.example.com
       - name: replit
         created_at: '2025-02-15'
         video_url: https://assets.awwwards.com/awards/element/2025/02/67a67ffb90217621271572.mp4
         code_link: /code/replit-chatbot
         image_link: null
+        site_link: https://ai-companion.example.com
       - name: lovable
         created_at: '2025-02-16'
         video_url: https://assets.awwwards.com/awards/element/2025/01/6798f6a17d779689123277.mp4
         code_link: /code/lovable-chatbot
         image_link: null
+        site_link: https://chatty-ai.example.com
       - name: bolt
         created_at: '2025-02-15'
         video_url: https://assets.awwwards.com/awards/element/2024/10/6720bb950b752303911183.mp4
         code_link: /code/bolt-chatbot
         image_link: null
+        site_link: https://conversai.example.com
       - name: grok
         created_at: '2025-03-02'
         video_url: https://assets.awwwards.com/awards/element/2024/02/65dde5ebe59f7145939762.mp4
