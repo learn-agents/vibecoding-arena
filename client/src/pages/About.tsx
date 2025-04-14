@@ -31,11 +31,11 @@ export default function About() {
     <div className="flex flex-col min-h-screen bg-background font-sans text-foreground">
       <Header />
       
-      <main className="py-8 px-4 md:px-8 lg:px-16 flex-grow">
-        <div className="max-w-3xl mx-auto prose prose-stone">
-          <section className="mb-10">
-            <h1 className="text-3xl font-bold mb-6">About Us</h1>
-            <p>
+      <main className="py-6 px-4 md:px-8 lg:px-16 flex-grow">
+        <div className="max-w-3xl mx-auto prose prose-stone prose-headings:mb-2 prose-p:my-2 prose-ul:my-2">
+          <section className="mb-6">
+            <h1 className="text-2xl font-bold">About Us</h1>
+            <p className="text-sm">
               VibeCoding Arena is an open platform for crowdsourced AI benchmarking in development. 
               We're creating learn-agents.diy so everyone can learn the art of making agents for free. 
               We always welcome contributions from the community. If you're interested in collaboration, 
@@ -43,9 +43,9 @@ export default function About() {
             </p>
           </section>
 
-          <section className="mb-10">
-            <h2 className="text-2xl font-bold mb-4">Open-source contributors</h2>
-            <ul className="list-disc pl-6 space-y-1">
+          <section className="mb-6">
+            <h2 className="text-xl font-bold">Open-source contributors</h2>
+            <ul className="list-disc pl-6 space-y-0 text-sm">
               <li>
                 <span className="font-medium">Leads:</span>{" "}
                 {socialLinks?.authors ? (
@@ -74,9 +74,9 @@ export default function About() {
             </ul>
           </section>
 
-          <section className="mb-10">
-            <h2 className="text-2xl font-bold mb-4">Learn More</h2>
-            <ul className="list-disc pl-6">
+          <section className="mb-6">
+            <h2 className="text-xl font-bold">Learn More</h2>
+            <ul className="list-disc pl-6 text-sm">
               <li>
                 <a 
                   href={contributeUrl}
@@ -91,8 +91,8 @@ export default function About() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-            <ul className="list-disc pl-6 space-y-2">
+            <h2 className="text-xl font-bold">Contact Us</h2>
+            <ul className="list-disc pl-6 space-y-1 text-sm">
               <li>
                 Follow our{" "}
                 {socialLinks?.project?.x && (
@@ -101,9 +101,10 @@ export default function About() {
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center"
+                    aria-label="X (Twitter)"
                   >
-                    <FaXTwitter className="inline mr-1" size={16} />
-                    X
+                    <FaXTwitter className="inline" size={16} />
+                    <span className="sr-only">X</span>
                   </a>
                 )} or email us at{" "}
                 {socialLinks?.project?.email ? (
