@@ -62,7 +62,7 @@ export default function Header() {
   return (
     <>
       {/* Main Header */}
-      <header className="py-6 px-4 md:px-8 lg:px-16 border-b border-border relative z-20">
+      <header className="py-6 px-4 md:px-8 lg:px-16 border-b border-border relative z-20 mb-0">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Left side with logo and text */}
           <div className="flex items-center">
@@ -157,10 +157,10 @@ export default function Header() {
         <div 
           className="fixed inset-0 bg-white z-10 overflow-y-auto"
         >
-          <div className="pt-24">
+          <div className="pt-[74px] -mt-px">
             <nav className="flex flex-col">
               {/* Category dropdown */}
-              <div className="border-b border-gray-200">
+              <div className="border-b border-gray-200 mt-0">
                 <button 
                   onClick={toggleCategory}
                   className="w-full py-4 px-4 flex justify-between items-center bg-menu-gray hover:bg-gray-200 transition-colors"
