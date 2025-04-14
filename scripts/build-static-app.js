@@ -45,11 +45,34 @@ function createEnvConfig() {
 function buildFrontend() {
   console.log('🏗️ Building the frontend in static mode...');
   try {
+    // Copy the special Tailwind config for static builds
+    console.log('📄 Setting up special Tailwind config for static builds...');
+    const staticTailwindConfigPath = path.join(clientDir, 'tailwind.config.static.ts');
+    const tailwindConfigPath = path.join(clientDir, 'tailwind.config.js');
+    
+    if (fs.existsSync(staticTailwindConfigPath)) {
+      // Create a simple CommonJS wrapper for the ESM Tailwind config
+      const tailwindConfigWrapper = `
+// This is a temporary wrapper created during the static build process
+module.exports = require('./tailwind.config.static.ts').default;
+      `.trim();
+      
+      fs.writeFileSync(tailwindConfigPath, tailwindConfigWrapper);
+      console.log('✓ Created temporary Tailwind config wrapper');
+    }
+    
     // Use relative paths for all assets
+    console.log('🔄 Building with relative asset paths...');
     execSync('cd client && npx vite build --base=./ --mode production', { 
       stdio: 'inherit',
       env: { ...process.env, VITE_STATIC_MODE: 'true' }
     });
+    
+    // Clean up temporary files
+    if (fs.existsSync(tailwindConfigPath)) {
+      fs.unlinkSync(tailwindConfigPath);
+      console.log('✓ Cleaned up temporary Tailwind config');
+    }
   } catch (error) {
     console.error('❌ Failed to build the frontend');
     process.exit(1);
