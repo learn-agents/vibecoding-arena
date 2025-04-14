@@ -8,6 +8,7 @@ export const prompts = pgTable("prompts", {
   text: text("text").notNull(),
   description: text("description").notNull(),
   carouselIndex: integer("carousel_index").notNull(),
+  fullPromptLink: text("full_prompt_link"),
 });
 
 // Agent results table
