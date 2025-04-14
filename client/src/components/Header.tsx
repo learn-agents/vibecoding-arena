@@ -180,7 +180,7 @@ export default function Header() {
             <X className="h-6 w-6" />
           </button>
 
-          <nav className="flex flex-col space-y-12 text-black text-4xl font-semibold mt-24">
+          <nav className="flex flex-col space-y-12 text-black text-2xl font-semibold mt-24">
             {/* Category section with dropdown */}
             <div className="-mt-6">
               <button 
@@ -193,7 +193,7 @@ export default function Header() {
               
               {/* Conditional rendering of category items */}
               {mobileCategoryOpen && (
-                <div className="px-8 space-y-8 mt-8">
+                <div className="px-8 space-y-5 mt-6">
                   <Link to="/" onClick={() => setMobileMenuOpen(false)}>
                     <span>Simple</span>
                   </Link>
@@ -208,7 +208,7 @@ export default function Header() {
             </div>
             
             {/* Other menu items */}
-            <div className="px-8 space-y-8">
+            <div className="px-8 space-y-5">
               <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
                 <span>About</span>
               </Link>
