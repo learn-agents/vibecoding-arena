@@ -1,4 +1,10 @@
 import { Link } from "wouter";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Header() {
   return (
@@ -12,7 +18,58 @@ export default function Header() {
             </div>
           </Link>
         </div>
-        <div>
+        <div className="flex items-center space-x-4">
+          <Link to="/">
+            <span className="inline-block px-4 py-2 rounded-md border-2 border-black text-black hover:bg-black hover:text-white transition-all cursor-pointer">
+              Simple
+            </span>
+          </Link>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link to="/hard">
+                  <span className="inline-block px-4 py-2 rounded-md border-2 border-gray-400 text-gray-500 transition-all cursor-pointer">
+                    Hard
+                  </span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>In development</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link to="/games">
+                  <span className="inline-block px-4 py-2 rounded-md border-2 border-gray-400 text-gray-500 transition-all cursor-pointer">
+                    Games
+                  </span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>In development</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link to="/for-devs">
+                  <span className="inline-block px-4 py-2 rounded-md border-2 border-gray-400 text-gray-500 transition-all cursor-pointer">
+                    4Devs
+                  </span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>In development</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          
           <Link to="/about">
             <span className="inline-block px-4 py-2 rounded-md border-2 border-black text-black hover:bg-black hover:text-white transition-all cursor-pointer">
               About
