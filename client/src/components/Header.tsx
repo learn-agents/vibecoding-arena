@@ -106,7 +106,7 @@ export default function Header() {
                   href={contributeUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-sm font-medium border border-black px-4 py-2 rounded hover:bg-gray-100 transition-colors"
+                  className="text-sm font-medium hover:text-primary transition-colors"
                 >
                   Submit Prompt
                 </a>
@@ -190,7 +190,7 @@ export default function Header() {
                     className="block w-full"
                   >
                     <div className="p-4 hover:bg-gray-50">
-                      <span className="border border-black px-3 py-1 rounded inline-block">Submit Prompt</span>
+                      Submit Prompt
                     </div>
                   </a>
                 </li>
