@@ -1,17 +1,13 @@
-# Social Media Links for AI Coding Agents Showcase Project
-
-# Project social media accounts
 project:
-  x: https://twitter.com/aicagents      # X (formerly Twitter) account
-  github: https://github.com/aicagents  # GitHub repository
+  x: https://twitter.com/aicagents
+  github: https://github.com/all-mute/vibecoding-arena
 
-# Authors' social media accounts
 authors:
   - name: David Merkulov
-    x: https://twitter.com/davidmerkulov
+    x: https://x.com/0xMerkulov
   
   - name: Artem Bulgakov
-    x: https://twitter.com/artembulgakov
+    x: https://x.com/w0ltage
   
   - name: Dmitry Zhechkov
-    x: https://twitter.com/dzhechkov
+    x: https://x.com/dzhechkov
