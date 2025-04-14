@@ -63,7 +63,7 @@ export default function Header() {
   return (
     <>
       {/* Main Header - always visible */}
-      <header className="py-6 px-4 md:px-8 lg:px-16 border-b border-border relative z-30">
+      <header className="py-6 px-4 md:px-8 lg:px-16 border-b border-border relative z-50">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Left side with logo and text */}
           <div className="flex items-center">
@@ -77,7 +77,7 @@ export default function Header() {
           
           {/* Hamburger Menu Button */}
           <button 
-            className="p-2 focus:outline-none" 
+            className="p-2 focus:outline-none relative z-50" 
             onClick={toggleMenu}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
@@ -88,7 +88,7 @@ export default function Header() {
 
       {/* Full Screen Menu Overlay */}
       {menuOpen && (
-        <div className="fixed inset-0 top-[89px] bg-gray-light z-20 overflow-y-auto">
+        <div className="fixed inset-0 bg-gray-light z-40 overflow-y-auto pt-24">
           {/* Menu content */}
           <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-4">
             {/* Category section with dropdown */}
