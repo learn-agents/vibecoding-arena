@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { Agent } from "@/lib/types";
+import { Agent } from "../lib/types";
 import { Globe } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "../components/ui/dialog";
+import { useIsMobile } from "../hooks/use-mobile";
 
 interface AgentCardProps {
   agent: Agent;

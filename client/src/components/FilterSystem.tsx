@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Separator } from "@/components/ui/separator";
-import { cn } from '@/lib/utils';
-import { Agent, Prompt } from '@/lib/types';
+import { Separator } from "../components/ui/separator";
+import { cn } from '../lib/utils';
+import { Agent, Prompt } from '../lib/types';
 import { useQuery } from '@tanstack/react-query';
 
 interface FilterSystemProps {

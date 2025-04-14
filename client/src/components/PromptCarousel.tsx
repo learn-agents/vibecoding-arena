@@ -1,5 +1,5 @@
 import AgentCard from "./AgentCard";
-import { Prompt } from "@/lib/types";
+import { Prompt } from "../lib/types";
 
 interface PromptCarouselProps {
   prompt: Prompt;

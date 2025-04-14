@@ -1,4 +1,4 @@
-import { Prompt } from "@/lib/types";
+import { Prompt } from "../lib/types";
 
 export const mockPrompts: Prompt[] = [
   {
