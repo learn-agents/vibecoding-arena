@@ -28,11 +28,9 @@ export default function Header() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link to="/hard">
-                  <span className="inline-block px-4 py-2 rounded-md border-2 border-gray-400 text-gray-500 transition-all cursor-pointer">
-                    Hard
-                  </span>
-                </Link>
+                <span className="inline-block px-4 py-2 rounded-md border-2 border-gray-400 text-gray-500 transition-all cursor-not-allowed">
+                  Hard
+                </span>
               </TooltipTrigger>
               <TooltipContent>
                 <p>In development</p>
@@ -43,11 +41,9 @@ export default function Header() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link to="/games">
-                  <span className="inline-block px-4 py-2 rounded-md border-2 border-gray-400 text-gray-500 transition-all cursor-pointer">
-                    Games
-                  </span>
-                </Link>
+                <span className="inline-block px-4 py-2 rounded-md border-2 border-gray-400 text-gray-500 transition-all cursor-not-allowed">
+                  Games
+                </span>
               </TooltipTrigger>
               <TooltipContent>
                 <p>In development</p>
@@ -58,11 +54,9 @@ export default function Header() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link to="/for-devs">
-                  <span className="inline-block px-4 py-2 rounded-md border-2 border-gray-400 text-gray-500 transition-all cursor-pointer">
-                    4Devs
-                  </span>
-                </Link>
+                <span className="inline-block px-4 py-2 rounded-md border-2 border-gray-400 text-gray-500 transition-all cursor-not-allowed">
+                  4Devs
+                </span>
               </TooltipTrigger>
               <TooltipContent>
                 <p>In development</p>
