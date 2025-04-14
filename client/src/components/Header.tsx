@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 // Define type for social links data
 interface SocialLinks {
@@ -86,15 +87,42 @@ export default function Header() {
                 <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">
                   Simple
                 </Link>
-                <span className="text-sm font-medium text-gray-400 cursor-not-allowed">
-                  Hard
-                </span>
-                <span className="text-sm font-medium text-gray-400 cursor-not-allowed">
-                  Games
-                </span>
-                <span className="text-sm font-medium text-gray-400 cursor-not-allowed">
-                  4Devs
-                </span>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="text-sm font-medium text-gray-400 cursor-not-allowed relative">
+                        Hard
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-gray-800 text-white text-xs py-1 px-2 rounded">
+                      <p>In development</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="text-sm font-medium text-gray-400 cursor-not-allowed relative">
+                        Games
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-gray-800 text-white text-xs py-1 px-2 rounded">
+                      <p>In development</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="text-sm font-medium text-gray-400 cursor-not-allowed relative">
+                        4Devs
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-gray-800 text-white text-xs py-1 px-2 rounded">
+                      <p>In development</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
               
               {/* About and Submit on right */}
@@ -152,19 +180,46 @@ export default function Header() {
                       </Link>
                     </li>
                     <li>
-                      <div className="p-4 text-gray-500 cursor-not-allowed">
-                        Hard
-                      </div>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="p-4 text-gray-500 cursor-not-allowed relative">
+                              Hard
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent className="bg-gray-800 text-white text-xs py-1 px-2 rounded">
+                            <p>In development</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </li>
                     <li>
-                      <div className="p-4 text-gray-500 cursor-not-allowed">
-                        Games
-                      </div>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="p-4 text-gray-500 cursor-not-allowed relative">
+                              Games
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent className="bg-gray-800 text-white text-xs py-1 px-2 rounded">
+                            <p>In development</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </li>
                     <li>
-                      <div className="p-4 text-gray-500 cursor-not-allowed">
-                        4Devs
-                      </div>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="p-4 text-gray-500 cursor-not-allowed relative">
+                              4Devs
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent className="bg-gray-800 text-white text-xs py-1 px-2 rounded">
+                            <p>In development</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </li>
                   </ul>
                 </div>
