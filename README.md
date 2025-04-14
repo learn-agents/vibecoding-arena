@@ -1,7 +1,7 @@
 # Vibe Coding Arena
 
 <div align="center">
-  <img src="attached_assets/20250412_2104_Cool Robot Icon_simple_compose_01jrnjq7cff56rx5dz3fgmv5xk.png" alt="Vibe Coding Arena Logo" width="150" />
+  <img src="public/favicon.ico" alt="Vibe Coding Arena Logo" width="150" />
   
   A dynamic AI coding agent showcase platform for crowdsourced AI benchmarking in building actual web applications.
 </div>
@@ -101,4 +101,14 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-For questions, suggestions, or collaboration opportunities, reach out to us at the project's GitHub repository.
+For questions, suggestions, or collaboration opportunities:
+
+- **X (Twitter)**: [https://x.com/aicagents](https://x.com/aicagents)
+- **GitHub**: [https://github.com/all-mute/vibecoding-arena](https://github.com/all-mute/vibecoding-arena)
+- **Email**: [vibecoding-arena@gmail.com](mailto:vibecoding-arena@gmail.com)
+
+### Team
+
+- Dmitry Zhechkov - [https://x.com/dzhechkov](https://x.com/dzhechkov)
+- David Merkulov - [https://x.com/0xMerkulov](https://x.com/0xMerkulov)
+- Artem Bulgakov - [https://x.com/w0ltage](https://x.com/w0ltage)
