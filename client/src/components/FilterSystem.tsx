@@ -67,7 +67,7 @@ export default function FilterSystem({ onFilterChange }: FilterSystemProps) {
   }, [selectedPrompts, selectedAgents, onFilterChange]);
 
   return (
-    <div style={{ backgroundColor: '#f8f8f8' }} className="mb-8 p-4 rounded-md border border-gray-200">
+    <div className="mb-8 p-4 rounded-md border border-gray-200">
       <div className="flex flex-col md:flex-row">
         {/* Prompts Column */}
         <div className="flex-1 mb-4 md:mb-0">
