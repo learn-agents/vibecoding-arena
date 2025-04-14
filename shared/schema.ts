@@ -19,6 +19,7 @@ export const agentResults = pgTable("agent_results", {
   codeLink: text("code_link").notNull(),
   originalGifUrl: text("original_gif_url"),  // Optional field for the original GIF URL when converted to video
   createdAt: text("created_at"),  // When the agent/website was created
+  siteLink: text("site_link"),    // Link to the actual website created by the agent
 });
 
 // Insert schemas

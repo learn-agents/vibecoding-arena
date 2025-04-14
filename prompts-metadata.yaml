@@ -9,26 +9,31 @@ prompts:
         video_url: https://assets.awwwards.com/awards/element/2023/12/6584f1820c7bc073053986.mp4
         code_link: /code/v0-cat-food
         image_link: null
+        site_link: https://purr-nutrition.com
       - name: replit
         created_at: '2025-02-15'
         video_url: https://assets.awwwards.com/awards/element/2025/02/67a67ffb90217621271572.mp4
         code_link: /code/replit-cat-food
         image_link: null
+        site_link: https://meowmeals.example.com
       - name: lovable
         created_at: '2025-02-16'
         video_url: https://assets.awwwards.com/awards/element/2025/01/6798f6a17d779689123277.mp4
         code_link: /code/lovable-cat-food
         image_link: null
+        site_link: https://whiskerfoods.example.com
       - name: bolt
         created_at: '2025-02-15'
         video_url: https://assets.awwwards.com/awards/element/2024/10/6720bb950b752303911183.mp4
         code_link: /code/bolt-cat-food
         image_link: null
+        site_link: https://purrfectmeals.example.com
       - name: grok
         created_at: '2025-03-02'
         video_url: null
         code_link: /code/grok-cat-food
         image_link: https://images.ctfassets.net/lzny33ho1g45/5VGvMMdX169JCk60IJCRDA/358a2d3f62c6028d978efc382cb83ad5/image10.png
+        site_link: https://catmunchies.example.com
   
   - shortname: portfolio-python
     title: Porfolio website for a Python developer

@@ -13,6 +13,7 @@ interface YamlAgent {
   video_url: string;
   code_link: string;
   image_link: string | null;
+  site_link: string | null;
 }
 
 interface YamlPrompt {
@@ -71,6 +72,7 @@ export class YamlStorage implements IStorage {
             codeLink: yamlAgent.code_link,
             originalGifUrl: yamlAgent.image_link, // Use image_link for originalGifUrl
             createdAt: yamlAgent.created_at, // Add the creation date from the YAML
+            siteLink: yamlAgent.site_link, // Add the site link from the YAML
           };
 
           this.agents.set(agentId, agentData);
