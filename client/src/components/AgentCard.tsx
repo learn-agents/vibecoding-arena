@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Agent } from "@/lib/types";
 
 interface AgentCardProps {
@@ -15,14 +15,22 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   // References for media elements
   const videoRef = useRef<HTMLVideoElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+
+  // Determine the source URL to use
+  // If gifUrl is available, use it; otherwise, fall back to originalGifUrl
+  const mediaUrl = useMemo(() => {
+    return agent.gifUrl || agent.originalGifUrl || "";
+  }, [agent.gifUrl, agent.originalGifUrl]);
   
-  // Check if the media source is a video (MP4/WebM) or GIF
+  // Check if the media source is a video (MP4/WebM) or image
   useEffect(() => {
-    const isVideoSource = agent.gifUrl.endsWith('.mp4') || 
-                          agent.gifUrl.endsWith('.webm') || 
-                          agent.gifUrl.startsWith('/videos/');
+    if (!mediaUrl) return;
+    
+    const isVideoSource = mediaUrl.endsWith('.mp4') || 
+                          mediaUrl.endsWith('.webm') || 
+                          mediaUrl.startsWith('/videos/');
     setIsVideo(isVideoSource);
-  }, [agent.gifUrl]);
+  }, [mediaUrl]);
   
   // Handle mouse events for hover
   const handleMouseEnter = () => {
@@ -73,13 +81,13 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
     }
   };
 
-  // Preload the media (either video or GIF)
+  // Preload the media (either video or image)
   useEffect(() => {
     if (isVideo) {
       // For video, we'll let the video element handle loading
       setLoading(false);
     } else {
-      // For GIF, preload with Image
+      // For image, preload with Image
       const img = new Image();
       img.onload = () => {
         setLoading(false);
@@ -88,24 +96,25 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
         console.error("Error loading image");
         setLoading(false);
       };
-      img.src = agent.gifUrl;
+      img.src = mediaUrl;
       
       return () => {
         img.onload = null;
         img.onerror = null;
       };
     }
-  }, [agent.gifUrl, isVideo]);
+  }, [mediaUrl, isVideo]);
 
-  // Handle video load error (fallback to GIF if possible)
+  // Handle video load error (fallback to image if possible)
   const handleVideoError = () => {
-    console.error(`Error loading video: ${agent.gifUrl}`);
+    console.error(`Error loading video: ${mediaUrl}`);
     
-    // Check if we have an original GIF URL to fall back to
-    if (agent.originalGifUrl) {
+    // Check if we have an original image URL to fall back to
+    // (This should only happen if we're already using gifUrl and there's an error)
+    if (agent.originalGifUrl && agent.gifUrl === mediaUrl) {
       setIsVideo(false);
       
-      // Preload the fallback GIF
+      // Preload the fallback image
       const img = new Image();
       img.onload = () => {
         setLoading(false);
@@ -140,7 +149,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
               // Video element for better control
               <video 
                 ref={videoRef}
-                src={agent.gifUrl}
+                src={mediaUrl}
                 className="w-full h-full object-cover rounded-subtle"
                 loop
                 playsInline
@@ -153,10 +162,10 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
                 autoPlay={false}
               />
             ) : (
-              // GIF with conditional animation for browsers that support it
+              // Image with conditional animation for browsers that support it
               <img 
                 ref={imgRef}
-                src={agent.gifUrl}
+                src={mediaUrl}
                 alt={`${agent.agentName} solution`}
                 className="w-full h-full object-cover rounded-subtle"
                 style={{ 
