@@ -173,6 +173,15 @@ export default function Header() {
         </div>
       </header>
 
+      {/* Desktop navigation - always visible on large screens */}
+      <nav className="hidden lg:block border-b border-gray-200">
+        <div className="max-w-7xl mx-auto flex justify-between px-4 md:px-8 lg:px-16">
+          <div className="py-3">
+            {/* Navigation links would go here for desktop version if needed */}
+          </div>
+        </div>
+      </nav>
+      
       {/* Mobile/tablet menu overlay - only visible when menu is open */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 top-[73px] bg-white z-10 flex flex-col overflow-y-auto">
@@ -185,72 +194,74 @@ export default function Header() {
             <X className="h-6 w-6" />
           </button>
 
-          <nav className="flex flex-col text-black text-lg font-semibold">
-            {/* Category section with dropdown */}
-            <div>
-              <button 
-                onClick={toggleMobileCategory}
-                className="flex items-center justify-between w-full py-4 text-black bg-gray-light px-8 text-xl"
-              >
-                <span>By Category</span>
-                <ChevronDown className={`h-5 w-5 transition-transform ${mobileCategoryOpen ? 'rotate-180' : ''}`} />
-              </button>
-              
-              {/* Conditional rendering of category items */}
-              {mobileCategoryOpen && (
-                <div className="w-full bg-white shadow-inner">
-                  <ul className="divide-y divide-gray-100">
-                    <li>
-                      <Link to="/" onClick={() => setMobileMenuOpen(false)} className="block w-full">
-                        <div className="px-8 py-3 hover:bg-gray-100">
-                          Simple
-                        </div>
-                      </Link>
-                    </li>
-                    <li>
-                      <div className="px-8 py-3 text-gray-500 cursor-not-allowed">
-                        Hard
-                      </div>
-                    </li>
-                    <li>
-                      <div className="px-8 py-3 text-gray-500 cursor-not-allowed">
-                        Games
-                      </div>
-                    </li>
-                    <li>
-                      <div className="px-8 py-3 text-gray-500 cursor-not-allowed">
-                        4Devs
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-            
-            {/* Other menu items - structured the same way for consistency */}
-            <ul className="mt-6 divide-y divide-gray-100">
-              <li>
-                <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="block w-full">
-                  <div className="px-8 py-3 hover:bg-gray-100">
-                    About
-                  </div>
-                </Link>
-              </li>
-              <li>
-                <a 
-                  href={contributeUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full"
+          <div className="mt-0">
+            <nav className="flex flex-col text-black text-lg font-semibold border-t border-gray-200">
+              {/* Category section with dropdown */}
+              <div>
+                <button 
+                  onClick={toggleMobileCategory}
+                  className="flex items-center justify-between w-full py-4 text-black bg-gray-light px-8 text-xl"
                 >
-                  <div className="px-8 py-3 hover:bg-gray-100">
-                    Submit Prompt
+                  <span>By Category</span>
+                  <ChevronDown className={`h-5 w-5 transition-transform ${mobileCategoryOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {/* Conditional rendering of category items */}
+                {mobileCategoryOpen && (
+                  <div className="w-full bg-white shadow-inner">
+                    <ul className="divide-y divide-gray-100">
+                      <li>
+                        <Link to="/" onClick={() => setMobileMenuOpen(false)} className="block w-full">
+                          <div className="px-8 py-3 hover:bg-gray-100">
+                            Simple
+                          </div>
+                        </Link>
+                      </li>
+                      <li>
+                        <div className="px-8 py-3 text-gray-500 cursor-not-allowed">
+                          Hard
+                        </div>
+                      </li>
+                      <li>
+                        <div className="px-8 py-3 text-gray-500 cursor-not-allowed">
+                          Games
+                        </div>
+                      </li>
+                      <li>
+                        <div className="px-8 py-3 text-gray-500 cursor-not-allowed">
+                          4Devs
+                        </div>
+                      </li>
+                    </ul>
                   </div>
-                </a>
-              </li>
-            </ul>
-          </nav>
+                )}
+              </div>
+              
+              {/* Other menu items - structured the same way for consistency */}
+              <ul className="mt-0 divide-y divide-gray-100">
+                <li>
+                  <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="block w-full">
+                    <div className="px-8 py-3 hover:bg-gray-100">
+                      About
+                    </div>
+                  </Link>
+                </li>
+                <li>
+                  <a 
+                    href={contributeUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block w-full"
+                  >
+                    <div className="px-8 py-3 hover:bg-gray-100">
+                      Submit Prompt
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       )}
     </>
