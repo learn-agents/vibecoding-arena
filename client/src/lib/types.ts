@@ -5,6 +5,7 @@ export interface Agent {
   gifUrl: string;
   codeLink: string;
   originalGifUrl?: string; // Optional field for the original GIF URL when converted to video
+  createdAt?: string; // Date when the agent/website was created
 }
 
 export interface Prompt {
