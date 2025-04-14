@@ -152,13 +152,10 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile menu overlay with animation */}
+      {/* Mobile menu overlay */}
       {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-gray-100 z-10 overflow-y-auto"
-          style={{
-            animation: 'slideDown 0.3s ease-out forwards',
-          }}
+          className="fixed inset-0 bg-white z-10 overflow-y-auto"
         >
           <div className="pt-24 px-4">
             <nav className="flex flex-col">
@@ -166,13 +163,13 @@ export default function Header() {
               <div className="border-b border-gray-200">
                 <button 
                   onClick={toggleCategory}
-                  className="w-full py-4 px-2 flex justify-between items-center"
+                  className="w-full py-4 px-2 flex justify-between items-center bg-gray-100 hover:bg-gray-200 transition-colors"
                 >
-                  <span className="text-xl font-medium">By Category</span>
+                  <span className="text-xl font-medium text-gray-700">By Category</span>
                   {categoryOpen ? (
-                    <ChevronUp className="h-5 w-5 text-gray-500" />
+                    <ChevronUp className="h-5 w-5 text-gray-600" />
                   ) : (
-                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                    <ChevronDown className="h-5 w-5 text-gray-600" />
                   )}
                 </button>
                 
