@@ -103,6 +103,10 @@ function updateIndexHtml() {
   content = content.replace(/src="\/assets\//g, 'src="./assets/');
   content = content.replace(/href="\/assets\//g, 'href="./assets/');
   
+  // Ensure favicon path is relative and correct
+  content = content.replace(/<link rel="icon" type="image\/x-icon" href="\/favicon.ico">/g, 
+                          '<link rel="icon" type="image/x-icon" href="./favicon.ico">');
+  
   // Write back the updated content
   fs.writeFileSync(indexFile, content);
   console.log('✓ Updated index.html');
@@ -120,6 +124,16 @@ function copyStaticFiles() {
     const destFile = path.join(distDataDir, file);
     fs.copyFileSync(sourceFile, destFile);
     console.log(`✓ Copied ${file}`);
+  }
+  
+  // Copy favicon.ico file
+  const faviconSource = path.join(publicDir, 'favicon.ico');
+  const faviconDest = path.join(distDir, 'favicon.ico');
+  if (fs.existsSync(faviconSource)) {
+    fs.copyFileSync(faviconSource, faviconDest);
+    console.log('✓ Copied favicon.ico');
+  } else {
+    console.warn('⚠️ favicon.ico not found in public directory');
   }
   
   // Create .nojekyll file for GitHub Pages
