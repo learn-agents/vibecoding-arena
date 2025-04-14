@@ -26,9 +26,9 @@ prompts:
         image_link: null
       - name: grok
         created_at: '2025-03-02'
-        video_url: https://assets.awwwards.com/awards/element/2024/02/65dde5ebe59f7145939762.mp4
+        video_url: null
         code_link: /code/grok-cat-food
-        image_link: null
+        image_link: https://images.ctfassets.net/lzny33ho1g45/5VGvMMdX169JCk60IJCRDA/358a2d3f62c6028d978efc382cb83ad5/image10.png
   
   - shortname: portfolio-python
     title: Porfolio website for a Python developer
