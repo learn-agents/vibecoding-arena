@@ -1,7 +1,7 @@
 # Vibe Coding Arena
 
 <div align="center">
-  <img src="public/favicon.ico" alt="Vibe Coding Arena Logo" width="150" />
+  <img src="attached_assets/20250412_2104_Cool Robot Icon_simple_compose_01jrnjq7cff56rx5dz3fgmv5xk.png" alt="Vibe Coding Arena Logo" width="150" />
   
   A dynamic AI coding agent showcase platform for crowdsourced AI benchmarking in building actual web applications.
 </div>
@@ -31,8 +31,8 @@ To run the Vibe Coding Arena locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/vibe-coding-arena.git
-   cd vibe-coding-arena
+   git clone https://github.com/all-mute/vibecoding-arena.git
+   cd vibecoding-arena
    ```
 
 2. Install dependencies:
