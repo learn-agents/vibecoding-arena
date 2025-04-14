@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Agent } from "@/lib/types";
+import { Maximize2 } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface AgentCardProps {
   agent: Agent;
@@ -135,94 +137,127 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Card image container */}
-      <div className="relative flex-none aspect-video rounded-subtle overflow-hidden">
-        {/* Loading placeholder */}
-        {loading && (
-          <div className="w-full h-full bg-gray-200 animate-pulse"></div>
-        )}
+      {/* Modal for full-screen preview */}
+      <Dialog>
+        <DialogTrigger asChild>
+          {/* Card image container */}
+          <div className="relative flex-none aspect-video rounded-subtle overflow-hidden cursor-pointer">
+            {/* Loading placeholder */}
+            {loading && (
+              <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+            )}
+            
+            {/* Media content: either video or GIF */}
+            {!loading && (
+              <>
+                {isVideo ? (
+                  // Video element for better control
+                  <video 
+                    ref={videoRef}
+                    src={mediaUrl}
+                    className="w-full h-full object-cover rounded-subtle"
+                    loop
+                    playsInline
+                    muted
+                    preload="auto"
+                    onError={handleVideoError}
+                    onLoadedData={() => setLoading(false)}
+                    onTimeUpdate={handleTimeUpdate}
+                    // Initialize paused if not hovering
+                    autoPlay={false}
+                  />
+                ) : (
+                  // Image with conditional animation for browsers that support it
+                  <img 
+                    ref={imgRef}
+                    src={mediaUrl}
+                    alt={`${agent.agentName} solution`}
+                    className="w-full h-full object-cover rounded-subtle"
+                    style={{ 
+                      animationPlayState: isHovering ? 'running' : 'paused',
+                      WebkitAnimationPlayState: isHovering ? 'running' : 'paused',
+                      filter: isHovering ? 'none' : 'url(#paused-gif)'
+                    }}
+                  />
+                )}
+              </>
+            )}
+            
+            {/* SVG filter to help improve GIF pausing across browsers */}
+            {!isVideo && (
+              <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+                <defs>
+                  <filter id="paused-gif">
+                    <feGaussianBlur stdDeviation="0.01" />
+                  </filter>
+                </defs>
+              </svg>
+            )}
+            
+            {/* Gradient overlay at the bottom - only render when hovering */}
+            {isHovering && (
+              <div 
+                className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-300 z-10 opacity-100"
+              ></div>
+            )}
+            
+            {/* Maximize icon with "Open in" text that appears on hover */}
+            {isHovering && (
+              <div className="absolute bottom-2 right-2 flex items-center gap-1 z-30 transition-all duration-300 bg-black/40 rounded-md px-2 py-1">
+                <span className="text-white text-xs">Open in</span>
+                <Maximize2 className="w-4 h-4 text-white" />
+              </div>
+            )}
+            
+            {/* Display creation date on hover in the bottom right */}
+            {isHovering && agent.createdAt && (
+              <div className="absolute bottom-2 left-2 text-xs text-white/90 z-30 transition-all duration-300">
+                {agent.createdAt}
+              </div>
+            )}
+          </div>
+        </DialogTrigger>
         
-        {/* Media content: either video or GIF */}
-        {!loading && (
-          <>
+        {/* Modal content for preview */}
+        <DialogContent className="w-[80vw] max-w-[80vw] h-[80vh] max-h-[80vh] p-0 border-none overflow-hidden bg-transparent">
+          <div className="relative w-full h-full bg-black/90 flex items-center justify-center overflow-hidden">
             {isVideo ? (
-              // Video element for better control
               <video 
-                ref={videoRef}
                 src={mediaUrl}
-                className="w-full h-full object-cover rounded-subtle"
+                className="w-full h-full object-contain"
+                controls
+                autoPlay
                 loop
                 playsInline
-                muted
-                preload="auto"
-                onError={handleVideoError}
-                onLoadedData={() => setLoading(false)}
-                onTimeUpdate={handleTimeUpdate}
-                // Initialize paused if not hovering
-                autoPlay={false}
               />
             ) : (
-              // Image with conditional animation for browsers that support it
               <img 
-                ref={imgRef}
                 src={mediaUrl}
-                alt={`${agent.agentName} solution`}
-                className="w-full h-full object-cover rounded-subtle"
-                style={{ 
-                  animationPlayState: isHovering ? 'running' : 'paused',
-                  WebkitAnimationPlayState: isHovering ? 'running' : 'paused',
-                  filter: isHovering ? 'none' : 'url(#paused-gif)'
-                }}
+                alt={`${agent.agentName} solution full preview`}
+                className="w-full h-full object-contain"
               />
             )}
-          </>
-        )}
-        
-        {/* SVG filter to help improve GIF pausing across browsers */}
-        {!isVideo && (
-          <svg style={{ position: 'absolute', width: 0, height: 0 }}>
-            <defs>
-              <filter id="paused-gif">
-                <feGaussianBlur stdDeviation="0.01" />
-              </filter>
-            </defs>
-          </svg>
-        )}
-        
-        {/* Gradient overlay at the bottom - only render when hovering */}
-        {isHovering && (
-          <div 
-            className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-300 z-10 opacity-100"
-          ></div>
-        )}
-        
-        {/* Code link button that appears on hover in the bottom-right corner */}
-        {isHovering && (
-          <div className="absolute bottom-2 right-2 flex gap-0 z-30 transition-all duration-300">
-            <a 
-              href={agent.codeLink} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="w-7 h-8 rounded-full flex items-center justify-center"
-              aria-label="View code by this agent"
-            >
-              <svg 
-                width="14" 
-                height="14" 
-                viewBox="0 0 14 14"
-              >
-                <path d="M10.8101 1.96222L0.726954 12.0453L1.66171 12.9801L11.7448 2.89698L11.9344 9.4447L13.208 9.07311L13.0134 2.35278C12.9877 1.46249 12.2434 0.718185 11.3531 0.692412L4.80762 0.502924L4.43487 1.77539L10.8101 1.96222Z" fill="white" stroke="white" strokeWidth="0.542084"></path>
-              </svg>
-            </a>
           </div>
-        )}
-      </div>
+        </DialogContent>
+      </Dialog>
       
-      {/* Agent name under the card */}
-      <div className="p-3 pt-2">
+      {/* Agent name and code link under the card */}
+      <div className="p-3 pt-2 flex justify-between items-center">
         <div className="text-sm font-medium text-foreground/90" style={{ fontFamily: "'Space Mono', monospace" }}>
           {agent.agentName.charAt(0).toUpperCase() + agent.agentName.slice(1)}
         </div>
+        
+        {/* External code link */}
+        <a 
+          href={agent.codeLink} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+          onClick={(e) => e.stopPropagation()}
+          aria-label="View code by this agent"
+        >
+          Code
+        </a>
       </div>
     </div>
   );
