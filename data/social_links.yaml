@@ -4,11 +4,11 @@ project:
   email: vibecoding-arena@gmail.com
 
 authors:
-  - name: Dmitry Zhechkov
-    x: https://x.com/dzhechkov
-  
   - name: David Merkulov
     x: https://x.com/0xMerkulov
   
   - name: Artem Bulgakov
     x: https://x.com/w0ltage
+  
+  - name: Dmitry Zhechkov
+    x: https://x.com/dzhechkov
