@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Agent } from "@/lib/types";
-import { Maximize2 } from "lucide-react";
+import { Globe } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface AgentCardProps {
@@ -201,11 +201,10 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
               ></div>
             )}
             
-            {/* Maximize icon with "Open in" text that appears on hover */}
+            {/* Browser icon that appears on hover */}
             {isHovering && (
-              <div className="absolute bottom-2 right-2 flex items-center gap-1 z-30 transition-all duration-300 bg-black/40 rounded-md px-2 py-1">
-                <span className="text-white text-xs">Open in</span>
-                <Maximize2 className="w-4 h-4 text-white" />
+              <div className="absolute bottom-2 right-2 flex items-center justify-center z-30 transition-all duration-300 bg-black/40 rounded-full w-8 h-8">
+                <Globe className="w-5 h-5 text-white" />
               </div>
             )}
             
