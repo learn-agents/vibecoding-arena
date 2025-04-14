@@ -203,8 +203,8 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
             
             {/* Browser icon that appears on hover */}
             {isHovering && (
-              <div className="absolute bottom-2 right-2 flex items-center justify-center z-30 transition-all duration-300 bg-black/40 rounded-full w-8 h-8">
-                <Globe className="w-5 h-5 text-white" />
+              <div className="absolute bottom-2 right-2 flex items-center justify-center z-30 transition-all duration-300 bg-black/40 rounded-full w-4 h-4">
+                <Globe className="w-2.5 h-2.5 text-white" />
               </div>
             )}
             
