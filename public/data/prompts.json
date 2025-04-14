@@ -1,0 +1,179 @@
+[
+  {
+    "id": "cat-food-landing",
+    "text": "Landing page for cat food subscription service",
+    "description": "Create a landing page for a cat food subscription service with a clean design, clear calls-to-action, and a testimonial section.",
+    "carouselIndex": 0,
+    "fullPromptLink": "https://github.com/all-mute/vibecoding-arena/blob/main/prompts/cat-food-landing.md",
+    "agents": [
+      {
+        "id": "a20a53db-240f-4d20-8aa1-9d866ee99aae",
+        "promptId": "cat-food-landing",
+        "agentName": "v0",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2023/12/6584f1820c7bc073053986.mp4",
+        "codeLink": "/code/v0-cat-food",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-15",
+        "siteLink": "https://purr-nutrition.com"
+      },
+      {
+        "id": "47ce4fa7-c247-4386-a2d1-ba018de13634",
+        "promptId": "cat-food-landing",
+        "agentName": "replit",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2025/02/67a67ffb90217621271572.mp4",
+        "codeLink": "/code/replit-cat-food",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-15",
+        "siteLink": "https://meowmeals.example.com"
+      },
+      {
+        "id": "b858cf9e-da1c-486d-b886-3c6a421c596b",
+        "promptId": "cat-food-landing",
+        "agentName": "lovable",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2025/01/6798f6a17d779689123277.mp4",
+        "codeLink": "/code/lovable-cat-food",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-16",
+        "siteLink": "https://whiskerfoods.example.com"
+      },
+      {
+        "id": "cce16b40-8728-49ff-a3e0-468f79794ac5",
+        "promptId": "cat-food-landing",
+        "agentName": "bolt",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2024/10/6720bb950b752303911183.mp4",
+        "codeLink": "/code/bolt-cat-food",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-15",
+        "siteLink": "https://purrfectmeals.example.com"
+      },
+      {
+        "id": "1a54dc7a-4de2-4c70-abbc-5af61240cf2f",
+        "promptId": "cat-food-landing",
+        "agentName": "grok",
+        "gifUrl": null,
+        "codeLink": "/code/grok-cat-food",
+        "originalGifUrl": "https://images.ctfassets.net/lzny33ho1g45/5VGvMMdX169JCk60IJCRDA/358a2d3f62c6028d978efc382cb83ad5/image10.png",
+        "createdAt": "2025-03-02",
+        "siteLink": "https://catmunchies.example.com"
+      }
+    ]
+  },
+  {
+    "id": "portfolio-python",
+    "text": "Porfolio website for a Python developer",
+    "description": "Create a portfolio website for a Python developer with a clean design, clear calls-to-action, and a project section.",
+    "carouselIndex": 1,
+    "fullPromptLink": "https://github.com/all-mute/vibecoding-arena/blob/main/prompts/portfolio-python.md",
+    "agents": [
+      {
+        "id": "25666ef1-ef51-49fc-81ce-890b880454ff",
+        "promptId": "portfolio-python",
+        "agentName": "v0",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2023/12/6584f1820c7bc073053986.mp4",
+        "codeLink": "/code/v0-portfolio",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-15",
+        "siteLink": "https://pythondev-portfolio.example.com"
+      },
+      {
+        "id": "50f9c436-46a5-46a6-bf0d-8c99ec49ddec",
+        "promptId": "portfolio-python",
+        "agentName": "replit",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2025/02/67a67ffb90217621271572.mp4",
+        "codeLink": "/code/replit-portfolio",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-15",
+        "siteLink": "https://pydev-showcase.example.com"
+      },
+      {
+        "id": "2a242b29-8c61-4939-851e-08ea213a9ed2",
+        "promptId": "portfolio-python",
+        "agentName": "lovable",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2025/01/6798f6a17d779689123277.mp4",
+        "codeLink": "/code/lovable-portfolio",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-16",
+        "siteLink": "https://codedportfolio.example.com"
+      },
+      {
+        "id": "6e506466-b3e5-40ca-a960-0a45ad474278",
+        "promptId": "portfolio-python",
+        "agentName": "bolt",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2024/10/6720bb950b752303911183.mp4",
+        "codeLink": "/code/bolt-portfolio",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-15",
+        "siteLink": "https://pythonista.example.com"
+      },
+      {
+        "id": "2487c8e8-d175-494b-bd11-78177c2634e1",
+        "promptId": "portfolio-python",
+        "agentName": "grok",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2024/02/65dde5ebe59f7145939762.mp4",
+        "codeLink": "/code/grok-portfolio",
+        "originalGifUrl": null,
+        "createdAt": "2025-03-02",
+        "siteLink": "https://serpent-coder.example.com"
+      }
+    ]
+  },
+  {
+    "id": "chat-bot",
+    "text": "Chat bot with a personality",
+    "description": "Create a chat bot with a unique personality and the ability to maintain context across conversations.",
+    "carouselIndex": 2,
+    "fullPromptLink": "https://github.com/all-mute/vibecoding-arena/blob/main/prompts/chat-bot.md",
+    "agents": [
+      {
+        "id": "d9ac734a-04ad-4198-9c61-7d015bcd6bb6",
+        "promptId": "chat-bot",
+        "agentName": "v0",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2023/12/6584f1820c7bc073053986.mp4",
+        "codeLink": "/code/v0-chatbot",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-15",
+        "siteLink": "https://robofriend.example.com"
+      },
+      {
+        "id": "632e9aa1-f3d1-4d74-9af6-05453145bb6f",
+        "promptId": "chat-bot",
+        "agentName": "replit",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2025/02/67a67ffb90217621271572.mp4",
+        "codeLink": "/code/replit-chatbot",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-15",
+        "siteLink": "https://ai-companion.example.com"
+      },
+      {
+        "id": "99a22f49-d658-4fd6-b563-8ac39ae41730",
+        "promptId": "chat-bot",
+        "agentName": "lovable",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2025/01/6798f6a17d779689123277.mp4",
+        "codeLink": "/code/lovable-chatbot",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-16",
+        "siteLink": "https://chatty-ai.example.com"
+      },
+      {
+        "id": "98d5845b-4ed9-4976-ab44-0a80bbea4ed7",
+        "promptId": "chat-bot",
+        "agentName": "bolt",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2024/10/6720bb950b752303911183.mp4",
+        "codeLink": "/code/bolt-chatbot",
+        "originalGifUrl": null,
+        "createdAt": "2025-02-15",
+        "siteLink": "https://conversai.example.com"
+      },
+      {
+        "id": "74038c1e-71a8-43c2-97df-195c63dc583d",
+        "promptId": "chat-bot",
+        "agentName": "grok",
+        "gifUrl": "https://assets.awwwards.com/awards/element/2024/02/65dde5ebe59f7145939762.mp4",
+        "codeLink": "/code/grok-chatbot",
+        "originalGifUrl": null,
+        "createdAt": "2025-03-02",
+        "siteLink": "https://intellichat.example.com"
+      }
+    ]
+  }
+]

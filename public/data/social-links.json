@@ -1,0 +1,21 @@
+{
+  "project": {
+    "x": "https://x.com/aicagents",
+    "github": "https://github.com/all-mute/vibecoding-arena",
+    "email": "vibecoding-arena@gmail.com"
+  },
+  "authors": [
+    {
+      "name": "David Merkulov",
+      "x": "https://x.com/0xMerkulov"
+    },
+    {
+      "name": "Artem Bulgakov",
+      "x": "https://x.com/w0ltage"
+    },
+    {
+      "name": "Dmitry Zhechkov",
+      "x": "https://x.com/dzhechkov"
+    }
+  ]
+}
