@@ -155,12 +155,12 @@ export default function Header() {
       {/* Mobile menu overlay with animation */}
       {mobileMenuOpen && (
         <div 
-          className="fixed top-[70px] inset-x-0 bottom-0 bg-gray-100 z-10 overflow-y-auto"
+          className="fixed inset-0 bg-gray-100 z-10 overflow-y-auto"
           style={{
             animation: 'slideDown 0.3s ease-out forwards',
           }}
         >
-          <div className="px-4 pb-4">
+          <div className="pt-24 px-4">
             <nav className="flex flex-col">
               {/* Category dropdown */}
               <div className="border-b border-gray-200">
