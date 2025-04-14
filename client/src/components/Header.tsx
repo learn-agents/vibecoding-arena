@@ -105,34 +105,41 @@ export default function Header() {
           {/* Center section with category dropdown - hidden on small screens */}
           <div className="hidden lg:flex items-center space-x-4">
             {/* Category Dropdown */}
-            <div className="relative w-full" ref={categoryDropdownRef}>
+            <div className="relative" ref={categoryDropdownRef}>
               <button 
                 onClick={toggleCategoryDropdown}
-                className="flex items-center justify-between space-x-1 px-4 py-2 w-56 bg-gray-light text-black hover:bg-gray-200 transition-all cursor-pointer"
+                className="flex items-center justify-between space-x-2 px-4 py-2 w-56 bg-gray-light text-black hover:bg-gray-200 transition-all cursor-pointer rounded-md"
               >
                 <span>By Category</span>
                 <ChevronDown className={`h-4 w-4 transition-transform ${categoryDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
               
               {categoryDropdownOpen && (
-                <div className="absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md p-2 z-50 min-w-[200px] flex flex-col">
-                  <Link to="/" className="w-full">
-                    <div className="px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer w-full text-left">
-                      Simple
-                    </div>
-                  </Link>
-                  
-                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed w-full text-left">
-                    Hard
-                  </div>
-                  
-                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed w-full text-left">
-                    Games
-                  </div>
-                  
-                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed w-full text-left">
-                    4Devs
-                  </div>
+                <div className="absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md overflow-hidden z-50 w-56">
+                  <ul className="divide-y divide-gray-100">
+                    <li>
+                      <Link to="/" className="block w-full">
+                        <div className="px-4 py-3 hover:bg-gray-100 cursor-pointer">
+                          Simple
+                        </div>
+                      </Link>
+                    </li>
+                    <li>
+                      <div className="px-4 py-3 text-gray-500 cursor-not-allowed">
+                        Hard
+                      </div>
+                    </li>
+                    <li>
+                      <div className="px-4 py-3 text-gray-500 cursor-not-allowed">
+                        Games
+                      </div>
+                    </li>
+                    <li>
+                      <div className="px-4 py-3 text-gray-500 cursor-not-allowed">
+                        4Devs
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               )}
             </div>
@@ -178,49 +185,71 @@ export default function Header() {
             <X className="h-6 w-6" />
           </button>
 
-          <nav className="flex flex-col space-y-12 text-black text-lg font-semibold mt-12">
+          <nav className="flex flex-col text-black text-lg font-semibold">
             {/* Category section with dropdown */}
-            <div className="-mt-6">
+            <div>
               <button 
                 onClick={toggleMobileCategory}
-                className="flex items-center justify-between w-full py-4 text-black bg-gray-light px-4 -mx-8 w-screen text-xl"
+                className="flex items-center justify-between w-full py-4 text-black bg-gray-light px-8 text-xl"
               >
-                <span className="ml-4">By Category</span>
-                <ChevronDown className={`h-5 w-5 mr-4 transition-transform ${mobileCategoryOpen ? 'rotate-180' : ''}`} />
+                <span>By Category</span>
+                <ChevronDown className={`h-5 w-5 transition-transform ${mobileCategoryOpen ? 'rotate-180' : ''}`} />
               </button>
               
               {/* Conditional rendering of category items */}
               {mobileCategoryOpen && (
-                <div className="px-8 space-y-4 mt-4 flex flex-col">
-                  <Link to="/" onClick={() => setMobileMenuOpen(false)} className="w-full">
-                    <span className="block w-full text-left py-1">Simple</span>
-                  </Link>
-                  
-                  <div className="block text-gray-500 cursor-not-allowed w-full text-left py-1">Hard</div>
-                  
-                  <div className="block text-gray-500 cursor-not-allowed w-full text-left py-1">Games</div>
-                  
-                  <div className="block text-gray-500 cursor-not-allowed w-full text-left py-1">4Devs</div>
+                <div className="w-full bg-white shadow-inner">
+                  <ul className="divide-y divide-gray-100">
+                    <li>
+                      <Link to="/" onClick={() => setMobileMenuOpen(false)} className="block w-full">
+                        <div className="px-8 py-3 hover:bg-gray-100">
+                          Simple
+                        </div>
+                      </Link>
+                    </li>
+                    <li>
+                      <div className="px-8 py-3 text-gray-500 cursor-not-allowed">
+                        Hard
+                      </div>
+                    </li>
+                    <li>
+                      <div className="px-8 py-3 text-gray-500 cursor-not-allowed">
+                        Games
+                      </div>
+                    </li>
+                    <li>
+                      <div className="px-8 py-3 text-gray-500 cursor-not-allowed">
+                        4Devs
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               )}
             </div>
             
-            {/* Other menu items */}
-            <div className="px-8 space-y-4">
-              <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
-                <span>About</span>
-              </Link>
-              
-              <a 
-                href={contributeUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="block"
-              >
-                <span>Submit Prompt</span>
-              </a>
-            </div>
+            {/* Other menu items - structured the same way for consistency */}
+            <ul className="mt-6 divide-y divide-gray-100">
+              <li>
+                <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="block w-full">
+                  <div className="px-8 py-3 hover:bg-gray-100">
+                    About
+                  </div>
+                </Link>
+              </li>
+              <li>
+                <a 
+                  href={contributeUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full"
+                >
+                  <div className="px-8 py-3 hover:bg-gray-100">
+                    Submit Prompt
+                  </div>
+                </a>
+              </li>
+            </ul>
           </nav>
         </div>
       )}
