@@ -1,7 +1,17 @@
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { 
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger
+} from "@/components/ui/navigation-menu";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 // Define type for social links data
 interface SocialLinks {
@@ -16,6 +26,8 @@ interface SocialLinks {
 }
 
 export default function Header() {
+  const isMobile = useIsMobile();
+  
   // State for fullscreen menu triggered by hamburger icon
   const [menuOpen, setMenuOpen] = useState(false);
   
@@ -60,6 +72,55 @@ export default function Header() {
     setCategoryDropdownOpen(!categoryDropdownOpen);
   };
 
+  // Link component for desktop navigation menu
+  const NavigationMenuItemLink = ({
+    to,
+    external = false,
+    onClick,
+    children,
+    className,
+  }: {
+    to: string;
+    external?: boolean;
+    onClick?: () => void;
+    children: React.ReactNode;
+    className?: string;
+  }) => {
+    if (external) {
+      return (
+        <NavigationMenuLink asChild>
+          <a
+            href={to}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClick}
+            className={cn(
+              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+              className
+            )}
+          >
+            {children}
+          </a>
+        </NavigationMenuLink>
+      );
+    }
+    
+    return (
+      <NavigationMenuLink asChild>
+        <Link
+          to={to}
+          onClick={onClick}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+        >
+          {children}
+        </Link>
+      </NavigationMenuLink>
+    );
+  };
+
   return (
     <>
       {/* Main Header - always visible */}
@@ -75,9 +136,59 @@ export default function Header() {
             </Link>
           </div>
           
-          {/* Hamburger Menu Button */}
+          {/* Desktop Navigation - only visible on larger screens */}
+          {!isMobile && (
+            <NavigationMenu className="hidden md:flex">
+              <NavigationMenuList>
+                {/* Categories Dropdown */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>By Category</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-1 p-2">
+                      <li>
+                        <NavigationMenuItemLink to="/">
+                          <div className="text-sm font-medium">Simple</div>
+                        </NavigationMenuItemLink>
+                      </li>
+                      <li>
+                        <span className="block select-none space-y-1 rounded-md p-3 leading-none text-gray-500 cursor-not-allowed">
+                          <div className="text-sm font-medium">Hard</div>
+                        </span>
+                      </li>
+                      <li>
+                        <span className="block select-none space-y-1 rounded-md p-3 leading-none text-gray-500 cursor-not-allowed">
+                          <div className="text-sm font-medium">Games</div>
+                        </span>
+                      </li>
+                      <li>
+                        <span className="block select-none space-y-1 rounded-md p-3 leading-none text-gray-500 cursor-not-allowed">
+                          <div className="text-sm font-medium">4Devs</div>
+                        </span>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                
+                {/* About Link */}
+                <NavigationMenuItem>
+                  <NavigationMenuItemLink to="/about">
+                    About
+                  </NavigationMenuItemLink>
+                </NavigationMenuItem>
+                
+                {/* Submit Prompt Link */}
+                <NavigationMenuItem>
+                  <NavigationMenuItemLink to={contributeUrl} external>
+                    Submit Prompt
+                  </NavigationMenuItemLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          )}
+          
+          {/* Hamburger Menu Button - only visible on mobile */}
           <button 
-            className="p-2 focus:outline-none relative z-50" 
+            className="md:hidden p-2 focus:outline-none relative z-50" 
             onClick={toggleMenu}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
@@ -86,8 +197,8 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Full Screen Menu Overlay */}
-      {menuOpen && (
+      {/* Full Screen Menu Overlay - only for mobile */}
+      {isMobile && menuOpen && (
         <div className="fixed inset-0 bg-gray-light z-40 overflow-y-auto pt-24">
           {/* Menu content */}
           <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-4">
