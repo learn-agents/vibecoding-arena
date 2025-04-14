@@ -94,17 +94,6 @@ export default function Home() {
           <div className="flex justify-center mb-6 gap-6">
             {socialLinks?.project && (
               <>
-                {/* GitHub Link */}
-                <a 
-                  href={socialLinks.project.github}
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <FaGithub className="text-xl" />
-                  <span className="sr-only">GitHub</span>
-                </a>
-                
                 {/* X (Twitter) Link */}
                 <a 
                   href={socialLinks.project.x}
@@ -114,6 +103,17 @@ export default function Home() {
                 >
                   <FaXTwitter className="text-xl" />
                   <span className="sr-only">X (Twitter)</span>
+                </a>
+                
+                {/* GitHub Link */}
+                <a 
+                  href={socialLinks.project.github}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <FaGithub className="text-xl" />
+                  <span className="sr-only">GitHub</span>
                 </a>
               </>
             )}
