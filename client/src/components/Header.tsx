@@ -106,7 +106,7 @@ export default function Header() {
                   href={contributeUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-sm font-medium hover:text-primary transition-colors"
+                  className="text-sm font-medium border border-black px-3 py-2 rounded transition-colors hover:bg-black hover:text-white"
                 >
                   Submit Prompt
                 </a>
