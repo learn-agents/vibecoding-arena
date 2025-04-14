@@ -8,6 +8,12 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // Define type for social links data
 interface SocialLinks {
@@ -22,13 +28,7 @@ interface SocialLinks {
 }
 
 export default function Header() {
-  // State for mobile menu
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
-  // State for category dropdown in mobile menu
-  const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false);
-  
-  // State for category dropdown in desktop
+  // State for desktop category dropdown
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -44,19 +44,6 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [mobileMenuOpen]);
-
   // Fetch social links to get the GitHub repository URL
   const { data } = useQuery<SocialLinks>({
     queryKey: ['/api/social-links'],
@@ -68,23 +55,9 @@ export default function Header() {
     ? `${data.project.github}/blob/master/CONTRIBUTE.md` 
     : "#";
 
-  // Handle mobile menu toggle
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-    // Reset category dropdown state when closing the menu
-    if (mobileMenuOpen) {
-      setMobileCategoryOpen(false);
-    }
-  };
-
   // Handle category dropdown toggle on desktop
   const toggleCategoryDropdown = () => {
     setCategoryDropdownOpen(!categoryDropdownOpen);
-  };
-  
-  // Handle category dropdown toggle on mobile
-  const toggleMobileCategory = () => {
-    setMobileCategoryOpen(!mobileCategoryOpen);
   };
 
   return (
@@ -153,77 +126,46 @@ export default function Header() {
             </a>
           </div>
           
-          {/* Hamburger menu button for small and medium screens - only show when menu is closed */}
-          {!mobileMenuOpen && (
-            <button 
-              className="lg:hidden p-2 focus:outline-none" 
-              onClick={toggleMobileMenu}
-              aria-label="Open menu"
-            >
-              <Menu className="h-6 w-6" />
-            </button>
-          )}
+          {/* Responsive menu for small and medium screens */}
+          <div className="lg:hidden flex items-center space-x-1 md:space-x-2">
+            {/* Category Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="bg-gray-light hover:bg-gray-200 transition-colors py-2 px-3 md:px-4 rounded-md flex items-center space-x-1 text-sm md:text-base">
+                <span>By Category</span>
+                <ChevronDown className="h-3 w-3 md:h-4 md:w-4 ml-1" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 z-50">
+                <Link to="/">
+                  <DropdownMenuItem className="cursor-pointer">
+                    Simple
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuItem disabled className="text-gray-500 cursor-not-allowed">
+                  Hard
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled className="text-gray-500 cursor-not-allowed">
+                  Games
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled className="text-gray-500 cursor-not-allowed">
+                  4Devs
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            {/* About Link */}
+            <Link to="/about">
+              <span className="inline-block px-3 md:px-4 py-2 rounded-md text-black hover:bg-black hover:text-white transition-all cursor-pointer text-sm md:text-base">
+                About
+              </span>
+            </Link>
+            
+            {/* Submit Prompt Link */}
+            <a href={contributeUrl} target="_blank" rel="noopener noreferrer" className="inline-block px-3 md:px-4 py-2 rounded-md text-black hover:bg-black hover:text-white transition-all cursor-pointer text-sm md:text-base whitespace-nowrap">
+              Submit Prompt
+            </a>
+          </div>
         </div>
       </header>
-
-      {/* Mobile/tablet menu overlay - only visible when menu is open */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 top-[73px] bg-white z-10 flex flex-col overflow-y-auto">
-          {/* Close button positioned at the top-right */}
-          <button 
-            className="absolute top-4 right-6 p-2 focus:outline-none" 
-            onClick={toggleMobileMenu}
-            aria-label="Close menu"
-          >
-            <X className="h-6 w-6" />
-          </button>
-
-          <nav className="flex flex-col space-y-12 text-black text-lg font-semibold mt-12">
-            {/* Category section with dropdown */}
-            <div className="-mt-6">
-              <button 
-                onClick={toggleMobileCategory}
-                className="flex items-center justify-between w-full py-4 text-black bg-gray-light px-4 -mx-8 w-screen text-xl"
-              >
-                <span className="ml-4">By Category</span>
-                <ChevronDown className={`h-5 w-5 mr-4 transition-transform ${mobileCategoryOpen ? 'rotate-180' : ''}`} />
-              </button>
-              
-              {/* Conditional rendering of category items */}
-              {mobileCategoryOpen && (
-                <div className="px-8 space-y-4 mt-4">
-                  <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-                    <span>Simple</span>
-                  </Link>
-                  
-                  <div className="block text-gray-500 cursor-not-allowed">Hard</div>
-                  
-                  <div className="block text-gray-500 cursor-not-allowed">Games</div>
-                  
-                  <div className="block text-gray-500 cursor-not-allowed">4Devs</div>
-                </div>
-              )}
-            </div>
-            
-            {/* Other menu items */}
-            <div className="px-8 space-y-4">
-              <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
-                <span>About</span>
-              </Link>
-              
-              <a 
-                href={contributeUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="block"
-              >
-                <span>Submit Prompt</span>
-              </a>
-            </div>
-          </nav>
-        </div>
-      )}
     </>
   );
 }
