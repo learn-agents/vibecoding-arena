@@ -13,6 +13,7 @@ export default {
       colors: {
         black: "#222",
         white: "#f8f8f8",
+        'menu-gray': "#ededed",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

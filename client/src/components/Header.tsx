@@ -157,13 +157,13 @@ export default function Header() {
         <div 
           className="fixed inset-0 bg-white z-10 overflow-y-auto"
         >
-          <div className="pt-24 px-4">
+          <div className="pt-24">
             <nav className="flex flex-col">
               {/* Category dropdown */}
               <div className="border-b border-gray-200">
                 <button 
                   onClick={toggleCategory}
-                  className="w-full py-4 px-2 flex justify-between items-center bg-gray-100 hover:bg-gray-200 transition-colors"
+                  className="w-full py-4 px-4 flex justify-between items-center bg-menu-gray hover:bg-gray-200 transition-colors"
                 >
                   <span className="text-xl font-medium text-gray-700">By Category</span>
                   {categoryOpen ? (
@@ -175,20 +175,20 @@ export default function Header() {
                 
                 {/* Category items */}
                 {categoryOpen && (
-                  <div className="pl-4 pb-4 flex flex-col space-y-4">
+                  <div className="pb-4 flex flex-col">
                     <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-                      <span className="block py-2 text-black">Simple</span>
+                      <span className="block py-3 px-4 pl-8 text-black">Simple</span>
                     </Link>
-                    <span className="block py-2 text-gray-400 cursor-not-allowed">Hard</span>
-                    <span className="block py-2 text-gray-400 cursor-not-allowed">Games</span>
-                    <span className="block py-2 text-gray-400 cursor-not-allowed">4Devs</span>
+                    <span className="block py-3 px-4 pl-8 text-gray-400 cursor-not-allowed">Hard</span>
+                    <span className="block py-3 px-4 pl-8 text-gray-400 cursor-not-allowed">Games</span>
+                    <span className="block py-3 px-4 pl-8 text-gray-400 cursor-not-allowed">4Devs</span>
                   </div>
                 )}
               </div>
               
               {/* Other menu items */}
               <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
-                <div className="py-4 px-2 border-b border-gray-200 text-xl font-medium">
+                <div className="py-4 px-4 border-b border-gray-200 text-xl font-medium">
                   About
                 </div>
               </Link>
@@ -199,7 +199,7 @@ export default function Header() {
                 rel="noopener noreferrer" 
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <div className="py-4 px-2 border-b border-gray-200 text-xl font-medium">
+                <div className="py-4 px-4 border-b border-gray-200 text-xl font-medium">
                   Submit Prompt
                 </div>
               </a>
