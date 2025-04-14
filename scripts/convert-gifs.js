@@ -123,16 +123,16 @@ async function processGifs() {
     // Update the YAML file with new video paths
     yamlData.prompts.forEach(prompt => {
       prompt.agents.forEach(agent => {
-        const gifUrl = agent.gif_url;
+        const gifUrl = agent.video_url;
         if (uniqueGifs.has(gifUrl)) {
           const fileInfo = uniqueGifs.get(gifUrl);
           
           // Check if the MP4 file exists before updating the URL
           if (fs.existsSync(fileInfo.outputPath)) {
-            // Keep the original URL as a comment or in a new field
-            agent.original_gif_url = gifUrl;
+            // Keep the original URL in image_link
+            agent.image_link = gifUrl;
             // Update with the new video path
-            agent.gif_url = fileInfo.publicPath;
+            agent.video_url = fileInfo.publicPath;
           }
         }
       });
