@@ -36,8 +36,7 @@ export default function About() {
           <section className="mb-6">
             <h1 className="text-2xl font-bold">About Us</h1>
             <p className="text-sm">
-              VibeCoding Arena is an open platform for crowdsourced AI benchmarking in development. 
-              We're creating learn-agents.diy so everyone can learn the art of making agents for free. 
+              VibeCoding Arena is an open platform for crowdsourced AI benchmarking in building actual stuff.
               We always welcome contributions from the community. If you're interested in collaboration, 
               we'd love to hear from you!
             </p>
@@ -85,6 +84,16 @@ export default function About() {
                   className="text-blue-600 hover:text-blue-800 hover:underline"
                 >
                   How to contribute
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://learn-agents.diy"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800 hover:underline"
+                >
+                  Learn how to make agents for free
                 </a>
               </li>
             </ul>
