@@ -78,7 +78,7 @@ function generatePromptsFromYaml() {
         text: yamlPrompt.title,
         description: yamlPrompt.short_description,
         carouselIndex: index,
-        fullPromptLink: yamlPrompt.full_prompt_link || undefined,
+        fullPromptLink: yamlPrompt.full_prompt_link || null,
         agents: agents,
       };
     });

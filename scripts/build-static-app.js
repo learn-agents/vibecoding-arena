@@ -9,6 +9,7 @@ const distDir = path.join(process.cwd(), 'dist', 'public');
 const dataDir = path.join(publicDir, 'data');
 const distDataDir = path.join(distDir, 'data');
 const clientDir = path.join(process.cwd(), 'client');
+const indexFile = path.join(distDir, 'index.html');
 
 // Create necessary directories
 function createDirectories() {
@@ -44,7 +45,7 @@ function createEnvConfig() {
 function buildFrontend() {
   console.log('🏗️ Building the frontend in static mode...');
   try {
-    // Use the --base=./ flag to make all asset paths relative
+    // Use relative paths for all assets
     execSync('cd client && npx vite build --base=./ --mode production', { 
       stdio: 'inherit',
       env: { ...process.env, VITE_STATIC_MODE: 'true' }
@@ -53,6 +54,35 @@ function buildFrontend() {
     console.error('❌ Failed to build the frontend');
     process.exit(1);
   }
+}
+
+// Update index.html to ensure proper path resolution
+function updateIndexHtml() {
+  if (!fs.existsSync(indexFile)) {
+    console.warn('⚠️ index.html not found, skipping update');
+    return;
+  }
+
+  console.log('📝 Updating index.html for proper path resolution...');
+  
+  // Read the current index.html content
+  let content = fs.readFileSync(indexFile, 'utf8');
+  
+  // Add base tag if not present
+  if (!content.includes('<base href')) {
+    content = content.replace(
+      '<head>',
+      '<head>\n    <base href="./">'
+    );
+  }
+  
+  // Ensure all script paths are relative
+  content = content.replace(/src="\/assets\//g, 'src="./assets/');
+  content = content.replace(/href="\/assets\//g, 'href="./assets/');
+  
+  // Write back the updated content
+  fs.writeFileSync(indexFile, content);
+  console.log('✓ Updated index.html');
 }
 
 // Copy the static data files to the build output
@@ -71,6 +101,70 @@ function copyStaticFiles() {
   
   // Create .nojekyll file for GitHub Pages
   fs.writeFileSync(path.join(distDir, '.nojekyll'), '');
+  
+  // Create a fallback replit.nix file to prevent deployment issues
+  const replitNixContent = `{ pkgs }: {
+    deps = [
+      pkgs.nodejs
+    ];
+  }`;
+  fs.writeFileSync(path.join(distDir, 'replit.nix'), replitNixContent);
+}
+
+// Create a deployment verification file
+function createVerificationFile() {
+  console.log('📝 Creating deployment verification file...');
+  
+  // Create a simple HTML file that can verify the static deployment works
+  const verifyContent = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Static Deployment Verification</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+    .success { color: green; }
+    .error { color: red; }
+    pre { background: #f5f5f5; padding: 10px; border-radius: 5px; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h1>Static Deployment Verification</h1>
+  <p>This file confirms your static site is deployed correctly.</p>
+  <div id="status">Checking data files...</div>
+  <div id="results"></div>
+
+  <script>
+    const status = document.getElementById('status');
+    const results = document.getElementById('results');
+    
+    // Try to load the data files
+    const checkFiles = async () => {
+      try {
+        const response = await fetch('./data/prompts.json');
+        if (!response.ok) {
+          throw new Error(\`Failed to load prompts.json: \${response.status}\`);
+        }
+        
+        const data = await response.json();
+        status.innerHTML = '<span class="success">✓ Success! Data files are accessible.</span>';
+        results.innerHTML = \`<p>Found \${data.length} prompts:</p><pre>\${JSON.stringify(data.map(p => p.text), null, 2)}</pre>\`;
+      } catch (error) {
+        status.innerHTML = \`<span class="error">❌ Error: \${error.message}</span>\`;
+        results.innerHTML = '<p>Troubleshooting tips:</p><ul>' +
+          '<li>Check the browser console for more error details</li>' +
+          '<li>Ensure data files were included in the deployment</li>' +
+          '<li>Verify the deployment server is properly configured</li>' +
+        '</ul>';
+      }
+    };
+    
+    checkFiles();
+  </script>
+</body>
+</html>`;
+
+  fs.writeFileSync(path.join(distDir, 'verify.html'), verifyContent);
 }
 
 // Main build process
@@ -81,11 +175,14 @@ async function main() {
   generateStaticData();
   createEnvConfig();
   buildFrontend();
+  updateIndexHtml();
   copyStaticFiles();
+  createVerificationFile();
   
   console.log('✅ Static build completed successfully!');
   console.log('📂 Your static site is available in the dist/public directory');
   console.log('🌐 Deploy these files to any static hosting service');
+  console.log('🧪 After deployment, visit /verify.html to verify everything works correctly');
 }
 
 main().catch(error => {

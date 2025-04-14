@@ -7,7 +7,7 @@
     "fullPromptLink": "https://github.com/all-mute/vibecoding-arena/blob/main/prompts/cat-food-landing.md",
     "agents": [
       {
-        "id": "a20a53db-240f-4d20-8aa1-9d866ee99aae",
+        "id": "313e966c-6a34-4933-9832-96d5eaf44c47",
         "promptId": "cat-food-landing",
         "agentName": "v0",
         "gifUrl": "https://assets.awwwards.com/awards/element/2023/12/6584f1820c7bc073053986.mp4",
@@ -17,7 +17,7 @@
         "siteLink": "https://purr-nutrition.com"
       },
       {
-        "id": "47ce4fa7-c247-4386-a2d1-ba018de13634",
+        "id": "2e8e5e68-88f7-41af-8f7e-a3ae7e86942f",
         "promptId": "cat-food-landing",
         "agentName": "replit",
         "gifUrl": "https://assets.awwwards.com/awards/element/2025/02/67a67ffb90217621271572.mp4",
@@ -27,7 +27,7 @@
         "siteLink": "https://meowmeals.example.com"
       },
       {
-        "id": "b858cf9e-da1c-486d-b886-3c6a421c596b",
+        "id": "7d5a82e1-bec2-41f5-8846-6e74cc419162",
         "promptId": "cat-food-landing",
         "agentName": "lovable",
         "gifUrl": "https://assets.awwwards.com/awards/element/2025/01/6798f6a17d779689123277.mp4",
@@ -37,7 +37,7 @@
         "siteLink": "https://whiskerfoods.example.com"
       },
       {
-        "id": "cce16b40-8728-49ff-a3e0-468f79794ac5",
+        "id": "3d6b2255-b0e9-4e79-82e8-a946ad351bad",
         "promptId": "cat-food-landing",
         "agentName": "bolt",
         "gifUrl": "https://assets.awwwards.com/awards/element/2024/10/6720bb950b752303911183.mp4",
@@ -47,7 +47,7 @@
         "siteLink": "https://purrfectmeals.example.com"
       },
       {
-        "id": "1a54dc7a-4de2-4c70-abbc-5af61240cf2f",
+        "id": "602dcb7c-8706-458c-82f7-c974c43d9421",
         "promptId": "cat-food-landing",
         "agentName": "grok",
         "gifUrl": null,
@@ -66,7 +66,7 @@
     "fullPromptLink": "https://github.com/all-mute/vibecoding-arena/blob/main/prompts/portfolio-python.md",
     "agents": [
       {
-        "id": "25666ef1-ef51-49fc-81ce-890b880454ff",
+        "id": "714c461f-e988-4da3-903e-7d829f946777",
         "promptId": "portfolio-python",
         "agentName": "v0",
         "gifUrl": "https://assets.awwwards.com/awards/element/2023/12/6584f1820c7bc073053986.mp4",
@@ -76,7 +76,7 @@
         "siteLink": "https://pythondev-portfolio.example.com"
       },
       {
-        "id": "50f9c436-46a5-46a6-bf0d-8c99ec49ddec",
+        "id": "3ac5e64e-9bdd-461e-9e65-dbb201f0c105",
         "promptId": "portfolio-python",
         "agentName": "replit",
         "gifUrl": "https://assets.awwwards.com/awards/element/2025/02/67a67ffb90217621271572.mp4",
@@ -86,7 +86,7 @@
         "siteLink": "https://pydev-showcase.example.com"
       },
       {
-        "id": "2a242b29-8c61-4939-851e-08ea213a9ed2",
+        "id": "a6f89479-fab9-40b4-87ff-ba95c81a748d",
         "promptId": "portfolio-python",
         "agentName": "lovable",
         "gifUrl": "https://assets.awwwards.com/awards/element/2025/01/6798f6a17d779689123277.mp4",
@@ -96,7 +96,7 @@
         "siteLink": "https://codedportfolio.example.com"
       },
       {
-        "id": "6e506466-b3e5-40ca-a960-0a45ad474278",
+        "id": "8eb6758f-e282-4846-82b6-350e171cbacc",
         "promptId": "portfolio-python",
         "agentName": "bolt",
         "gifUrl": "https://assets.awwwards.com/awards/element/2024/10/6720bb950b752303911183.mp4",
@@ -106,7 +106,7 @@
         "siteLink": "https://pythonista.example.com"
       },
       {
-        "id": "2487c8e8-d175-494b-bd11-78177c2634e1",
+        "id": "e01d63c8-76ae-4f88-b9de-001de1744507",
         "promptId": "portfolio-python",
         "agentName": "grok",
         "gifUrl": "https://assets.awwwards.com/awards/element/2024/02/65dde5ebe59f7145939762.mp4",
@@ -125,7 +125,7 @@
     "fullPromptLink": "https://github.com/all-mute/vibecoding-arena/blob/main/prompts/chat-bot.md",
     "agents": [
       {
-        "id": "d9ac734a-04ad-4198-9c61-7d015bcd6bb6",
+        "id": "bb5a72a7-c305-4eb9-92ac-addfb9c81cb5",
         "promptId": "chat-bot",
         "agentName": "v0",
         "gifUrl": "https://assets.awwwards.com/awards/element/2023/12/6584f1820c7bc073053986.mp4",
@@ -135,7 +135,7 @@
         "siteLink": "https://robofriend.example.com"
       },
       {
-        "id": "632e9aa1-f3d1-4d74-9af6-05453145bb6f",
+        "id": "beb3792d-f6fe-4b04-a658-9f8daa781219",
         "promptId": "chat-bot",
         "agentName": "replit",
         "gifUrl": "https://assets.awwwards.com/awards/element/2025/02/67a67ffb90217621271572.mp4",
@@ -145,7 +145,7 @@
         "siteLink": "https://ai-companion.example.com"
       },
       {
-        "id": "99a22f49-d658-4fd6-b563-8ac39ae41730",
+        "id": "6c806677-e146-4bc6-a027-10fec446a9ad",
         "promptId": "chat-bot",
         "agentName": "lovable",
         "gifUrl": "https://assets.awwwards.com/awards/element/2025/01/6798f6a17d779689123277.mp4",
@@ -155,7 +155,7 @@
         "siteLink": "https://chatty-ai.example.com"
       },
       {
-        "id": "98d5845b-4ed9-4976-ab44-0a80bbea4ed7",
+        "id": "0157c45c-031f-40b6-b52f-5970c68185a3",
         "promptId": "chat-bot",
         "agentName": "bolt",
         "gifUrl": "https://assets.awwwards.com/awards/element/2024/10/6720bb950b752303911183.mp4",
@@ -165,7 +165,7 @@
         "siteLink": "https://conversai.example.com"
       },
       {
-        "id": "74038c1e-71a8-43c2-97df-195c63dc583d",
+        "id": "76c48a30-8dc8-41ff-bd80-480d677925fc",
         "promptId": "chat-bot",
         "agentName": "grok",
         "gifUrl": "https://assets.awwwards.com/awards/element/2024/02/65dde5ebe59f7145939762.mp4",
