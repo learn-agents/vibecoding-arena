@@ -155,12 +155,12 @@ export default function Header() {
       {/* Mobile menu overlay */}
       {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-white z-10 overflow-y-auto"
+          className="fixed inset-0 top-[75px] bg-white z-10 overflow-y-auto"
         >
-          <div className="pt-[74px] -mt-px">
+          <div>
             <nav className="flex flex-col">
               {/* Category dropdown */}
-              <div className="border-b border-gray-200 mt-0">
+              <div className="border-b border-gray-200">
                 <button 
                   onClick={toggleCategory}
                   className="w-full py-4 px-4 flex justify-between items-center bg-menu-gray hover:bg-gray-200 transition-colors"
