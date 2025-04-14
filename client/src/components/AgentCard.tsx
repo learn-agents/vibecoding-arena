@@ -230,16 +230,11 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
                   className="absolute bottom-2 right-2 flex items-center justify-center z-30 transition-all duration-300 bg-black/40 rounded-full w-5 h-5 cursor-pointer"
                   onClick={handleBrowserIconClick}
                 >
-                  <Globe className="w-3.5 h-3.5 text-[#6495ED]" />
+                  <Globe className="w-3.5 h-3.5 text-[#ADD8E6]" />
                 </div>
               )}
               
-              {/* Display creation date on hover in the bottom left */}
-              {isHovering && agent.createdAt && (
-                <div className="absolute bottom-2 left-2 text-xs text-white/90 z-30 transition-all duration-300">
-                  {agent.createdAt}
-                </div>
-              )}
+              {/* Display creation date on hover - removed as requested */}
             </div>
           </DialogTrigger>
           
@@ -305,12 +300,7 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
             </>
           )}
           
-          {/* Display creation date on mobile */}
-          {agent.createdAt && (
-            <div className="absolute bottom-2 left-2 text-xs text-white/90 z-30 bg-black/40 px-2 py-1 rounded-md">
-              {agent.createdAt}
-            </div>
-          )}
+          {/* Display creation date on mobile - removed as requested */}
         </div>
       )}
       
