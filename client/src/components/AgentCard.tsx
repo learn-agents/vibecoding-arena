@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Agent } from "@/lib/types";
 import { Globe } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface AgentCardProps {
   agent: Agent;
@@ -13,6 +14,9 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
   const [loading, setLoading] = useState(true);
   const [isVideo, setIsVideo] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  
+  // Check if on mobile device
+  const isMobile = useIsMobile();
   
   // References for media elements
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -131,114 +135,184 @@ export default function AgentCard({ agent, promptId }: AgentCardProps) {
     }
   };
 
+  // Handle click for mobile devices
+  const handleMobileClick = (e: React.MouseEvent) => {
+    if (isMobile && agent.siteLink) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.open(agent.siteLink, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  // Handle click on browser icon
+  const handleBrowserIconClick = (e: React.MouseEvent) => {
+    if (agent.siteLink) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.open(agent.siteLink, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <div 
       className="group relative flex flex-col overflow-visible bg-transparent transition-all duration-300 h-full"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Modal for full-screen preview */}
-      <Dialog>
-        <DialogTrigger asChild>
-          {/* Card image container */}
-          <div className="relative flex-none aspect-video rounded-subtle overflow-hidden cursor-pointer">
-            {/* Loading placeholder */}
-            {loading && (
-              <div className="w-full h-full bg-gray-200 animate-pulse"></div>
-            )}
-            
-            {/* Media content: either video or GIF */}
-            {!loading && (
-              <>
-                {isVideo ? (
-                  // Video element for better control
-                  <video 
-                    ref={videoRef}
-                    src={mediaUrl}
-                    className="w-full h-full object-cover rounded-subtle"
-                    loop
-                    playsInline
-                    muted
-                    preload="auto"
-                    onError={handleVideoError}
-                    onLoadedData={() => setLoading(false)}
-                    onTimeUpdate={handleTimeUpdate}
-                    // Initialize paused if not hovering
-                    autoPlay={false}
-                  />
-                ) : (
-                  // Image with conditional animation for browsers that support it
-                  <img 
-                    ref={imgRef}
-                    src={mediaUrl}
-                    alt={`${agent.agentName} solution`}
-                    className="w-full h-full object-cover rounded-subtle"
-                    style={{ 
-                      animationPlayState: isHovering ? 'running' : 'paused',
-                      WebkitAnimationPlayState: isHovering ? 'running' : 'paused',
-                      filter: isHovering ? 'none' : 'url(#paused-gif)'
-                    }}
-                  />
-                )}
-              </>
-            )}
-            
-            {/* SVG filter to help improve GIF pausing across browsers */}
-            {!isVideo && (
-              <svg style={{ position: 'absolute', width: 0, height: 0 }}>
-                <defs>
-                  <filter id="paused-gif">
-                    <feGaussianBlur stdDeviation="0.01" />
-                  </filter>
-                </defs>
-              </svg>
-            )}
-            
-            {/* Gradient overlay at the bottom - only render when hovering */}
-            {isHovering && (
-              <div 
-                className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-300 z-10 opacity-100"
-              ></div>
-            )}
-            
-            {/* Browser icon that appears on hover */}
-            {isHovering && (
-              <div className="absolute bottom-2 right-2 flex items-center justify-center z-30 transition-all duration-300 bg-black/40 rounded-full w-5 h-5">
-                <Globe className="w-3.5 h-3.5 text-white" />
-              </div>
-            )}
-            
-            {/* Display creation date on hover in the bottom right */}
-            {isHovering && agent.createdAt && (
-              <div className="absolute bottom-2 left-2 text-xs text-white/90 z-30 transition-all duration-300">
-                {agent.createdAt}
-              </div>
-            )}
-          </div>
-        </DialogTrigger>
-        
-        {/* Modal content for preview */}
-        <DialogContent className="w-[80vw] max-w-[80vw] h-[80vh] max-h-[80vh] p-0 border-none overflow-hidden bg-transparent">
-          <div className="relative w-full h-full bg-black/90 flex items-center justify-center overflow-hidden">
-            {isVideo ? (
-              <video 
-                src={mediaUrl}
-                className="w-full h-full object-contain"
-                controls
-                autoPlay
-                loop
-                playsInline
-              />
-            ) : (
-              <img 
-                src={mediaUrl}
-                alt={`${agent.agentName} solution full preview`}
-                className="w-full h-full object-contain"
-              />
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
+      {/* For desktop: Modal for full-screen preview */}
+      {!isMobile ? (
+        <Dialog>
+          <DialogTrigger asChild>
+            {/* Card image container */}
+            <div className="relative flex-none aspect-video rounded-subtle overflow-hidden cursor-pointer">
+              {/* Loading placeholder */}
+              {loading && (
+                <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+              )}
+              
+              {/* Media content: either video or GIF */}
+              {!loading && (
+                <>
+                  {isVideo ? (
+                    // Video element for better control
+                    <video 
+                      ref={videoRef}
+                      src={mediaUrl}
+                      className="w-full h-full object-cover rounded-subtle"
+                      loop
+                      playsInline
+                      muted
+                      preload="auto"
+                      onError={handleVideoError}
+                      onLoadedData={() => setLoading(false)}
+                      onTimeUpdate={handleTimeUpdate}
+                      // Initialize paused if not hovering
+                      autoPlay={false}
+                    />
+                  ) : (
+                    // Image with conditional animation for browsers that support it
+                    <img 
+                      ref={imgRef}
+                      src={mediaUrl}
+                      alt={`${agent.agentName} solution`}
+                      className="w-full h-full object-cover rounded-subtle"
+                      style={{ 
+                        animationPlayState: isHovering ? 'running' : 'paused',
+                        WebkitAnimationPlayState: isHovering ? 'running' : 'paused',
+                        filter: isHovering ? 'none' : 'url(#paused-gif)'
+                      }}
+                    />
+                  )}
+                </>
+              )}
+              
+              {/* SVG filter to help improve GIF pausing across browsers */}
+              {!isVideo && (
+                <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+                  <defs>
+                    <filter id="paused-gif">
+                      <feGaussianBlur stdDeviation="0.01" />
+                    </filter>
+                  </defs>
+                </svg>
+              )}
+              
+              {/* Gradient overlay at the bottom - only render when hovering */}
+              {isHovering && (
+                <div 
+                  className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-300 z-10 opacity-100"
+                ></div>
+              )}
+              
+              {/* Browser icon that appears on hover - links to the actual website */}
+              {isHovering && agent.siteLink && (
+                <div 
+                  className="absolute bottom-2 right-2 flex items-center justify-center z-30 transition-all duration-300 bg-black/40 rounded-full w-5 h-5 cursor-pointer"
+                  onClick={handleBrowserIconClick}
+                >
+                  <Globe className="w-3.5 h-3.5 text-white" />
+                </div>
+              )}
+              
+              {/* Display creation date on hover in the bottom left */}
+              {isHovering && agent.createdAt && (
+                <div className="absolute bottom-2 left-2 text-xs text-white/90 z-30 transition-all duration-300">
+                  {agent.createdAt}
+                </div>
+              )}
+            </div>
+          </DialogTrigger>
+          
+          {/* Modal content for preview */}
+          <DialogContent className="w-[80vw] max-w-[80vw] h-[80vh] max-h-[80vh] p-0 border-none overflow-hidden bg-transparent">
+            <DialogTitle className="sr-only">{agent.agentName} Preview</DialogTitle>
+            <div className="relative w-full h-full bg-black/90 flex items-center justify-center overflow-hidden">
+              {isVideo ? (
+                <video 
+                  src={mediaUrl}
+                  className="w-full h-full object-contain"
+                  controls
+                  autoPlay
+                  loop
+                  playsInline
+                />
+              ) : (
+                <img 
+                  src={mediaUrl}
+                  alt={`${agent.agentName} solution full preview`}
+                  className="w-full h-full object-contain"
+                />
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
+      ) : (
+        // For mobile: Direct link to the site
+        <div 
+          className="relative flex-none aspect-video rounded-subtle overflow-hidden cursor-pointer"
+          onClick={handleMobileClick}
+        >
+          {/* Loading placeholder */}
+          {loading && (
+            <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+          )}
+          
+          {/* Media content: either video or GIF */}
+          {!loading && (
+            <>
+              {isVideo ? (
+                // Video element with no autoplay on mobile
+                <video 
+                  ref={videoRef}
+                  src={mediaUrl}
+                  className="w-full h-full object-cover rounded-subtle"
+                  loop
+                  playsInline
+                  muted
+                  preload="auto"
+                  onError={handleVideoError}
+                  onLoadedData={() => setLoading(false)}
+                />
+              ) : (
+                // Static image on mobile
+                <img 
+                  ref={imgRef}
+                  src={mediaUrl}
+                  alt={`${agent.agentName} solution`}
+                  className="w-full h-full object-cover rounded-subtle"
+                />
+              )}
+            </>
+          )}
+          
+          {/* Display creation date on mobile */}
+          {agent.createdAt && (
+            <div className="absolute bottom-2 left-2 text-xs text-white/90 z-30 bg-black/40 px-2 py-1 rounded-md">
+              {agent.createdAt}
+            </div>
+          )}
+        </div>
+      )}
       
       {/* Agent name and code link under the card */}
       <div className="p-3 pt-2 flex justify-between items-center">
