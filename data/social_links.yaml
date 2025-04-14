@@ -1,0 +1,17 @@
+# Social Media Links for AI Coding Agents Showcase Project
+
+# Project social media accounts
+project:
+  x: https://twitter.com/aicagents      # X (formerly Twitter) account
+  github: https://github.com/aicagents  # GitHub repository
+
+# Authors' social media accounts
+authors:
+  - name: David Merkulov
+    x: https://twitter.com/davidmerkulov
+  
+  - name: Artem Bulgakov
+    x: https://twitter.com/artembulgakov
+  
+  - name: Dmitry Zhechkov
+    x: https://twitter.com/dzhechkov
