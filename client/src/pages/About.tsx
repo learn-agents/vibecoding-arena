@@ -1,5 +1,5 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import { Mail, Github } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import { useQuery } from "@tanstack/react-query";

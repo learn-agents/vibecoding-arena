@@ -1,10 +1,10 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import PromptCarousel from "@/components/PromptCarousel";
-import FilterSystem from "@/components/FilterSystem";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import PromptCarousel from "../components/PromptCarousel";
+import FilterSystem from "../components/FilterSystem";
 import { useQuery } from "@tanstack/react-query";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Prompt, Agent } from "@/lib/types";
+import { Skeleton } from "../components/ui/skeleton";
+import { Prompt, Agent } from "../lib/types";
 import { useState, useMemo } from "react";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
 
