@@ -6,8 +6,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 // Define type for social links data
 interface SocialLinks {
@@ -22,23 +22,23 @@ interface SocialLinks {
 }
 
 export default function Header() {
+  // State for mobile menu
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  
+  // State for category dropdown
+  const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
+  const categoryDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Handle window resize to detect mobile view
+  // Close category dropdown when clicking outside
   useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target as Node)) {
+        setCategoryDropdownOpen(false);
+      }
     };
-    
-    // Initial check
-    checkIfMobile();
-    
-    // Set up event listener for window resize
-    window.addEventListener('resize', checkIfMobile);
-    
-    // Clean up event listener on component unmount
-    return () => window.removeEventListener('resize', checkIfMobile);
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   // Prevent body scroll when mobile menu is open
@@ -70,6 +70,11 @@ export default function Header() {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
+  // Handle category dropdown toggle
+  const toggleCategoryDropdown = () => {
+    setCategoryDropdownOpen(!categoryDropdownOpen);
+  };
+
   return (
     <>
       {/* Main Header */}
@@ -85,56 +90,44 @@ export default function Header() {
             </Link>
           </div>
           
-          {/* Center section with category buttons - hidden on mobile */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link to="/">
-              <span className="inline-block px-4 py-2 rounded-md text-black hover:bg-black hover:text-white transition-all cursor-pointer">
-                Simple
-              </span>
-            </Link>
-            
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="inline-block px-4 py-2 rounded-md text-gray-500 transition-all cursor-not-allowed">
+          {/* Center section with category dropdown - hidden on small screens */}
+          <div className="hidden lg:flex items-center space-x-4">
+            {/* Category Dropdown */}
+            <div className="relative" ref={categoryDropdownRef}>
+              <button 
+                onClick={toggleCategoryDropdown}
+                className="flex items-center space-x-1 px-4 py-2 rounded-md bg-gray-light text-black hover:bg-gray-200 transition-all cursor-pointer"
+              >
+                <span>By Category</span>
+                <ChevronDown className={`h-4 w-4 transition-transform ${categoryDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {categoryDropdownOpen && (
+                <div className="absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md p-2 z-50 min-w-[200px]">
+                  <Link to="/">
+                    <div className="px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">
+                      Simple
+                    </div>
+                  </Link>
+                  
+                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed">
                     Hard
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>In development</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="inline-block px-4 py-2 rounded-md text-gray-500 transition-all cursor-not-allowed">
+                  </div>
+                  
+                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed">
                     Games
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>In development</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="inline-block px-4 py-2 rounded-md text-gray-500 transition-all cursor-not-allowed">
+                  </div>
+                  
+                  <div className="px-4 py-2 text-gray-500 cursor-not-allowed">
                     4Devs
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>In development</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
           
-          {/* Right side with About and Submit Prompt - hidden on mobile */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Right side with About and Submit Prompt - hidden on small screens */}
+          <div className="hidden lg:flex items-center space-x-4">
             <Link to="/about">
               <span className="inline-block px-4 py-2 rounded-md text-black hover:bg-black hover:text-white transition-all cursor-pointer">
                 About
@@ -148,9 +141,9 @@ export default function Header() {
             </a>
           </div>
           
-          {/* Mobile hamburger menu button */}
+          {/* Hamburger menu button for small and medium screens */}
           <button 
-            className="md:hidden p-2 focus:outline-none" 
+            className="lg:hidden p-2 focus:outline-none" 
             onClick={toggleMobileMenu}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
@@ -163,20 +156,36 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile menu overlay - only visible when menu is open */}
+      {/* Mobile/tablet menu overlay - only visible when menu is open */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-black z-10 flex flex-col pt-24 px-8 overflow-y-auto">
-          <nav className="flex flex-col space-y-8 text-white text-4xl font-semibold">
-            <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-              <span>Simple</span>
-            </Link>
+        <div className="fixed inset-0 bg-white z-10 flex flex-col pt-24 px-8 overflow-y-auto">
+          {/* Close button in the top-right corner */}
+          <button 
+            className="absolute top-6 right-6 p-2 focus:outline-none" 
+            onClick={toggleMobileMenu}
+            aria-label="Close menu"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          
+          <nav className="flex flex-col space-y-8 text-black text-4xl font-semibold">
+            {/* Category header */}
+            <div className="text-gray-light">By Category</div>
             
-            <span className="text-gray-500 cursor-not-allowed">Hard</span>
+            {/* Category items with indentation */}
+            <div className="pl-4 space-y-6">
+              <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+                <span>Simple</span>
+              </Link>
+              
+              <div className="text-gray-500 cursor-not-allowed">Hard</div>
+              
+              <div className="text-gray-500 cursor-not-allowed">Games</div>
+              
+              <div className="text-gray-500 cursor-not-allowed">4Devs</div>
+            </div>
             
-            <span className="text-gray-500 cursor-not-allowed">Games</span>
-            
-            <span className="text-gray-500 cursor-not-allowed">4Devs</span>
-            
+            {/* Other menu items */}
             <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
               <span>About</span>
             </Link>
