@@ -1,97 +1,145 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Mail, Github } from "lucide-react";
-import { FaTelegram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { FaXTwitter } from "react-icons/fa6";
+import { useQuery } from "@tanstack/react-query";
+
+interface SocialLinks {
+  project: {
+    x: string;
+    github: string;
+    email: string;
+  };
+  authors: Array<{
+    name: string;
+    x: string;
+  }>;
+}
 
 export default function About() {
+  const { data: socialLinks } = useQuery<SocialLinks>({
+    queryKey: ['/api/social-links'],
+    retry: false,
+  });
+
+  // Construct the CONTRIBUTE.md URL from the GitHub repo URL
+  const contributeUrl = socialLinks?.project?.github
+    ? `${socialLinks.project.github}/blob/main/CONTRIBUTE.md` 
+    : "#";
+
   return (
     <div className="flex flex-col min-h-screen bg-background font-sans text-foreground">
       <Header />
       
       <main className="py-8 px-4 md:px-8 lg:px-16 flex-grow">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-8 text-center">
-            About
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            {/* Left Column - Avatar */}
-            <div className="flex flex-col items-center justify-start">
-              <img 
-                src="https://avatars.githubusercontent.com/u/25614260" 
-                alt="David Merkulov" 
-                className="rounded-lg w-full max-w-md shadow-lg"
-              />
-            </div>
-            
-            {/* Right Column - Bio */}
-            <div className="prose max-w-none">
-              <h3 className="text-xl font-medium mb-4">David Merkulov</h3>
-              <p>
-                My name is David Merkulov. I'm an AI Agents enthusiast, deeply immersed in this field since 2022. Previously, I worked as an AI architect in the YandexGPT team, was involved in DL development, and participated in more than 10 AI startups, including big tech projects.
-              </p>
-              <p>
-                Currently, I'm the CTO at an international venture fund, where I focus on automating internal processes using agents and creating AI-insight tools. I also run a free online course (learn-agents.diy), offer mentorship (similar to ds-mentor.ru), and provide consulting services.
-              </p>
-              <div className="mt-6">
-                <div className="flex flex-wrap gap-4">
+        <div className="max-w-3xl mx-auto prose prose-stone">
+          <section className="mb-10">
+            <h1 className="text-3xl font-bold mb-6">About Us</h1>
+            <p>
+              VibeCoding Arena is an open platform for crowdsourced AI benchmarking in development. 
+              We're creating learn-agents.diy so everyone can learn the art of making agents for free. 
+              We always welcome contributions from the community. If you're interested in collaboration, 
+              we'd love to hear from you!
+            </p>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold mb-4">Open-source contributors</h2>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>
+                <span className="font-medium">Leads:</span>{" "}
+                {socialLinks?.authors ? (
+                  <>
+                    {socialLinks.authors.map((author, index) => (
+                      <span key={author.name}>
+                        <a 
+                          href={author.x} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 hover:underline"
+                        >
+                          {author.name}
+                        </a>
+                        {index < socialLinks.authors.length - 1 ? ", " : ""}
+                      </span>
+                    ))}
+                  </> 
+                ) : (
+                  "David Merkulov, Dmitry Zhechkov, Artem Bulgakov"
+                )}
+              </li>
+              <li>
+                <span className="font-medium">Contributors:</span> here could be your name!
+              </li>
+            </ul>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold mb-4">Learn More</h2>
+            <ul className="list-disc pl-6">
+              <li>
+                <a 
+                  href={contributeUrl}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800 hover:underline"
+                >
+                  How to contribute
+                </a>
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>
+                Follow our{" "}
+                {socialLinks?.project?.x && (
                   <a 
-                    href="https://t.me/nonGilgameshj" 
+                    href={socialLinks.project.x}
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-blue-500 hover:text-white transition-all"
-                    title="Telegram"
+                    className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center"
                   >
-                    <FaTelegram size={20} />
+                    <FaXTwitter className="inline mr-1" size={16} />
+                    X
                   </a>
+                )} or email us at{" "}
+                {socialLinks?.project?.email ? (
                   <a 
-                    href="https://github.com/all-mute" 
+                    href={`mailto:${socialLinks.project.email}`}
+                    className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center"
+                  >
+                    <Mail className="inline mr-1" size={16} />
+                    {socialLinks.project.email}
+                  </a>
+                ) : (
+                  <a 
+                    href="mailto:vibecoding-arena@gmail.com"
+                    className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center"
+                  >
+                    <Mail className="inline mr-1" size={16} />
+                    vibecoding-arena@gmail.com
+                  </a>
+                )}
+              </li>
+              <li>
+                File issues on{" "}
+                {socialLinks?.project?.github && (
+                  <a 
+                    href={socialLinks.project.github}
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-black hover:text-white transition-all"
-                    title="GitHub"
+                    className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center"
                   >
-                    <Github size={20} />
+                    <Github className="inline mr-1" size={16} />
+                    GitHub
                   </a>
-                  <a 
-                    href="https://www.linkedin.com/in/david-merkulov/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-blue-700 hover:text-white transition-all"
-                    title="LinkedIn"
-                  >
-                    <FaLinkedinIn size={20} />
-                  </a>
-                  <a 
-                    href="https://x.com/0xMerkulov" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-black hover:text-white transition-all"
-                    title="Twitter/X"
-                  >
-                    <FaXTwitter size={20} />
-                  </a>
-                  <a 
-                    href="mailto:fox256410@gmail.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-red-500 hover:text-white transition-all"
-                    title="Email"
-                  >
-                    <Mail size={20} />
-                  </a>
-                  <a 
-                    href="https://www.merkulov.ai/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-block px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100 transition-all text-sm"
-                  >
-                    merkulov.ai
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+                )}
+              </li>
+            </ul>
+          </section>
         </div>
       </main>
       
